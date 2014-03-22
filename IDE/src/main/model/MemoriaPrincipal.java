@@ -35,6 +35,10 @@ public class MemoriaPrincipal {
 
     }
 
+    public String leerCelda(ComplexNumber numeroCelda){
+        return celdasMemoria.get(numeroCelda).getValorHexa();
+    }
+
     public void setValor(ComplexNumber pos, String hexa){
         setValor(pos,HEXAConversionAPI.hex_to_bitvector(hexa));
     }

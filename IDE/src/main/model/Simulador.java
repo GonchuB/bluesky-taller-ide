@@ -12,15 +12,15 @@ import java.util.Iterator;
  */
 public class Simulador {
 
-    MaquinaGenerica maquinaGenerica;
+    private MaquinaGenerica maquinaGenerica;
 
-    ArrayList<Instruccion> instrucciones;
+    private ArrayList<Instruccion> instrucciones;
 
-    FabricaInstrucciones fabricaInstrucciones;
+    private FabricaInstrucciones fabricaInstrucciones;
 
-    Instruccion instruccionActual;
+    private Instruccion instruccionActual;
 
-    Iterator<Instruccion> iteratorInstrucciones;
+    private Iterator<Instruccion> iteratorInstrucciones;
 
     public Simulador() {
         maquinaGenerica = new MaquinaGenerica();

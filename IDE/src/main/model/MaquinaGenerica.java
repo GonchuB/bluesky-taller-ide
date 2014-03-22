@@ -10,8 +10,8 @@ import java.util.Map;
  */
 public class MaquinaGenerica {
     private static final int TAM_REG = 16;
-    Map<ComplexNumber,Registro> registros;
-    MemoriaPrincipal memoriaPrincipal;
+    private Map<ComplexNumber,Registro> registros;
+    private MemoriaPrincipal memoriaPrincipal;
 
     public MaquinaGenerica() {
         memoriaPrincipal = new MemoriaPrincipal();
@@ -25,6 +25,22 @@ public class MaquinaGenerica {
     public void ejecutarInstruccion(Instruccion instruccion){
         memoriaPrincipal.setValor(instruccion.getPosEnMemoria(),instruccion.getLineaCodigo());
         instruccion.operacion(this);
+    }
+
+    public void escribirEnMemoria(ComplexNumber numeroCelda,String hexa){
+        memoriaPrincipal.setValor(numeroCelda,hexa);
+    }
+
+    public void escribirEnRegistro(ComplexNumber numeroRegistro,String hexa){
+        registros.get(numeroRegistro).setValor(hexa);
+    }
+
+    public String leerMemoria(ComplexNumber numeroCelda){
+        return memoriaPrincipal.leerCelda(numeroCelda);
+    }
+
+    public String leerRegistro(ComplexNumber numeroRegistro){
+        return registros.get(numeroRegistro).getValorHexa();
     }
 
     public String obtenerEstado(){
