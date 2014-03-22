@@ -137,6 +137,7 @@ public class HEXAConversionAPI {
         return "";
     }
 
+
     public static Integer twosComp(String str)  {
         Integer num = Integer.valueOf(str, 16);
         return (num > 32767) ? num - 65536 : num;
