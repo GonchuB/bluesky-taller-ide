@@ -48,7 +48,9 @@ public class MemoriaPrincipal {
         if (cantCeldasNecesarias == 0) return;
         ArrayList<CeldaMemoria> celdasAEscribir = new ArrayList<CeldaMemoria>();
         for (int i = 0; i< cantCeldasNecesarias; i++){
-            celdasAEscribir.add(celdasMemoria.get(new ComplexNumber(pos.getDecimalNumber()+i)));
+            ComplexNumber key = new ComplexNumber(pos.getDecimalNumber() + i);
+            CeldaMemoria celda = celdasMemoria.get(key);
+            celdasAEscribir.add(celda);
         }
 
         int cantBitsEscritos = 0;
@@ -57,7 +59,7 @@ public class MemoriaPrincipal {
         for (int i= 0; i< bits.size(); i++) {
             celdaEscritura.setValor(cantBitsEscritos,bits.getBit(i));
             cantBitsEscritos++;
-            if(cantBitsEscritos == 8){
+            if(cantBitsEscritos == 8 && iterator.hasNext()){
                 celdaEscritura = iterator.next();
                 cantBitsEscritos = 0;
             }

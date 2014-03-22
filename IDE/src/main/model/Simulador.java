@@ -121,4 +121,8 @@ public class Simulador {
             }
         }
     }
+
+    public void mostrarEstadoSimulacion() {
+
+    }
 }

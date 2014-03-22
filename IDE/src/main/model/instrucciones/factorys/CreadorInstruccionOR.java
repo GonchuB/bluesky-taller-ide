@@ -10,9 +10,9 @@ import main.model.instrucciones.tipos.InstruccionOR;
 public class CreadorInstruccionOR implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroDestino = new ComplexNumber(lineaCodigoHexa.charAt(1));
-        ComplexNumber registroFuente1 = new ComplexNumber(lineaCodigoHexa.charAt(2));
-        ComplexNumber registroFuente2 = new ComplexNumber(lineaCodigoHexa.charAt(3));
+        ComplexNumber registroDestino = new ComplexNumber(""+lineaCodigoHexa.charAt(1));
+        ComplexNumber registroFuente1 = new ComplexNumber(""+lineaCodigoHexa.charAt(2));
+        ComplexNumber registroFuente2 = new ComplexNumber(""+lineaCodigoHexa.charAt(3));
         Instruccion instruccion = new InstruccionOR(registroFuente1,registroFuente2,registroDestino);
         instruccion.setComentario(comentario);
         instruccion.setLineaCodigo(lineaCodigoHexa);

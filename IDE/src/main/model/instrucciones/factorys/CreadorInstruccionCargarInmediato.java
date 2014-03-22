@@ -10,7 +10,7 @@ import main.model.instrucciones.tipos.InstruccionCargarInmediato;
 public class CreadorInstruccionCargarInmediato implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroDestino = new ComplexNumber(lineaCodigoHexa.charAt(1));
+        ComplexNumber registroDestino = new ComplexNumber("" + lineaCodigoHexa.charAt(1));
         String hex = "" + lineaCodigoHexa.charAt(2) + lineaCodigoHexa.charAt(3);
         Instruccion instruccion = new InstruccionCargarInmediato(registroDestino,hex);
         instruccion.setComentario(comentario);

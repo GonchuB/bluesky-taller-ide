@@ -5,7 +5,7 @@ import main.apis.HEXAConversionAPI;
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
-public class ComplexNumber {
+public class ComplexNumber implements Comparable{
     private int numero;
 
     public ComplexNumber(int numero) {
@@ -26,8 +26,21 @@ public class ComplexNumber {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        return numero == ((ComplexNumber)obj).numero;
+    }
 
-    public boolean equals(ComplexNumber obj) {
-        return numero == obj.numero;
+    @Override
+    public int hashCode() {
+        return numero;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (numero == ((ComplexNumber)o).numero) return 0;
+        if (numero > ((ComplexNumber)o).numero) return 1;
+        return -1;
+
     }
 }

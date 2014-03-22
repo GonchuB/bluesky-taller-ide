@@ -10,8 +10,8 @@ import main.model.instrucciones.tipos.InstruccionCopiar;
 public class CreadorInstruccionCopiar implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroFuente = new ComplexNumber(lineaCodigoHexa.charAt(2));
-        ComplexNumber registroDestino = new ComplexNumber(lineaCodigoHexa.charAt(3));
+        ComplexNumber registroFuente = new ComplexNumber(""+lineaCodigoHexa.charAt(2));
+        ComplexNumber registroDestino = new ComplexNumber(""+lineaCodigoHexa.charAt(3));
         Instruccion instruccion = new InstruccionCopiar(registroFuente,registroDestino);
         instruccion.setComentario(comentario);
         instruccion.setLineaCodigo(lineaCodigoHexa);

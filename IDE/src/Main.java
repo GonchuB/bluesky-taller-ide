@@ -1,20 +1,17 @@
 import main.apis.HEXAConversionAPI;
 import main.apis.bitvector.BitVector;
+import main.model.Simulador;
 
 /**
  * Created by Juan-Asus on 20/03/2014.
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println(HEXAConversionAPI.hex_to_decimal("3E8", HEXAConversionAPI.ConversionType.A2COMPLEMENT));
-        System.out.println(HEXAConversionAPI.hex_to_decimal("3E8", HEXAConversionAPI.ConversionType.FLOATINGPOINT));// Display the string.
+        Simulador simulador = new Simulador();
+        simulador.init("D:\\Workspace\\bluesky-taller-ide\\IDE\\src\\resources\\programas\\ejemplo.maq");
+        simulador.iniciarSimulacionCompleta();
+        simulador.mostrarEstadoSimulacion();
 
-        BitVector bv = new BitVector(8);
-
-        BitVector ff = HEXAConversionAPI.hex_to_bitvector("FF");
-
-        System.out.println(ff.toString());
-
-
+        System.exit(0);
     }
 }

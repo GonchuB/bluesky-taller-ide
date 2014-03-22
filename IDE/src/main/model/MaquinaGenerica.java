@@ -17,6 +17,7 @@ public class MaquinaGenerica {
     public MaquinaGenerica() {
         memoriaPrincipal = new MemoriaPrincipal();
         registros = new HashMap<ComplexNumber, Registro>();
+        enFuncionamiento = true;
         for (int i=0; i< TAM_REG; i++){
             ComplexNumber key = new ComplexNumber(i);
             registros.put(key,new Registro(key));

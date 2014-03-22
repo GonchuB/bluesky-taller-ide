@@ -10,8 +10,8 @@ import main.model.instrucciones.tipos.InstruccionAlmacenar;
 public class CreadorInstruccionAlmacenar implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroFuente = new ComplexNumber(lineaCodigoHexa.charAt(1));
-        ComplexNumber posMemoriaDestino = new ComplexNumber(lineaCodigoHexa.charAt(2)+lineaCodigoHexa.charAt(3));
+        ComplexNumber registroFuente = new ComplexNumber(""+lineaCodigoHexa.charAt(1));
+        ComplexNumber posMemoriaDestino = new ComplexNumber(""+lineaCodigoHexa.charAt(2)+lineaCodigoHexa.charAt(3));
         Instruccion instruccion = new InstruccionAlmacenar(registroFuente,posMemoriaDestino);
         instruccion.setComentario(comentario);
         instruccion.setLineaCodigo(lineaCodigoHexa);

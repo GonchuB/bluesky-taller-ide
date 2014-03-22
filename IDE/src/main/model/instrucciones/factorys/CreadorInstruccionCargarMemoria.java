@@ -10,8 +10,8 @@ import main.model.instrucciones.tipos.InstruccionCargarMemoria;
 public class CreadorInstruccionCargarMemoria implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroDestino = new ComplexNumber(lineaCodigoHexa.charAt(1));
-        ComplexNumber posMemoriaFuente = new ComplexNumber(lineaCodigoHexa.charAt(2)+lineaCodigoHexa.charAt(3));
+        ComplexNumber registroDestino = new ComplexNumber(""+lineaCodigoHexa.charAt(1));
+        ComplexNumber posMemoriaFuente = new ComplexNumber(""+lineaCodigoHexa.charAt(2)+lineaCodigoHexa.charAt(3));
         Instruccion instruccion = new InstruccionCargarMemoria(registroDestino,posMemoriaFuente);
         instruccion.setComentario(comentario);
         instruccion.setLineaCodigo(lineaCodigoHexa);

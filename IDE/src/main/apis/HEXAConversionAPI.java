@@ -54,7 +54,7 @@ public class HEXAConversionAPI {
         BitVector bv = new BitVector(ff.length());
         for(int i=0;i<ff.length();i++){
             Boolean val = false;
-            if (ff.charAt(0) == '1') val = true;
+            if (ff.charAt(i) == '1') val = true;
             bv.setBit(i,val);
         }
         return bv;
@@ -72,6 +72,7 @@ public class HEXAConversionAPI {
     public static String hex_to_binary(String hex) {
         String hex_char,bin_char,binary;
         binary = "";
+        if (hex.length() == 1) hex = "0" + hex;
         int len = hex.length()/2;
         for(int i=0;i<len;i++){
             hex_char = hex.substring(2*i,2*i+2);

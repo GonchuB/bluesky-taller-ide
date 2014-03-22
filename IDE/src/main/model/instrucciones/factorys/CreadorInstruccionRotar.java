@@ -11,7 +11,7 @@ import main.model.instrucciones.tipos.InstruccionRotar;
 public class CreadorInstruccionRotar implements CreadorInstruccion {
     @Override
     public Instruccion factoryMethod(String posMemoria, String lineaCodigoHexa, String comentario) {
-        ComplexNumber registroFuente = new ComplexNumber(lineaCodigoHexa.charAt(1));
+        ComplexNumber registroFuente = new ComplexNumber(""+lineaCodigoHexa.charAt(1));
         int cantRotaciones = Integer.parseInt(HEXAConversionAPI.hex_to_decimal(String.valueOf(lineaCodigoHexa.charAt(3))));
         Instruccion instruccion = new InstruccionRotar(cantRotaciones,registroFuente);
         instruccion.setComentario(comentario);
