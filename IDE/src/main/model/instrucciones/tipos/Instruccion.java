@@ -2,6 +2,7 @@ package main.model.instrucciones.tipos;
 
 import main.model.ComplexNumber;
 import main.model.MaquinaGenerica;
+import main.model.Simulador;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
@@ -12,7 +13,7 @@ public abstract class Instruccion {
     private String comentario;
     private String lineaCodigo;
 
-    public abstract void operacion(MaquinaGenerica maquina);
+    public abstract void operacion(Simulador simulador, MaquinaGenerica maquina);
 
     public ComplexNumber getPosEnMemoria() {
         return posEnMemoria;

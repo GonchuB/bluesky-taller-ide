@@ -12,6 +12,7 @@ public class MaquinaGenerica {
     private static final int TAM_REG = 16;
     private Map<ComplexNumber,Registro> registros;
     private MemoriaPrincipal memoriaPrincipal;
+    private Boolean enFuncionamiento;
 
     public MaquinaGenerica() {
         memoriaPrincipal = new MemoriaPrincipal();
@@ -22,16 +23,21 @@ public class MaquinaGenerica {
         }
     }
 
-    public void ejecutarInstruccion(Instruccion instruccion){
+
+
+    public void ejecutarInstruccion(Simulador simulador,Instruccion instruccion){
+        if (!enFuncionamiento) return;
         memoriaPrincipal.setValor(instruccion.getPosEnMemoria(),instruccion.getLineaCodigo());
-        instruccion.operacion(this);
+        instruccion.operacion(simulador, this);
     }
 
     public void escribirEnMemoria(ComplexNumber numeroCelda,String hexa){
+        if (!enFuncionamiento) return;
         memoriaPrincipal.setValor(numeroCelda,hexa);
     }
 
     public void escribirEnRegistro(ComplexNumber numeroRegistro,String hexa){
+        if (!enFuncionamiento) return;
         registros.get(numeroRegistro).setValor(hexa);
     }
 

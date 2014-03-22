@@ -4,8 +4,7 @@ import main.model.instrucciones.FabricaInstrucciones;
 import main.model.instrucciones.tipos.Instruccion;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
@@ -14,7 +13,7 @@ public class Simulador {
 
     private MaquinaGenerica maquinaGenerica;
 
-    private ArrayList<Instruccion> instrucciones;
+    private Map<Integer,Instruccion> instrucciones;
 
     private FabricaInstrucciones fabricaInstrucciones;
 
@@ -22,10 +21,13 @@ public class Simulador {
 
     private Iterator<Instruccion> iteratorInstrucciones;
 
+    private boolean simulando;
+
     public Simulador() {
         maquinaGenerica = new MaquinaGenerica();
         fabricaInstrucciones = new FabricaInstrucciones();
-        instrucciones = new ArrayList<Instruccion>();
+        instrucciones = new LinkedHashMap<Integer, Instruccion>();
+        simulando = false;
     }
 
     public void init(String rutaArchivoHexa){
@@ -38,10 +40,12 @@ public class Simulador {
         try {
             reader = new BufferedReader(new FileReader(rutaArchivo));
             String line = null;
+            int i = 0;
             while ((line = reader.readLine()) != null) {
                 Instruccion instruccion = fabricaInstrucciones.crearInstruccion(line);
                 //Agrego las instrucciones null, despues en la ejecución habra un runtime exception por instruccion desconocida
-                instrucciones.add(instruccion);
+                instrucciones.put(i,instruccion);
+                i++;
             }
         } catch (FileNotFoundException e) {
 
@@ -54,11 +58,9 @@ public class Simulador {
     }
 
     public void iniciarSimulacionCompleta(){
-        for (Instruccion instruccion : instrucciones){
-            if (instruccion == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
-            maquinaGenerica.ejecutarInstruccion(instruccion);
-        }
-        System.out.println("Ejecución finalizada");
+        iniciarSimulacionPasoAPaso();
+        while (simulando) ejecutarSiguienteInstruccion();
+
     }
 
     public void iniciarSimulacionPasoAPaso(){
@@ -66,23 +68,57 @@ public class Simulador {
             System.out.println("Ejecución finalizada");
             return;
         }
-        iteratorInstrucciones = instrucciones.iterator();
+        iteratorInstrucciones = instrucciones.values().iterator();
+        simulando = true;
         instruccionActual = iteratorInstrucciones.next();
-        if (instruccionActual == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
-        maquinaGenerica.ejecutarInstruccion(instruccionActual);
+        if (instruccionActual == null) {
+            System.out.println("La instrucción es desconocida y no se puede ejecutar el código");
+            pararSimulacion();
+            return;
+        }
+        maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
     }
 
     public void ejecutarSiguienteInstruccion(){
-        if(instruccionActual == null) return;
         if (iteratorInstrucciones.hasNext()){
             instruccionActual = iteratorInstrucciones.next();
-            if (instruccionActual == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
-            maquinaGenerica.ejecutarInstruccion(instruccionActual);
+            if (instruccionActual == null) {
+                System.out.println("La instrucción es desconocida y no se puede ejecutar el código");
+                pararSimulacion();
+                return;
+            }
+            maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
         } else {
-            System.out.println("Ejecución finalizada");
+            pararSimulacion();
         }
     }
 
 
+    public void pararSimulacion() {
+        simulando = false;
+        System.out.println("Ejecución finalizada");
+    }
 
+    public void setearProximaInstruccionSegunNumero(ComplexNumber numeroCeldaMemoria,String instruccionAComparar) {
+        if (numeroCeldaMemoria.getDecimalNumber() % 2 != 0){
+            System.out.println("Instruccion destino inválida");
+            pararSimulacion();
+        }
+        iteratorInstrucciones = instrucciones.values().iterator();
+        if (numeroCeldaMemoria.getDecimalNumber() == 0) instruccionActual = iteratorInstrucciones.next();
+        else {
+            for (int i= 0 ; i < (numeroCeldaMemoria.getDecimalNumber()/2)+1; i++){
+                if(iteratorInstrucciones.hasNext()){
+                    instruccionActual = iteratorInstrucciones.next();
+                } else {
+                    System.out.println("No existe una instruccion en la celda de memoria indicada");
+                    pararSimulacion();
+                }
+            }
+            if(simulando && !instruccionActual.getLineaCodigo().equals(instruccionAComparar)){
+                System.out.println("La instruccion en memoria es distinta a la de la posicion que se quizo saltar en el simulador");
+                pararSimulacion();
+            }
+        }
+    }
 }
