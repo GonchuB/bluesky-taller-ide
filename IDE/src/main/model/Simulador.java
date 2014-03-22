@@ -5,6 +5,7 @@ import main.model.instrucciones.tipos.Instruccion;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
@@ -18,6 +19,8 @@ public class Simulador {
     FabricaInstrucciones fabricaInstrucciones;
 
     Instruccion instruccionActual;
+
+    Iterator<Instruccion> iteratorInstrucciones;
 
     public Simulador() {
         maquinaGenerica = new MaquinaGenerica();
@@ -51,11 +54,33 @@ public class Simulador {
     }
 
     public void iniciarSimulacionCompleta(){
-
+        for (Instruccion instruccion : instrucciones){
+            if (instruccion == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
+            maquinaGenerica.ejecutarInstruccion(instruccion);
+        }
+        System.out.println("Ejecución finalizada");
     }
 
     public void iniciarSimulacionPasoAPaso(){
+        if (instrucciones.isEmpty()){
+            System.out.println("Ejecución finalizada");
+            return;
+        }
+        iteratorInstrucciones = instrucciones.iterator();
+        instruccionActual = iteratorInstrucciones.next();
+        if (instruccionActual == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
+        maquinaGenerica.ejecutarInstruccion(instruccionActual);
+    }
 
+    public void ejecutarSiguienteInstruccion(){
+        if(instruccionActual == null) return;
+        if (iteratorInstrucciones.hasNext()){
+            instruccionActual = iteratorInstrucciones.next();
+            if (instruccionActual == null) throw  new RuntimeException("La instrucción es desconocida y no se puede ejecutar el código");
+            maquinaGenerica.ejecutarInstruccion(instruccionActual);
+        } else {
+            System.out.println("Ejecución finalizada");
+        }
     }
 
 
