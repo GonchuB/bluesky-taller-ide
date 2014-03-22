@@ -20,5 +20,10 @@ public class InstruccionAlmacenar extends Instruccion {
     public void operacion(Simulador simulador, MaquinaGenerica maquina) {
         String hexa = maquina.leerRegistro(numeroRegistro);
         maquina.escribirEnMemoria(numeroDeCelda,hexa);
+        if (numeroDeCelda.getDecimalNumber() == 255){
+            maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
+            System.out.println("Sale: " + hexa);
+            maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
+        }
     }
 }
