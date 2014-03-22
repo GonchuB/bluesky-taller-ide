@@ -1,5 +1,5 @@
-import apis.HEXAConversionAPI;
-import apis.bitvector.BitVector;
+import main.apis.HEXAConversionAPI;
+import main.apis.bitvector.BitVector;
 
 /**
  * Created by Juan-Asus on 20/03/2014.
