@@ -7,6 +7,8 @@ import main.apis.bitvector.BitVector;
  */
 public class HEXAConversionAPI {
 
+
+
     public enum ConversionType {
         A2COMPLEMENT, FLOATINGPOINT
     }
@@ -129,23 +131,36 @@ public class HEXAConversionAPI {
     public static String hex_to_decimal(String hex,ConversionType type){
         String auxHex = hex.replaceFirst("0x","");
         if (ConversionType.A2COMPLEMENT.equals(type)){
-            return twosComp(auxHex).toString();
+            return hex_to_a2_decimal(auxHex).toString();
         } else if (ConversionType.FLOATINGPOINT.equals(type)){
-            return floatingPoint(auxHex).toString();
+            return hex_to_fp_decimal(auxHex).toString();
         }
 
         return "";
     }
 
 
-    public static Integer twosComp(String str)  {
+    public static Integer hex_to_a2_decimal(String str)  {
         Integer num = Integer.valueOf(str, 16);
-        return (num > 32767) ? num - 65536 : num;
+        double pow = Math.pow(2, str.length());
+        int i = new Double(pow).intValue();
+        return (num > (i /2)) ? (num - i) : num;
     }
 
-    public static Float floatingPoint(String str){
-        float f = Float.intBitsToFloat(new Integer(hex_to_decimal(str)).intValue());
+    public static Float hex_to_fp_decimal(String str){
+        float f = Float.intBitsToFloat(Integer.parseInt(hex_to_decimal(str)));
         return new Float(f);
+    }
+
+    public static String a2_decimal_to_hex(Integer i)  {
+        Integer newN = i;
+        if (i < 0) newN = 128 - i;
+        return decimal_to_hex(newN.intValue());
+    }
+
+    public static String fp_decimal_to_hex(Float f){
+        int i = Float.floatToIntBits(f);
+        return decimal_to_hex(i);
     }
 
 }

@@ -19,7 +19,7 @@ public abstract class Instruccion {
         return posEnMemoria;
     }
 
-    protected void setPosEnMemoria(ComplexNumber posEnMemoria) {
+    public void setPosEnMemoria(ComplexNumber posEnMemoria) {
         this.posEnMemoria = posEnMemoria;
     }
 
@@ -27,7 +27,7 @@ public abstract class Instruccion {
         return comentario;
     }
 
-    protected void setComentario(String comentario) {
+    public void setComentario(String comentario) {
         this.comentario = comentario;
     }
 
@@ -35,7 +35,7 @@ public abstract class Instruccion {
         return lineaCodigo;
     }
 
-    protected void setLineaCodigo(String lineaCodigo) {
+    public void setLineaCodigo(String lineaCodigo) {
         this.lineaCodigo = lineaCodigo;
     }
 }
