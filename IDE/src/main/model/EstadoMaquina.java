@@ -7,20 +7,21 @@ import java.util.Map;
  */
 public class EstadoMaquina {
 
-    private Map<ComplexNumber, Registro> registros;
+    private BancoRegistros bancoRegistros;
     private MemoriaPrincipal memoriaPrincipal;
     private String aluControlBits;
     private Float porcentajeMemoriaUtilizada;
     private Float porcentajeRegistrosUtilizados;
 
-    public EstadoMaquina(Map<ComplexNumber, Registro> regs, MemoriaPrincipal mem, String aluBits) {
-        registros = regs;
+    public EstadoMaquina(BancoRegistros regs, MemoriaPrincipal mem, String aluBits) {
+        bancoRegistros = regs;
         memoriaPrincipal = mem;
         aluControlBits = aluBits;
     }
 
     public void calcularEstadoMaquina() {
         this.setPorcentajeMemoriaUtilizada(memoriaPrincipal.obtenerPorcentajeUtilizado());
+        this.setPorcentajeRegistrosUtilizados(bancoRegistros.obtenerPorcentajeRegistrosUtilizados());
     }
 
     public Float getPorcentajeMemoriaUtilizada() {

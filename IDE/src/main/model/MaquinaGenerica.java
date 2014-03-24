@@ -9,19 +9,14 @@ import java.util.Map;
  * Created by Juan-Asus on 21/03/2014.
  */
 public class MaquinaGenerica {
-    private static final int TAM_REG = 16;
-    private Map<ComplexNumber, Registro> registros;
+    private BancoRegistros bancoRegistros;
     private MemoriaPrincipal memoriaPrincipal;
     private Boolean enFuncionamiento;
 
     public MaquinaGenerica() {
         memoriaPrincipal = new MemoriaPrincipal();
-        registros = new HashMap<ComplexNumber, Registro>();
+        bancoRegistros = new BancoRegistros();
         enFuncionamiento = true;
-        for (int i = 0; i < TAM_REG; i++) {
-            ComplexNumber key = new ComplexNumber(i);
-            registros.put(key, new Registro(key));
-        }
     }
 
 
@@ -38,18 +33,7 @@ public class MaquinaGenerica {
 
     public void escribirEnRegistro(ComplexNumber numeroRegistro, String hexa) {
         if (!enFuncionamiento) return;
-        registros.get(numeroRegistro).setValor(hexa);
-    }
-
-    public Float obtenerPorcentajeRegistrosUtilizados() {
-        Float regsUtilizados = 0f;
-        for (Map.Entry<ComplexNumber, Registro> entry : registros.entrySet()) {
-            if (entry.getValue().getModificado()) {
-                regsUtilizados += 1f;
-            }
-        }
-        regsUtilizados = regsUtilizados / TAM_REG;
-        return 100 * regsUtilizados;
+        bancoRegistros.escribirEnRegistro(numeroRegistro, hexa);
     }
 
     public String leerMemoria(ComplexNumber numeroCelda) {
@@ -57,13 +41,12 @@ public class MaquinaGenerica {
     }
 
     public String leerRegistro(ComplexNumber numeroRegistro) {
-        return registros.get(numeroRegistro).getValorHexa();
+        return bancoRegistros.leerRegistro(numeroRegistro);
     }
 
     public EstadoMaquina obtenerEstado() {
-        EstadoMaquina estadoActual = new EstadoMaquina(registros, memoriaPrincipal, "");
+        EstadoMaquina estadoActual = new EstadoMaquina(bancoRegistros, memoriaPrincipal, "");
         estadoActual.calcularEstadoMaquina();
-        estadoActual.setPorcentajeRegistrosUtilizados(this.obtenerPorcentajeRegistrosUtilizados());
         return estadoActual;
     }
 }
