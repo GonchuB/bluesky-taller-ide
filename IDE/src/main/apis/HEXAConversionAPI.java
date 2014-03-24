@@ -143,9 +143,9 @@ public class HEXAConversionAPI {
 
     public static Integer hex_to_a2_decimal(String str)  {
         Integer num = Integer.valueOf(str, 16);
-        double pow = Math.pow(2, str.length());
+        double pow = Math.pow(2, 8);
         int i = new Double(pow).intValue();
-        return (num > (i /2)) ? (num - i) : num;
+        return (num >= (i / 2)) ? (num - i) : num;
     }
 
     public static Float hex_to_fp_decimal(String str){
