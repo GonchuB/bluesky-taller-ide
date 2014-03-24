@@ -124,5 +124,8 @@ public class Simulador {
 
     public void mostrarEstadoSimulacion() {
         EstadoMaquina estadoMaquina = maquinaGenerica.obtenerEstado();
+        System.out.println("Alu bits: "+ estadoMaquina.getAluControlBits());
+        System.out.println("% Mem Used: "+ estadoMaquina.getPorcentajeMemoriaUtilizada());
+        System.out.println("% Regs Used: "+ estadoMaquina.getPorcentajeRegistrosUtilizados());
     }
 }

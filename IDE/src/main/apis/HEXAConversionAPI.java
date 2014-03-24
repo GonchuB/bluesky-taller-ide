@@ -20,21 +20,7 @@ public class HEXAConversionAPI {
         for(int i=1;i<8-len;i++) zero_pad = zero_pad + "0";
         return zero_pad + bin_char;
     }
-    public static String plaintext_to_binary(String pt){
-        return hex_to_binary(plaintext_to_hex(pt));
-    }
-    public static String binary_to_plaintext(String bin){
-        return hex_to_plaintext(binary_to_hex(bin));
-    }
-    public static String plaintext_to_hex(String pt) {
-        String hex = "";
-        for(int i=0;i<pt.length();i++){
-            String hex_char = Integer.toHexString(pt.charAt(i));
-            if(i==0) hex = hex_char;
-            else hex = hex + hex_char;
-        }
-        return hex;
-    }
+
     public static String binary_to_hex(String binary) {
         String hex = "";
         String hex_char;
@@ -84,19 +70,6 @@ public class HEXAConversionAPI {
             //out.printf("%s %s\n", hex_char,bin_char);
         }
         return binary;
-    }
-    public static String hex_to_plaintext(String hex) {
-        String hex_char;
-        StringBuilder plaintext = new StringBuilder();
-        char pt_char;
-        int len = hex.length()/2;
-        for(int i=0;i<len;i++){
-            hex_char = hex.substring(2*i,2*i+2);
-            pt_char = (char)Integer.parseInt(hex_char,16);
-            plaintext.append(pt_char);
-            //out.printf("%s %s\n", hex_char,bin_char);
-        }
-        return plaintext.toString();
     }
 
     public static String hex_to_decimal(String s) {
