@@ -123,6 +123,6 @@ public class Simulador {
     }
 
     public void mostrarEstadoSimulacion() {
-
+        EstadoMaquina estadoMaquina = maquinaGenerica.obtenerEstado();
     }
 }

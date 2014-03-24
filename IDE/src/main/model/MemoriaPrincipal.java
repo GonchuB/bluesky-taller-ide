@@ -15,7 +15,7 @@ import java.util.Map;
 public class MemoriaPrincipal {
     private static final int TAM_MP = 256;
 
-    Map<ComplexNumber,CeldaMemoria> celdasMemoria;
+    Map<ComplexNumber, CeldaMemoria> celdasMemoria;
 
     CeldaMemoria puertoEntradaControl;
     CeldaMemoria puertoEntrada;
@@ -24,9 +24,9 @@ public class MemoriaPrincipal {
 
     public MemoriaPrincipal() {
         celdasMemoria = new HashMap<ComplexNumber, CeldaMemoria>();
-        for (int i=0; i< TAM_MP; i++){
+        for (int i = 0; i < TAM_MP; i++) {
             ComplexNumber key = new ComplexNumber(i);
-            celdasMemoria.put(key,new CeldaMemoria(key));
+            celdasMemoria.put(key, new CeldaMemoria(key));
         }
         puertoEntradaControl = celdasMemoria.get(new ComplexNumber(252));
         puertoEntrada = celdasMemoria.get(new ComplexNumber(253));
@@ -35,19 +35,19 @@ public class MemoriaPrincipal {
 
     }
 
-    public String leerCelda(ComplexNumber numeroCelda){
+    public String leerCelda(ComplexNumber numeroCelda) {
         return celdasMemoria.get(numeroCelda).getValorHexa();
     }
 
-    public void setValor(ComplexNumber pos, String hexa){
-        setValor(pos,HEXAConversionAPI.hex_to_bitvector(hexa));
+    public void setValor(ComplexNumber pos, String hexa) {
+        setValor(pos, HEXAConversionAPI.hex_to_bitvector(hexa));
     }
 
-    public void setValor(ComplexNumber pos, BitVector bits){
+    public void setValor(ComplexNumber pos, BitVector bits) {
         int cantCeldasNecesarias = cantCeldasNecesarias(bits);
         if (cantCeldasNecesarias == 0) return;
         ArrayList<CeldaMemoria> celdasAEscribir = new ArrayList<CeldaMemoria>();
-        for (int i = 0; i< cantCeldasNecesarias; i++){
+        for (int i = 0; i < cantCeldasNecesarias; i++) {
             ComplexNumber key = new ComplexNumber(pos.getDecimalNumber() + i);
             CeldaMemoria celda = celdasMemoria.get(key);
             celdasAEscribir.add(celda);
@@ -56,10 +56,10 @@ public class MemoriaPrincipal {
         int cantBitsEscritos = 0;
         Iterator<CeldaMemoria> iterator = celdasAEscribir.iterator();
         CeldaMemoria celdaEscritura = iterator.next();
-        for (int i= 0; i< bits.size(); i++) {
-            celdaEscritura.setValor(cantBitsEscritos,bits.getBit(i));
+        for (int i = 0; i < bits.size(); i++) {
+            celdaEscritura.setValor(cantBitsEscritos, bits.getBit(i));
             cantBitsEscritos++;
-            if(cantBitsEscritos == 8 && iterator.hasNext()){
+            if (cantBitsEscritos == 8 && iterator.hasNext()) {
                 celdaEscritura = iterator.next();
                 cantBitsEscritos = 0;
             }
@@ -68,10 +68,24 @@ public class MemoriaPrincipal {
 
     }
 
-    private int cantCeldasNecesarias(BitVector bv){
+    private int cantCeldasNecesarias(BitVector bv) {
         if (bv.size() == 0) return 0;
         if (bv.size() % 8 == 0) return bv.size() / 8;
-        else return (bv.size()+8) / 8;
+        else return (bv.size() + 8) / 8;
+    }
+
+    public Map<ComplexNumber, CeldaMemoria> getCeldasMemoria() {
+        return celdasMemoria;
+    }
+
+    public Float obtenerPorcentajeUtilizado() {
+        Float celdasUtilizadas = 0f;
+        for (Map.Entry<ComplexNumber, CeldaMemoria> entry : celdasMemoria.entrySet()) {
+            if (entry.getValue().getModificada()) {
+                celdasUtilizadas += 1f;
+            }
+        }
+        return celdasUtilizadas / TAM_MP;
     }
 
 }
