@@ -9,13 +9,16 @@ import java.util.Map;
  * Created by Juan-Asus on 21/03/2014.
  */
 public class MaquinaGenerica {
+
     private BancoRegistros bancoRegistros;
     private MemoriaPrincipal memoriaPrincipal;
     private Boolean enFuncionamiento;
+    private ALUControl aluControl;
 
     public MaquinaGenerica() {
         memoriaPrincipal = new MemoriaPrincipal();
         bancoRegistros = new BancoRegistros();
+        aluControl = new ALUControl();
         enFuncionamiento = true;
     }
 
@@ -48,5 +51,9 @@ public class MaquinaGenerica {
         EstadoMaquina estadoActual = new EstadoMaquina(bancoRegistros, memoriaPrincipal, "");
         estadoActual.calcularEstadoMaquina();
         return estadoActual;
+    }
+
+    public ALUControl getAluControl() {
+        return aluControl;
     }
 }

@@ -23,11 +23,11 @@ public class InstruccionSumarA2 extends Instruccion {
     @Override
     public void operacion(Simulador simulador, MaquinaGenerica maquina) {
         String valor1 = HEXAConversionAPI.hex_to_decimal(maquina.leerRegistro(registro1), HEXAConversionAPI.ConversionType.A2COMPLEMENT);
-        String valor2  = HEXAConversionAPI.hex_to_decimal(maquina.leerRegistro(registro2), HEXAConversionAPI.ConversionType.A2COMPLEMENT);
+        String valor2 = HEXAConversionAPI.hex_to_decimal(maquina.leerRegistro(registro2), HEXAConversionAPI.ConversionType.A2COMPLEMENT);
         Integer int1 = new Integer(valor1);
         Integer int2 = new Integer(valor2);
-        Integer resultadoFinal = int1 + int2;
+        Integer resultadoFinal = maquina.getAluControl().addTwoNumbers(int1, int2);
         String valorAGuardar = HEXAConversionAPI.a2_decimal_to_hex(resultadoFinal);
-        maquina.escribirEnRegistro(registroDestino,valorAGuardar);
+        maquina.escribirEnRegistro(registroDestino, valorAGuardar);
     }
 }

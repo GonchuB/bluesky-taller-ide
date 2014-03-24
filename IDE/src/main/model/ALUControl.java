@@ -25,6 +25,19 @@ public class ALUControl {
         return result;
     }
 
+    public boolean checkSumOverflow(Integer op1, Integer op2) {
+        return (op1 + op2 > maxPosNumber || op1 + op2 < maxNegNumber);
+    }
+
+    public Integer addTwoNumbers(Integer op1, Integer op2) {
+        Integer result = op1 + op2;
+        this.setOverflow(this.checkSumOverflow(op1, op2));
+        this.setNegative(result < 0);
+        this.setZero(result == 0);
+        this.setPrecisionLost(false);
+        return result;
+    }
+
     public boolean isOverflow() {
         return overflow;
     }
