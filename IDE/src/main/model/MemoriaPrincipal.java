@@ -85,7 +85,8 @@ public class MemoriaPrincipal {
                 celdasUtilizadas += 1f;
             }
         }
-        return celdasUtilizadas / TAM_MP;
+        celdasUtilizadas = celdasUtilizadas / TAM_MP;
+        return 100 * celdasUtilizadas;
     }
 
 }

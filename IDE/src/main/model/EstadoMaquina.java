@@ -19,13 +19,8 @@ public class EstadoMaquina {
         aluControlBits = aluBits;
     }
 
-    private Float calcularPorcentajeRegistrosUtilizados() {
-        return 0f;
-    }
-
     public void calcularEstadoMaquina() {
         this.setPorcentajeMemoriaUtilizada(memoriaPrincipal.obtenerPorcentajeUtilizado());
-        this.setPorcentajeRegistrosUtilizados(this.calcularPorcentajeRegistrosUtilizados());
     }
 
     public Float getPorcentajeMemoriaUtilizada() {

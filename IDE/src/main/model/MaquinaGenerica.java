@@ -41,6 +41,17 @@ public class MaquinaGenerica {
         registros.get(numeroRegistro).setValor(hexa);
     }
 
+    public Float obtenerPorcentajeRegistrosUtilizados() {
+        Float regsUtilizados = 0f;
+        for (Map.Entry<ComplexNumber, Registro> entry : registros.entrySet()) {
+            if (entry.getValue().getModificado()) {
+                regsUtilizados += 1f;
+            }
+        }
+        regsUtilizados = regsUtilizados / TAM_REG;
+        return 100 * regsUtilizados;
+    }
+
     public String leerMemoria(ComplexNumber numeroCelda) {
         return memoriaPrincipal.leerCelda(numeroCelda);
     }
@@ -52,6 +63,7 @@ public class MaquinaGenerica {
     public EstadoMaquina obtenerEstado() {
         EstadoMaquina estadoActual = new EstadoMaquina(registros, memoriaPrincipal, "");
         estadoActual.calcularEstadoMaquina();
+        estadoActual.setPorcentajeRegistrosUtilizados(this.obtenerPorcentajeRegistrosUtilizados());
         return estadoActual;
     }
 }
