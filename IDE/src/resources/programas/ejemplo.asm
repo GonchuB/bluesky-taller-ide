@@ -1,3 +1,3 @@
-00 2001 Asigno 1
-02 2101
-04 5301 Suma
+ldi r0,1 ;Asigno 1
+ldi r1,1
+add r2,r0,r1 ;Suma
