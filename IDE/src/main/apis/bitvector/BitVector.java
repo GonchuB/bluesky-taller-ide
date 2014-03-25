@@ -472,7 +472,8 @@ public final class BitVector extends Number implements Cloneable, Iterable<Boole
 		//TODO can this be usefully optimized?
 		for (int i = 0; i < finish; i++) {
 			final char c = str.charAt(i);
-			if (c == '1') setBit(finish - 1 - i, true);
+            if (c == '1') setBit(i, true);
+			/*if (c == '1') setBit(finish - 1 - i, true);*/
 			else if (c != '0') throw new IllegalArgumentException("Illegal character '" + c + "' at index " + i + ", expected '0' or '1'.");
 		}
 	}
@@ -1493,7 +1494,7 @@ public final class BitVector extends Number implements Cloneable, Iterable<Boole
 			for (int i = finish - 1; i >= start; i--) {
 				sb.append(getBitAdj(i) ? '1' : '0');
 			}
-			return sb.toString();
+			return new StringBuilder(sb.toString()).reverse().toString();
 		}
 	}
 	

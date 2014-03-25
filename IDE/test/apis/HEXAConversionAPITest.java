@@ -1,6 +1,7 @@
 package apis;
 
 import main.apis.HEXAConversionAPI;
+import main.apis.bitvector.BitVector;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -58,6 +59,34 @@ public class HEXAConversionAPITest {
 
         String fa2 = HEXAConversionAPI.hex_to_binary("FA");
         Assert.assertEquals("11111010",fa2);
+    }
+
+    @Test
+    public void testHex_To_BitvectorConversions() {
+        BitVector fa = HEXAConversionAPI.hex_to_bitvector("03");
+        Assert.assertEquals("00000011",fa.toString());
+
+        BitVector fa2 = HEXAConversionAPI.hex_to_bitvector("FA");
+        Assert.assertEquals("11111010",fa2.toString());
+    }
+
+    @Test
+    public void testbitvector_To_HexConversions() {
+        BitVector bv = new BitVector("00000011");
+        String fa = HEXAConversionAPI.bitvector_to_hex(bv);
+        Assert.assertEquals("03",fa);
+
+        BitVector bv1 = new BitVector("11111010");
+        String fa2 = HEXAConversionAPI.bitvector_to_hex(bv1);
+        Assert.assertEquals("FA",fa2);
+
+        BitVector bv2 = new BitVector("00000011");
+        BitVector bv3 = new BitVector("11111110");
+
+        bv2.orVector(bv3);
+
+        Assert.assertEquals("11111111",bv2.toString());
+
     }
 
 
