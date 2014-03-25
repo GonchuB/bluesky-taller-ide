@@ -32,7 +32,8 @@ public class HEXAConversionAPI {
             if(i==0) hex = hex_char;
             else hex = hex+hex_char;
         }
-        return hex;
+        if(hex.length() == 1 ) hex = "0" + hex;
+        return hex.toUpperCase();
     }
 
     public static BitVector hex_to_bitvector(String hex){
@@ -128,7 +129,7 @@ public class HEXAConversionAPI {
 
     public static String a2_decimal_to_hex(Integer i)  {
         Integer newN = i;
-        if (i < 0) newN = 128 - i;
+        if (i < 0) newN = 256 + i;
         return decimal_to_hex(newN.intValue());
     }
 
