@@ -483,13 +483,13 @@ public class ActionPerformer {
         @Override
         public boolean accept(File f) {
             //acepta directorios y archivos de extensión .txt
-            return f.isDirectory() || f.getName().toLowerCase().endsWith("txt");
+            return f.isDirectory() || f.getName().toLowerCase().endsWith("asm") || f.getName().toLowerCase().endsWith("maq");
         }
  
         @Override
         public String getDescription() {
             //la descripción del tipo de archivo aceptado
-            return "Text Files";
+            return "Simulator Files";
         }
     };
  
