@@ -44,13 +44,16 @@ public class ActionPerformer {
         } else if (comandoDeAccion.equals("cmd_saveas") == true) {    //opción seleccionada: "Guardar como"
             this.actionSaveAs();
         } else if (comandoDeAccion.equals("cmd_execute") == true) {    //opción seleccionada: "Ejecutar"
-            //TODO hacer lo de la Ejecucion
+            this.actionExecute();
         } else if (comandoDeAccion.equals("cmd_executeStep") == true){
         	//TODO hacer lo de la ejecucucion paso por paso
+            this.actionExecuteStep();
         } else if (comandoDeAccion.equals("cmd_compile") == true){
         	//TODO hacer la compilacion del archivo.
+            this.actionCompile();
         } else if (comandoDeAccion.equals("cmd_translate") == true){
         	//TODO hacer la traduccion del texto ensamblador a hexadecimal.
+            this.actionTranslate();
         } else if (comandoDeAccion.equals("cmd_exit") == true) {    //opción seleccionada: "Salir"
             this.actionExit();
         } else if (comandoDeAccion.equals("cmd_undo") == true) {    //opción seleccionada: "Deshacer"
@@ -101,7 +104,23 @@ public class ActionPerformer {
                                           JOptionPane.INFORMATION_MESSAGE);
         }*/
     }
- 
+
+    private void actionExecuteStep() {
+
+    }
+
+    private void actionTranslate() {
+
+    }
+
+    private void actionCompile() {
+
+    }
+
+    private void actionExecute() {
+
+    }
+
     /**
      * Opción seleccionada: "Nuevo".
      *
