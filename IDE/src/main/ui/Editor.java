@@ -185,70 +185,70 @@ public class Editor {
         //le asigna una etiqueta flotante
         buttonNew.setToolTipText("Nuevo");
         //le asigna una imagen ubicada en los recursos del proyecto
-        buttonNew.setIcon(new ImageIcon("resource/papel.png"));
+        buttonNew.setIcon(new ImageIcon(getClass().getClassLoader().getResource("papel.png").getPath()));
         //le asigna un nombre de comando
         buttonNew.setActionCommand("cmd_new");
  
         JButton buttonOpen = new JButton();
         buttonOpen.setToolTipText("Abrir");
-        buttonOpen.setIcon(new ImageIcon("resource/carpeta.png"));
+        buttonOpen.setIcon(new ImageIcon(getClass().getClassLoader().getResource("carpeta.png").getPath()));
         buttonOpen.setActionCommand("cmd_open");
  
         JButton buttonSave = new JButton();
         buttonSave.setToolTipText("Guardar");
-        buttonSave.setIcon(new ImageIcon("resource/tp_save.png"));
+        buttonSave.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_save.png").getPath()));
         buttonSave.setActionCommand("cmd_save");
  
         JButton buttonSaveAs = new JButton();
         buttonSaveAs.setToolTipText("Guardar como...");
-        buttonSaveAs.setIcon(new ImageIcon("resource/tp_saveas.png"));
+        buttonSaveAs.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_saveas.png").getPath()));
         buttonSaveAs.setActionCommand("cmd_saveas");
  
        JButton buttonExecute = new JButton();
        buttonExecute.setToolTipText("Ejecutar");
-       buttonExecute.setIcon(new ImageIcon("resource/play.png"));
+       buttonExecute.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png").getPath()));
        buttonExecute.setActionCommand("cmd_execute");
         
         JButton buttonCompile = new JButton();
         buttonCompile.setToolTipText("Compilar");
-        buttonCompile.setIcon(new ImageIcon("resource/compilar.png"));
+        buttonCompile.setIcon(new ImageIcon(getClass().getClassLoader().getResource("compilar.png").getPath()));
         buttonCompile.setActionCommand("cmd_compile");
         
         JButton buttonExecuteStep = new JButton();
         buttonExecuteStep.setToolTipText("Ejecutar paso a paso");
-        buttonExecuteStep.setIcon(new ImageIcon("resource/play_pause.png"));
+        buttonExecuteStep.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play_pause.png").getPath()));
         buttonExecuteStep.setActionCommand("cmd_executeStep");
         
         JButton buttonTranslate = new JButton();
         buttonTranslate.setToolTipText("Traducir");
-        buttonTranslate.setIcon(new ImageIcon("resource/traducor.png"));
+        buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("traducor.png").getPath()));
         buttonTranslate.setActionCommand("cmd_translate");
  
         buttonUndo = new JButton();
         buttonUndo.setEnabled(false);
         buttonUndo.setToolTipText("Deshacer");
-        buttonUndo.setIcon(new ImageIcon("resource/tp_undo.png"));
+        buttonUndo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_undo.png").getPath()));
         buttonUndo.setActionCommand("cmd_undo");
  
         buttonRedo = new JButton();
         buttonRedo.setEnabled(false);
         buttonRedo.setToolTipText("Rehacer");
-        buttonRedo.setIcon(new ImageIcon("resource/tp_redo.png"));
+        buttonRedo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_redo.png").getPath()));
         buttonRedo.setActionCommand("cmd_redo");
  
         JButton buttonCut = new JButton();
         buttonCut.setToolTipText("Cortar");
-        buttonCut.setIcon(new ImageIcon("resource/tp_cut.png"));
+        buttonCut.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_cut.png").getPath()));
         buttonCut.setActionCommand("cmd_cut");
  
         JButton buttonCopy = new JButton();
         buttonCopy.setToolTipText("Copiar");
-        buttonCopy.setIcon(new ImageIcon("resource/tp_copy.png"));
+        buttonCopy.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_copy.png").getPath()));
         buttonCopy.setActionCommand("cmd_copy");
  
         JButton buttonPaste = new JButton();
         buttonPaste.setToolTipText("Pegar");
-        buttonPaste.setIcon(new ImageIcon("resource/tp_paste.png"));
+        buttonPaste.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_paste.png").getPath()));
         buttonPaste.setActionCommand("cmd_paste");
  
         jToolBar.add(buttonNew);    //se añaden los botones construidos a la barra de herramientas
@@ -437,7 +437,6 @@ class EventHandler extends MouseAdapter implements ActionListener,CaretListener,
     /**
      * Atiende y maneja los eventos del cursor.
      *
-     * @param ce evento del cursor
      */
     @Override
     public void caretUpdate(CaretEvent e) {
