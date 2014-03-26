@@ -16,11 +16,39 @@ public class Compilador {
     Traductor traductorOpsCdes;
     Traductor traductorRegCodes;
     Traductor traductorInmCodes;
+    Map<String,Integer> cantParamsSOp;
 
     public Compilador() {
         this.traductorOpsCdes = crearTraductorOpsCdes();
         this.traductorRegCodes = crearTraductorRegCodes();
         this.traductorInmCodes = crearTraductorInmCodes();
+        this.cantParamsSOp = crearMapaCantParamsSOp();
+    }
+
+    private Map<String, Integer> crearMapaCantParamsSOp() {
+        Map<String,Integer> map = new HashMap<String, Integer>();
+        for(int i=1 ; i< 13 ;i++){
+            map.put(getOpStringByCode(i), getOpParamsCountByCode(i));
+        }
+        return map;
+    }
+
+    private Integer getOpParamsCountByCode(int i) {
+        switch (i) {
+            case 1: return 2;
+            case 2: return 2;
+            case 3: return 2;
+            case 4: return 2;
+            case 5: return 3;
+            case 6: return 3;
+            case 7: return 3;
+            case 8: return 3;
+            case 9: return 3;
+            case 10: return 2;
+            case 11: return 2;
+            case 12: return 0;
+            default: return null;
+        }
     }
 
     private Traductor crearTraductorInmCodes() {
@@ -80,7 +108,7 @@ public class Compilador {
             String line = null;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                String error = chequearSyntaxisDeLinea(rutaArchivoASM,line);
+                String error = chequearSyntaxisDeLinea(rutaArchivoASM,line,i);
                 if (error != null){
                     File archMAQ = new File(rutaArchivoMAQ);
                     if (archMAQ.exists()) archMAQ.delete();
@@ -102,11 +130,47 @@ public class Compilador {
         return "ERROR - El archivo " + rutaArchivoASM + " está vacio";
     }
 
-    private String traducirLineaALenguajeMaquina(String line) {
+    private String traducirLineaALenguajeMaquina(String line){
+        String[] split = line.split("\\s+");
         return null;
     }
 
-    private String chequearSyntaxisDeLinea(String rutaArchivoASM, String line) {
+    private String chequearSyntaxisDeLinea(String rutaArchivoASM, String line,int nLinea) {
+        String[] split = line.split("\\s+");
+        String error = null;
+
+        if (split.length == 0) return null;
+
+        if (split.length == 1 && !split[0].equals("stp")){
+            error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
+        }
+
+        if (error == null && split.length > 2){
+            error = validarComentarios(nLinea,split[2]);
+        }
+
+        if (error == null) {
+            error = validarOperacion(nLinea,split[0]);
+        }
+
+        if (error == null){
+            error = validarParametrosSOperacion(nLinea,split[0],split[1]);
+        }
+
+        return error;
+    }
+
+    private String validarParametrosSOperacion(int nLinea,String op, String params) {
+        return null;
+    }
+
+    private String validarOperacion(int nLinea,String op) {
+        if (traductorOpsCdes.existeValorKey(op)) return "Error de syntaxis - Linea " + nLinea + " - Operación desconocida";
+        return null;
+    }
+
+    private String validarComentarios(int nLinea,String comments) {
+        if (comments.charAt(0) != ';') return "Error de syntaxis - Linea " + nLinea + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
         return null;
     }
 }

@@ -25,4 +25,16 @@ public class Traductor {
         if (s == null) s = mapaInvertido.get(valor);
         return s;
     }
+
+    public boolean existeValorKey(String valor){
+        String s = mapa.get(valor);
+        if (s == null) return false;
+        return true;
+    }
+
+    public boolean existeValorValue(String valor){
+        String s = mapaInvertido.get(valor);
+        if (s == null) return false;
+        return true;
+    }
 }
