@@ -1,10 +1,7 @@
 package main.model;
 
-import main.apis.HEXAConversionAPI;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,110 +9,18 @@ import java.util.Map;
  */
 public class Compilador {
 
+    FabricaTraductor fabricaTraductor;
     Traductor traductorOpsCdes;
     Traductor traductorRegCodes;
     Traductor traductorInmCodes;
-    Map<String, Integer> cantParamsSOp;
+    Map<String, Integer> cantParamsOp;
 
     public Compilador() {
-        this.traductorOpsCdes = crearTraductorOpsCdes();
-        this.traductorRegCodes = crearTraductorRegCodes();
-        this.traductorInmCodes = crearTraductorInmCodes();
-        this.cantParamsSOp = crearMapaCantParamsSOp();
-    }
-
-    private Map<String, Integer> crearMapaCantParamsSOp() {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        for (int i = 1; i < 13; i++) {
-            map.put(getOpStringByCode(i), getOpParamsCountByCode(i));
-        }
-        return map;
-    }
-
-    private Integer getOpParamsCountByCode(int i) {
-        switch (i) {
-            case 1:
-                return 2;
-            case 2:
-                return 2;
-            case 3:
-                return 2;
-            case 4:
-                return 2;
-            case 5:
-                return 3;
-            case 6:
-                return 3;
-            case 7:
-                return 3;
-            case 8:
-                return 3;
-            case 9:
-                return 3;
-            case 10:
-                return 2;
-            case 11:
-                return 2;
-            case 12:
-                return 0;
-            default:
-                return null;
-        }
-    }
-
-    private Traductor crearTraductorInmCodes() {
-        Traductor traductor = new Traductor();
-        for (int i = 0; i < 256; i++) {
-            traductor.agregarValor(String.valueOf(i), HEXAConversionAPI.decimal_to_hex(i));
-        }
-        return traductor;
-    }
-
-    private Traductor crearTraductorRegCodes() {
-        Traductor traductor = new Traductor();
-        for (int i = 0; i < 15; i++) {
-            traductor.agregarValor("r" + i, HEXAConversionAPI.decimal_to_hex(i));
-        }
-        return traductor;
-    }
-
-    private Traductor crearTraductorOpsCdes() {
-        Traductor traductor = new Traductor();
-        for (int i = 1; i < 13; i++) {
-            traductor.agregarValor(getOpStringByCode(i), HEXAConversionAPI.decimal_to_hex(i));
-        }
-        return traductor;
-    }
-
-    private String getOpStringByCode(int i) {
-        switch (i) {
-            case 1:
-                return "ldm";
-            case 2:
-                return "ldi";
-            case 3:
-                return "stm";
-            case 4:
-                return "cpy";
-            case 5:
-                return "add";
-            case 6:
-                return "addf";
-            case 7:
-                return "oor";
-            case 8:
-                return "and";
-            case 9:
-                return "xor";
-            case 10:
-                return "rrr";
-            case 11:
-                return "jpz";
-            case 12:
-                return "stp";
-            default:
-                return null;
-        }
+        this.fabricaTraductor = new FabricaTraductor();
+        this.traductorOpsCdes = fabricaTraductor.crearTraductorOpsCdes();
+        this.traductorRegCodes = fabricaTraductor.crearTraductorRegCodes();
+        this.traductorInmCodes = fabricaTraductor.crearTraductorInmCodes();
+        this.cantParamsOp = fabricaTraductor.crearMapaCantParamsOp();
     }
 
     public String compilar(String rutaArchivoASM) {
@@ -125,8 +30,8 @@ public class Compilador {
     private String validarYTraducirLineasDeCodigo(String rutaArchivoASM) {
         String rutaArchivoMAQ = rutaArchivoASM;
         rutaArchivoMAQ = rutaArchivoMAQ.replace(".asm", ".maq");
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
+        BufferedReader reader;
+        BufferedWriter writer;
         try {
             reader = new BufferedReader(new FileReader(rutaArchivoASM));
             writer = new BufferedWriter(new FileWriter(rutaArchivoMAQ));
@@ -151,7 +56,7 @@ public class Compilador {
             if (i > 0) {
                 writer.close();
                 reader.close();
-                return "Compilación exitosa - Se creó el archivo " + rutaArchivoMAQ;
+                return null;
             }
         } catch (FileNotFoundException e) {
             return "ERROR - El archivo " + rutaArchivoASM + " no existe.";
@@ -245,7 +150,7 @@ public class Compilador {
     private String validarParametrosOperacion(int nLinea, String op, String params) {
         // TODO: validamos el tipo de parametros que le llega (registro, valor)? Habria que hacer otro tipo de map ademas del de cantidad.
         String[] paramSplit = params.split("\\s*,\\s*");
-        if (cantParamsSOp.get(op) != paramSplit.length)
+        if (cantParamsOp.get(op) != paramSplit.length)
             return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";
         return null;
     }
