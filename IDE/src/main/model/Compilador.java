@@ -1,11 +1,10 @@
 package main.model;
 
 import main.apis.HEXAConversionAPI;
-import main.model.instrucciones.tipos.Instruccion;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -140,12 +139,20 @@ public class Compilador {
                     if (archMAQ.exists()) archMAQ.delete();
                     return error;
                 }
+
                 String lineaTraducida = traducirLineaALenguajeMaquina(line);
+                writer.write(lineNumberToBytes(i));
+                writer.write(" ");
                 writer.write(lineaTraducida);
                 writer.newLine();
+
                 i++;
             }
-            if (i > 0) return "Compilación exitosa - Se creó el archivo " + rutaArchivoMAQ;
+            if (i > 0) {
+                writer.close();
+                reader.close();
+                return "Compilación exitosa - Se creó el archivo " + rutaArchivoMAQ;
+            }
         } catch (FileNotFoundException e) {
             return "ERROR - El archivo " + rutaArchivoASM + " no existe.";
         } catch (IOException e) {
@@ -156,9 +163,58 @@ public class Compilador {
         return "ERROR - El archivo " + rutaArchivoASM + " está vacio";
     }
 
+    private String lineNumberToBytes(Integer i) {
+        Integer byteCount = 2 * i;
+        if (byteCount < 10) {
+            return "0" + byteCount.toString();
+        }
+        return byteCount.toString();
+    }
+
+    private boolean isRegisterParam(String param) {
+        return param.charAt(0) == 'r';
+    }
+
+    private String registerParamToString(String registerParam, String opCode) {
+        String replaced = registerParam.replaceFirst("r", "");
+        if (opCode.equals("4")) {
+            return "0" + replaced;
+        }
+        return replaced;
+    }
+
+    private String immediateParamToString(String immediateParam, String opCode) {
+        Integer paramInteger = Integer.parseInt(immediateParam);
+        if (opCode.equals("A") || paramInteger < 10) {
+            return "0" + immediateParam;
+        }
+        return immediateParam;
+    }
+
     private String traducirLineaALenguajeMaquina(String line) {
         String[] split = line.split("\\s+");
-        return null;
+
+        String opName = split[0];
+        String opCode = traductorOpsCdes.obtenerTraduccion(opName);
+        String[] params = split[1].split("\\s*,\\s*");
+        ArrayList<String> parsedParams = new ArrayList<String>();
+
+        for (String param : params) {
+            if (isRegisterParam(param)) {
+                parsedParams.add(registerParamToString(param, opCode));
+            } else {
+                parsedParams.add(immediateParamToString(param, opCode));
+            }
+        }
+
+        String translatedInstruction = "";
+
+        translatedInstruction += opCode;
+        for (String param : parsedParams) {
+            translatedInstruction += param;
+        }
+
+        return translatedInstruction;
     }
 
     private String chequearSyntaxisDeLinea(String rutaArchivoASM, String line, int nLinea) {
@@ -180,19 +236,18 @@ public class Compilador {
         }
 
         if (error == null) {
-            error = validarParametrosSOperacion(nLinea, split[0], split[1]);
+            error = validarParametrosOperacion(nLinea, split[0], split[1]);
         }
 
         return error;
     }
 
-    private String validarParametrosSOperacion(int nLinea, String op, String params) {
+    private String validarParametrosOperacion(int nLinea, String op, String params) {
+        // TODO: validamos el tipo de parametros que le llega (registro, valor)? Habria que hacer otro tipo de map ademas del de cantidad.
         String[] paramSplit = params.split("\\s*,\\s*");
-        if (cantParamsSOp.get(op) == paramSplit.length) {
-            return null;
-        } else {
+        if (cantParamsSOp.get(op) != paramSplit.length)
             return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";
-        }
+        return null;
     }
 
     private String validarOperacion(int nLinea, String op) {
