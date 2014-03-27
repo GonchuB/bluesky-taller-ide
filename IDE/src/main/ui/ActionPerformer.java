@@ -2,6 +2,10 @@ package main.ui;
 
 
 
+import main.model.Compilador;
+import main.model.Simulador;
+import main.model.TraductorASMtoMAQ;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -22,6 +26,9 @@ import javax.swing.undo.CannotUndoException;
 public class ActionPerformer {
 	
 	private final Editor tpEditor;    //instancia de TPEditor (la clase principal)
+    private final Simulador simulador;
+    private final Compilador compilador;
+    private final TraductorASMtoMAQ traductor;
     private String lastSearch = "";     //la última búsqueda de texto realizada, por defecto no contiene nada
  
     /**
@@ -31,6 +38,9 @@ public class ActionPerformer {
      */
     public ActionPerformer(Editor tpEditor) {
         this.tpEditor = tpEditor;    //guarda la instancia de la clase TPEditor
+        this.simulador = new Simulador();
+        this.compilador = new Compilador();
+        this.traductor = new TraductorASMtoMAQ();
     }
     
     public void DoAction(String comandoDeAccion){
@@ -105,19 +115,67 @@ public class ActionPerformer {
         }*/
     }
 
-    private void actionExecuteStep() {
-
-    }
 
     private void actionTranslate() {
+        actionSave();
+
+        String error = null;
+        int msgType = JOptionPane.ERROR_MESSAGE;
+        String title = "Traducción Erronea";
+
+
+        String nombreDeArchivo = this.tpEditor.getCurrentFile().getAbsolutePath();
+
+        String errorCompilacion = compilador.compilar(nombreDeArchivo);
+
+        if (errorCompilacion == null){
+            if(tpEditor.getCurrentFile().getName().endsWith(".asm")){
+                error = traductor.traducir(nombreDeArchivo);
+                if(error == null){
+                    String nombreDeArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm",".maq");
+                    error = "Se creó el archivo " + nombreDeArchivoMAQ;
+                    msgType = JOptionPane.INFORMATION_MESSAGE;
+                    title = "Traducción Exitosa";
+                }
+            } else {
+               error = "No se pueden traducir archivos .maq";
+            }
+        } else {
+            title = "Error de compilación";
+            error = errorCompilacion;
+        }
+
+
+        JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
 
     }
 
     private void actionCompile() {
+        actionSave();
 
+        int msgType = JOptionPane.ERROR_MESSAGE;
+        String title = "Error de compilación";
+
+        String nombreDeArchivo = this.tpEditor.getCurrentFile().getAbsolutePath();
+
+        String error = compilador.compilar(nombreDeArchivo);
+
+        if (error == null){
+            msgType = JOptionPane.INFORMATION_MESSAGE;
+            title = "Compilación Exitosa";
+            error = "El archivo " + nombreDeArchivo + " se compiló sin errores";
+        }
+
+        JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
     }
 
     private void actionExecute() {
+        actionSave();
+
+    }
+
+    private void actionExecuteStep() {
+        actionSave();
 
     }
 
