@@ -8,14 +8,14 @@ import main.ui.Editor;
 public class Main {
     public static void main(String[] args) {
 
-//        runWhitoutUI();
+        runWhitoutUI();
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        /*javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new Editor().getJFrame().setVisible(true);    //hace visible la GUI creada por la clase TPEditor
             }
-        });
+        });*/
     }
 
     public static void runWhitoutUI() {
@@ -24,6 +24,8 @@ public class Main {
          * CAMBIAR ARCHIVO ESPECIFICO DE CADA MAQUINA.
          */
         String rutaArchivoASM = "/home/gonchub/Documents/FIUBA/bluesky-taller-ide/IDE/src/resources/programas/test.asm";
+        rutaArchivoASM = "D:\\Workspace\\bluesky-taller-ide\\IDE\\src\\resources\\programas\\ejemplo.asm";
+
 
         Compilador compilador = new Compilador();
         String rutaArchivoMAQ = rutaArchivoASM.replace(".asm", ".maq");
