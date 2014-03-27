@@ -1,5 +1,7 @@
 package main.model;
 
+import main.apis.HEXAConversionAPI;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,7 +49,7 @@ public class Compilador {
                     return error;
                 }
 
-                String lineaTraducida = traducirLineaALenguajeMaquina(line);
+                String lineaTraducida = traducirLineaALenguajeMaquina(i,line);
                 writer.write(lineNumberToBytes(i));
                 writer.write(" ");
                 writer.write(lineaTraducida);
@@ -71,11 +73,10 @@ public class Compilador {
     }
 
     private String lineNumberToBytes(Integer i) {
-        Integer byteCount = 2 * i;
-        if (byteCount < 10) {
-            return "0" + byteCount.toString();
-        }
-        return byteCount.toString();
+        String posMemoria = HEXAConversionAPI.decimal_to_hex(i*2);
+        if (posMemoria.length()==1) posMemoria = "0" + posMemoria;
+
+        return posMemoria;
     }
 
     private boolean isRegisterParam(String param) {
@@ -98,7 +99,7 @@ public class Compilador {
         return immediateParam;
     }
 
-    private String traducirLineaALenguajeMaquina(String line) {
+    private String traducirLineaALenguajeMaquina(int numeroOperacion,String line) {
         String[] split = line.split("\\s+");
 
         String opName = split[0];
