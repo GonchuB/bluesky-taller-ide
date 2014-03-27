@@ -8,9 +8,9 @@ import main.ui.Editor;
 public class Main {
     public static void main(String[] args) {
 
-        runWhitoutUI();
+        //runWhitoutUI();
 
-        //runUI();
+        runUI();
     }
 
     public static void runUI() {
