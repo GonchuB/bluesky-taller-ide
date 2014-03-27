@@ -90,6 +90,37 @@ public class TraductorASMtoMAQTest extends TestCase {
 
     public void testChequearSyntaxisDeLinea() throws Exception {
 
+        // Param tests.
+        String asmLine1 = "ldi r0,1";
+        String asmLine2 = "ldi 0,1";
+        String asmLine3 = "ldi r0,r1";
+        String asmLine4 = "ldi r0,1,2";
+
+        // Operation tests.
+        String asmLine5 = "ldi r0,1";
+        String asmLine6 = "asd 1,2,3";
+
+        // Comment tests.
+        String asmLine7 = "ldi r0,1 ;Valid";
+        String asmLine8 = "ldi r1,2 Invalid";
+
+        Integer lineNo = 0;
+        String typeRegex = "^r[0-15],[0-9a-fA-F]{1,2}$";
+        String countError = "Error de sintaxis - Linea " + lineNo + " - Numero de parametros incorrectos";
+        String typeError = "Error de sintaxis - Linea " + lineNo + " - Tipo de parametros incorrectos. Se esperaba: " + typeRegex;
+        String nonExistantError = "Error de syntaxis - Linea " + lineNo + " - Operación desconocida";
+        String invalidCommentError = "Error de syntaxis - Linea " + lineNo + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
+
+        Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine1, lineNo));
+        Assert.assertEquals(typeError, traductor.chequearSyntaxisDeLinea(asmLine2, lineNo));
+        Assert.assertEquals(typeError, traductor.chequearSyntaxisDeLinea(asmLine3, lineNo));
+        Assert.assertEquals(countError, traductor.chequearSyntaxisDeLinea(asmLine4, lineNo));
+
+        Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine5, lineNo));
+        Assert.assertEquals(nonExistantError, traductor.chequearSyntaxisDeLinea(asmLine6, lineNo));
+
+        Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine7, lineNo));
+        Assert.assertEquals(invalidCommentError, traductor.chequearSyntaxisDeLinea(asmLine8, lineNo));
     }
 
     public void testValidarParametrosOperacion() throws Exception {
