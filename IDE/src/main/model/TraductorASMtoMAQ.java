@@ -71,34 +71,34 @@ public class TraductorASMtoMAQ {
         return "ERROR - El archivo " + rutaArchivoASM + " está vacio";
     }
 
-    private String lineNumberToBytes(Integer i) {
+    public String lineNumberToBytes(Integer i) {
         String posMemoria = HEXAConversionAPI.decimal_to_hex(i * 2);
-        if (posMemoria.length()==1) posMemoria = "0" + posMemoria;
+        if (posMemoria.length() == 1) posMemoria = "0" + posMemoria;
 
         return posMemoria;
     }
 
-    private boolean isRegisterParam(String param) {
+    public boolean isRegisterParam(String param) {
         return param.charAt(0) == 'r';
     }
 
-    private String registerParamToString(String registerParam, String opCode) {
+    public String registerParamToString(String registerParam, String opCode) {
         String replaced = registerParam.replaceFirst("r", "");
         if (opCode.equals("4")) {
-            return "0" + replaced;
+            return "0" + HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
         }
-        return replaced;
+        return HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
     }
 
-    private String immediateParamToString(String immediateParam, String opCode) {
+    public String immediateParamToString(String immediateParam, String opCode) {
         Integer paramInteger = Integer.parseInt(immediateParam);
-        if (opCode.equals("A") || paramInteger < 10) {
-            return "0" + immediateParam;
+        if (opCode.equals("A") || paramInteger < 16) {
+            return "0" + HEXAConversionAPI.decimal_to_hex(paramInteger);
         }
-        return immediateParam;
+        return HEXAConversionAPI.decimal_to_hex(paramInteger);
     }
 
-    private String traducirLineaALenguajeMaquina(String line) {
+    public String traducirLineaALenguajeMaquina(String line) {
         String[] split = line.split("\\s+");
 
         String opName = split[0];
@@ -116,9 +116,9 @@ public class TraductorASMtoMAQ {
 
         String comments = "";
 
-        if (split.length > 2){
-            comments = split[2].replace(";","");
-            for (int i= 3; i < split.length;i++){
+        if (split.length > 2) {
+            comments = split[2].replace(";", "");
+            for (int i = 3; i < split.length; i++) {
                 comments += " " + split[i];
             }
         }
@@ -135,7 +135,7 @@ public class TraductorASMtoMAQ {
         return translatedInstruction;
     }
 
-    private String chequearSyntaxisDeLinea(String line, int nLinea) {
+    public String chequearSyntaxisDeLinea(String line, int nLinea) {
         String[] split = line.split("\\s+");
         String error = null;
 
@@ -160,7 +160,7 @@ public class TraductorASMtoMAQ {
         return error;
     }
 
-    private String validarParametrosOperacion(int nLinea, String op, String params) {
+    public String validarParametrosOperacion(int nLinea, String op, String params) {
         // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
         String[] paramSplit = params.split("\\s*,\\s*");
         String regex = traductorParamRegex.obtenerTraduccion(op);
@@ -171,13 +171,13 @@ public class TraductorASMtoMAQ {
         return null;
     }
 
-    private String validarOperacion(int nLinea, String op) {
+    public String validarOperacion(int nLinea, String op) {
         if (!traductorOpsCdes.existeValorKey(op))
             return "Error de syntaxis - Linea " + nLinea + " - Operación desconocida";
         return null;
     }
 
-    private String validarComentarios(int nLinea, String comments) {
+    public String validarComentarios(int nLinea, String comments) {
         if (comments.charAt(0) != ';')
             return "Error de syntaxis - Linea " + nLinea + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
         return null;
