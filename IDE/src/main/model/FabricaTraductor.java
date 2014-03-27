@@ -84,29 +84,30 @@ public class FabricaTraductor {
     private String getParamRegexByCode(int i) {
         switch (i) {
             case 1:
+                // "^r[0-15],[0-15]{1,2}$"
                 return "R,XY";
             case 2:
-                return "R,XY";
+                return "^r[0-15],[0-9a-fA-F]{1,2}$";
             case 3:
-                return "R,XY";
+                return "^r[0-15],[0-9a-fA-F]{1,2}$";
             case 4:
-                return "R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 5:
-                return "R,R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 6:
-                return "R,R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 7:
-                return "R,R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 8:
-                return "R,R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 9:
-                return "R,R,R";
+                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
             case 10:
-                return "R,X";
+                return "^r[0-15],[0-9a-fA-F]$";
             case 11:
-                return "R,XY";
+                return "^r[0-15],[0-9a-fA-F]{1,2}$";
             case 12:
-                return "";
+                return "^$";
             default:
                 return null;
         }

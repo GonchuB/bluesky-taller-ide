@@ -152,8 +152,11 @@ public class Compilador {
     private String validarParametrosOperacion(int nLinea, String op, String params) {
         // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
         String[] paramSplit = params.split("\\s*,\\s*");
+        String regex = traductorParamRegex.obtenerTraduccion(op);
         if (cantParamsOp.get(op) != paramSplit.length)
             return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";
+        else if (!params.matches(regex))
+            return "Error de sintaxis - Linea " + nLinea + " - Tipo de parametros incorrectos. Se esperaba: " + regex;
         return null;
     }
 
