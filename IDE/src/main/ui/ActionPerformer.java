@@ -116,12 +116,13 @@ public class ActionPerformer {
     }
 
 
-    private void actionTranslate() {
+    private boolean actionTranslate() {
         actionSave();
 
         String error = null;
         int msgType = JOptionPane.ERROR_MESSAGE;
         String title = "Traducción Erronea";
+        boolean returnBoolean = false;
 
 
         String nombreDeArchivo = this.tpEditor.getCurrentFile().getAbsolutePath();
@@ -133,9 +134,10 @@ public class ActionPerformer {
                 error = traductor.traducir(nombreDeArchivo);
                 if(error == null){
                     String nombreDeArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm",".maq");
-                    error = "Se creó el archivo " + nombreDeArchivoMAQ;
+                    error = "Se creó o actualizó el archivo " + nombreDeArchivoMAQ;
                     msgType = JOptionPane.INFORMATION_MESSAGE;
                     title = "Traducción Exitosa";
+                    returnBoolean = true;
                 }
             } else {
                error = "No se pueden traducir archivos .maq";
@@ -148,11 +150,13 @@ public class ActionPerformer {
 
         JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
 
+        return returnBoolean;
     }
 
-    private void actionCompile() {
+    private boolean actionCompile() {
         actionSave();
 
+        boolean returnBoolean = false;
         int msgType = JOptionPane.ERROR_MESSAGE;
         String title = "Error de compilación";
 
@@ -164,19 +168,58 @@ public class ActionPerformer {
             msgType = JOptionPane.INFORMATION_MESSAGE;
             title = "Compilación Exitosa";
             error = "El archivo " + nombreDeArchivo + " se compiló sin errores";
+            returnBoolean = true;
         }
 
         JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
+
+        return returnBoolean;
     }
 
     private void actionExecute() {
         actionSave();
+
+        boolean error = false;
+        String rutaArchivoMAQ = "";
+
+        if(tpEditor.getCurrentFile().getName().endsWith(".asm")){
+            error = !actionTranslate();
+            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm",".maq");
+        }else {
+            error = !actionCompile();
+            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath();
+        }
+
+        if(!error) {
+            simulador.init(rutaArchivoMAQ);
+            simulador.iniciarSimulacionCompleta();//TODO MOSTRAR UN DIALOG EN LAS INSTRUCCIONES DE ENTRADA SALIDA
+            simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO
+        }
 
     }
 
     private void actionExecuteStep() {
         actionSave();
 
+        boolean error = false;
+        String rutaArchivoMAQ = "";
+
+        if(tpEditor.getCurrentFile().getName().endsWith(".asm")){
+            error = !actionTranslate();
+            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm",".maq");
+        }else {
+            error = !actionCompile();
+            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath();
+        }
+
+        if(!error) {
+            simulador.init(rutaArchivoMAQ);
+            //Ejecuta 1ª paso
+            simulador.iniciarSimulacionPasoAPaso();//TODO MOSTRAR UN DIALOG EN LAS INSTRUCCIONES DE ENTRADA SALIDA
+            simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO
+            //Mientras tenga pasos para ejecutar abrir un dialog con el estado y 2 botones para siguiente paso o cancelar ejecucion
+
+        }
     }
 
     /**
