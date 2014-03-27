@@ -258,6 +258,13 @@ public class ActionPerformer {
  
         //presenta un dialogo modal para que el usuario seleccione un archivo
         int state = fc.showSaveDialog(tpEditor.getJFrame());
+        while (state == JFileChooser.APPROVE_OPTION
+                && (!fc.getSelectedFile().getName().endsWith(".asm") || !fc.getSelectedFile().getName().endsWith(".maq"))) {
+            JOptionPane.showMessageDialog(tpEditor.getJFrame(), "El archivo "
+                            + fc.getSelectedFile() + " no tiene extension .asm o .maq.",
+                    "Error al Guardar", JOptionPane.ERROR_MESSAGE);
+            state = fc.showSaveDialog(tpEditor.getJFrame());;
+        }
         if (state == JFileChooser.APPROVE_OPTION) {    //si elige guardar en el archivo
             File f = fc.getSelectedFile();    //obtiene el archivo seleccionado
  
@@ -488,8 +495,12 @@ public class ActionPerformer {
     private static JFileChooser getJFileChooser() {
         JFileChooser fc = new JFileChooser();                     //construye un JFileChooser
         fc.setDialogTitle("Simulador de Máquina Genérica - Elige un archivo:");    //se le establece un título
-        fc.setMultiSelectionEnabled(false);                       //desactiva la multi-selección
-        fc.setFileFilter(textFileFilter);                         //aplica un filtro de extensiones
+        fc.setMultiSelectionEnabled(false);//desactiva la multi-selección
+        fc.setFileFilter(allFileFilter);
+        fc.addChoosableFileFilter(allFileFilter);
+        fc.addChoosableFileFilter(asmFileFilter);
+        fc.addChoosableFileFilter(maqFileFilter);
+        fc.setAcceptAllFileFilterUsed(false);//desactiva opcion todos los archivos
         return fc;    //retorna el JFileChooser
     }
  
@@ -497,7 +508,7 @@ public class ActionPerformer {
      * Clase anónima interna que extiende la clase javax.swing.filechooser.FileFilter para
      * establecer un filtro de archivos en el JFileChooser.
      */
-    private static FileFilter textFileFilter = new FileFilter() {
+    /*private static FileFilter textFileFilter = new FileFilter() {
  
         @Override
         public boolean accept(File f) {
@@ -510,12 +521,59 @@ public class ActionPerformer {
             //la descripción del tipo de archivo aceptado
             return "Simulator Files";
         }
+    };*/
+    private static FileFilter allFileFilter = new FileFilter() {
+
+        @Override
+        public boolean accept(File f) {
+            //acepta directorios y archivos de extensión .txt
+            return f.isDirectory() || f.getName().toLowerCase().endsWith("asm") || f.getName().toLowerCase().endsWith("maq");
+        }
+
+        @Override
+        public String getDescription() {
+            //la descripción del tipo de archivo aceptado
+            return "Simulator Files";
+        }
     };
- 
+
+    private static FileFilter asmFileFilter = new FileFilter() {
+
+        @Override
+        public boolean accept(File f) {
+            //acepta directorios y archivos de extensión .txt
+            return f.isDirectory() || f.getName().toLowerCase().endsWith("asm") ;
+        }
+
+        @Override
+        public String getDescription() {
+            //la descripción del tipo de archivo aceptado
+            return ".asm Simulator Files";
+        }
+    };
+
+    private static FileFilter maqFileFilter = new FileFilter() {
+
+        @Override
+        public boolean accept(File f) {
+            //acepta directorios y archivos de extensión .txt
+            return f.isDirectory() || f.getName().toLowerCase().endsWith("maq");
+        }
+
+        @Override
+        public String getDescription() {
+            //la descripción del tipo de archivo aceptado
+            return ".maq Simulator Files";
+        }
+    };
+
+
+
+
     /**
      * Retorna la ruta de la ubicación de un archivo en forma reducida.
      *
-     * @param longpath la ruta de un archivo
+     *
      * @return la ruta reducida del archivo
      */
     private static String shortPathName(String longPath) {
