@@ -1,11 +1,5 @@
 package main.model;
 
-import main.apis.HEXAConversionAPI;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
