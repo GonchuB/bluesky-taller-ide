@@ -110,7 +110,7 @@ public class Editor {
         }
  
         //construye un JFrame con título
-        jFrame = new JFrame("Simulador");
+        jFrame = new JFrame("Simulador de Máquina Genérica");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
  
         //asigna un manejador de eventos para el cierre del JFrame
