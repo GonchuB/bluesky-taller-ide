@@ -156,6 +156,9 @@ public class ActionPerformer {
         tpEditor.setCurrentFile(null);
         //marca el estado del documento como no modificado
         tpEditor.setDocumentChanged(false);
+
+        //Guardo el nuevo documento
+        actionSaveAs();
     }
  
     /**
@@ -259,7 +262,7 @@ public class ActionPerformer {
         //presenta un dialogo modal para que el usuario seleccione un archivo
         int state = fc.showSaveDialog(tpEditor.getJFrame());
         while (state == JFileChooser.APPROVE_OPTION
-                && (!fc.getSelectedFile().getName().endsWith(".asm") || !fc.getSelectedFile().getName().endsWith(".maq"))) {
+                && !(fc.getSelectedFile().getName().endsWith(".asm") || fc.getSelectedFile().getName().endsWith(".maq"))) {
             JOptionPane.showMessageDialog(tpEditor.getJFrame(), "El archivo "
                             + fc.getSelectedFile() + " no tiene extension .asm o .maq.",
                     "Error al Guardar", JOptionPane.ERROR_MESSAGE);
