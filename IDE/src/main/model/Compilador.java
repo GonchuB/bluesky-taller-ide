@@ -49,7 +49,7 @@ public class Compilador {
                     return error;
                 }
 
-                String lineaTraducida = traducirLineaALenguajeMaquina(i,line);
+                String lineaTraducida = traducirLineaALenguajeMaquina(line);
                 writer.write(lineNumberToBytes(i));
                 writer.write(" ");
                 writer.write(lineaTraducida);
@@ -99,7 +99,7 @@ public class Compilador {
         return immediateParam;
     }
 
-    private String traducirLineaALenguajeMaquina(int numeroOperacion,String line) {
+    private String traducirLineaALenguajeMaquina(String line) {
         String[] split = line.split("\\s+");
 
         String opName = split[0];
@@ -115,12 +115,23 @@ public class Compilador {
             }
         }
 
+        String comments = "";
+
+        if (split.length > 2){
+            comments = split[2].replace(";","");
+            for (int i= 3; i < split.length;i++){
+                comments += " " + split[i];
+            }
+        }
+
         String translatedInstruction = "";
 
         translatedInstruction += opCode;
         for (String param : parsedParams) {
             translatedInstruction += param;
         }
+
+        translatedInstruction += " " + comments;
 
         return translatedInstruction;
     }
