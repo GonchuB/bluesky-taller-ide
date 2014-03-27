@@ -13,6 +13,7 @@ public class Compilador {
     Traductor traductorOpsCdes;
     Traductor traductorRegCodes;
     Traductor traductorInmCodes;
+    Traductor traductorParamRegex;
     Map<String, Integer> cantParamsOp;
 
     public Compilador() {
@@ -20,6 +21,7 @@ public class Compilador {
         this.traductorOpsCdes = fabricaTraductor.crearTraductorOpsCdes();
         this.traductorRegCodes = fabricaTraductor.crearTraductorRegCodes();
         this.traductorInmCodes = fabricaTraductor.crearTraductorInmCodes();
+        this.traductorParamRegex = fabricaTraductor.crearTraductorParamRegex();
         this.cantParamsOp = fabricaTraductor.crearMapaCantParamsOp();
     }
 
@@ -35,10 +37,10 @@ public class Compilador {
         try {
             reader = new BufferedReader(new FileReader(rutaArchivoASM));
             writer = new BufferedWriter(new FileWriter(rutaArchivoMAQ));
-            String line = null;
+            String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                String error = chequearSyntaxisDeLinea(rutaArchivoASM, line, i);
+                String error = chequearSyntaxisDeLinea(line, i);
                 if (error != null) {
                     File archMAQ = new File(rutaArchivoMAQ);
                     if (archMAQ.exists()) archMAQ.delete();
@@ -122,7 +124,7 @@ public class Compilador {
         return translatedInstruction;
     }
 
-    private String chequearSyntaxisDeLinea(String rutaArchivoASM, String line, int nLinea) {
+    private String chequearSyntaxisDeLinea(String line, int nLinea) {
         String[] split = line.split("\\s+");
         String error = null;
 
@@ -148,7 +150,7 @@ public class Compilador {
     }
 
     private String validarParametrosOperacion(int nLinea, String op, String params) {
-        // TODO: validamos el tipo de parametros que le llega (registro, valor)? Habria que hacer otro tipo de map ademas del de cantidad.
+        // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
         String[] paramSplit = params.split("\\s*,\\s*");
         if (cantParamsOp.get(op) != paramSplit.length)
             return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";

@@ -42,6 +42,14 @@ public class FabricaTraductor {
         return traductor;
     }
 
+    public Traductor crearTraductorParamRegex() {
+        Traductor traductor = new Traductor();
+        for (int i = 0; i < 15; i++) {
+            traductor.agregarValor(getOpStringByCode(i), getParamRegexByCode(i));
+        }
+        return traductor;
+    }
+
     private String getOpStringByCode(int i) {
         switch (i) {
             case 1:
@@ -68,6 +76,37 @@ public class FabricaTraductor {
                 return "jpz";
             case 12:
                 return "stp";
+            default:
+                return null;
+        }
+    }
+
+    private String getParamRegexByCode(int i) {
+        switch (i) {
+            case 1:
+                return "R,XY";
+            case 2:
+                return "R,XY";
+            case 3:
+                return "R,XY";
+            case 4:
+                return "R,R";
+            case 5:
+                return "R,R,R";
+            case 6:
+                return "R,R,R";
+            case 7:
+                return "R,R,R";
+            case 8:
+                return "R,R,R";
+            case 9:
+                return "R,R,R";
+            case 10:
+                return "R,X";
+            case 11:
+                return "R,XY";
+            case 12:
+                return "";
             default:
                 return null;
         }
