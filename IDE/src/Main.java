@@ -10,12 +10,16 @@ public class Main {
 
         runWhitoutUI();
 
-        /*javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        //runUI();
+    }
+
+    public static void runUI() {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new Editor().getJFrame().setVisible(true);    //hace visible la GUI creada por la clase TPEditor
             }
-        });*/
+        });
     }
 
     public static void runWhitoutUI() {
