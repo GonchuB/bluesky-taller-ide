@@ -10,20 +10,15 @@ import java.util.Map;
  * Created by Juan-Asus on 27/03/2014.
  */
 public class TraductorASMtoMAQ {
-    FabricaTraductor fabricaTraductor;
-    Traductor traductorOpsCdes;
-    Traductor traductorRegCodes;
-    Traductor traductorInmCodes;
-    Traductor traductorParamRegex;
-    Map<String, Integer> cantParamsOp;
+    private Compilador compilador;
+    private FabricaTraductor fabricaTraductor;
+    private Traductor traductorOpsCdes;
+
 
     public TraductorASMtoMAQ() {
         this.fabricaTraductor = new FabricaTraductor();
+        this.compilador = new Compilador();
         this.traductorOpsCdes = fabricaTraductor.crearTraductorOpsCdes();
-        this.traductorRegCodes = fabricaTraductor.crearTraductorRegCodes();
-        this.traductorInmCodes = fabricaTraductor.crearTraductorInmCodes();
-        this.traductorParamRegex = fabricaTraductor.crearTraductorParamRegex();
-        this.cantParamsOp = fabricaTraductor.crearMapaCantParamsOp();
     }
 
     /**
@@ -57,7 +52,7 @@ public class TraductorASMtoMAQ {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                String error = chequearSyntaxisDeLinea(line, i);
+                String error = compilador.chequearSyntaxisDeLineaASM(line, i);
                 if (error != null) {
                     File archMAQ = new File(rutaArchivoMAQ);
                     if (archMAQ.exists()) archMAQ.delete();
@@ -181,51 +176,6 @@ public class TraductorASMtoMAQ {
         return translatedInstruction;
     }
 
-    public String chequearSyntaxisDeLinea(String line, int nLinea) {
-        String[] split = line.split("\\s+");
-        String error = null;
 
-        if (split.length == 0) return null;
 
-        if (split.length == 1 && !split[0].equals("stp")) {
-            error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
-        }
-
-        if (error == null && split.length > 2) {
-            error = validarComentarios(nLinea, split[2]);
-        }
-
-        if (error == null) {
-            error = validarOperacion(nLinea, split[0]);
-        }
-
-        if (error == null) {
-            error = validarParametrosOperacion(nLinea, split[0], split[1]);
-        }
-
-        return error;
-    }
-
-    public String validarParametrosOperacion(int nLinea, String op, String params) {
-        // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
-        String[] paramSplit = params.split("\\s*,\\s*");
-        String regex = traductorParamRegex.obtenerTraduccion(op);
-        if (cantParamsOp.get(op) != paramSplit.length)
-            return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";
-        else if (!params.matches(regex))
-            return "Error de sintaxis - Linea " + nLinea + " - Tipo de parametros incorrectos. Se esperaba: " + regex;
-        return null;
-    }
-
-    public String validarOperacion(int nLinea, String op) {
-        if (!traductorOpsCdes.existeValorKey(op))
-            return "Error de syntaxis - Linea " + nLinea + " - Operación desconocida";
-        return null;
-    }
-
-    public String validarComentarios(int nLinea, String comments) {
-        if (comments.charAt(0) != ';')
-            return "Error de syntaxis - Linea " + nLinea + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
-        return null;
-    }
 }

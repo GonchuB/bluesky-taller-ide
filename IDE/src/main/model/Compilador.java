@@ -1,5 +1,11 @@
 package main.model;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
+
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
@@ -7,8 +13,105 @@ package main.model;
 // Si encuentra un error, para el recorrido y muestra un popup diciendo que hubo un error en tal linea, y que error sucedio.
 public class Compilador {
 
+    FabricaTraductor fabricaTraductor;
+    Traductor traductorOpsCdesASM;
+    Traductor traductorParamRegexASM;
+    Map<String, Integer> cantParamsOpASM;
 
-    public String compilar(String nombreDeArchivo) {
+
+    public Compilador() {
+        this.fabricaTraductor = new FabricaTraductor();
+        this.traductorOpsCdesASM = fabricaTraductor.crearTraductorOpsCdes();
+        this.traductorParamRegexASM = fabricaTraductor.crearTraductorParamRegex();
+        this.cantParamsOpASM = fabricaTraductor.crearMapaCantParamsOp();
+    }
+
+    public String compilar(String rutaDeArchivo) {
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(rutaDeArchivo));
+            boolean isAsmFile = rutaDeArchivo.contains(".asm") || rutaDeArchivo.contains(".ASM");
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+
+                String error = null;
+
+                if (isAsmFile){
+                    error = chequearSyntaxisDeLineaASM(line, i);
+                } else {
+                    error = chequearSyntaxisDeLineaMAQ(line, i);
+                }
+
+                if (error != null) {
+                    reader.close();
+                    return error;
+                }
+                i++;
+            }
+            if (i > 0) {
+                reader.close();
+                return null;
+            }
+        } catch (FileNotFoundException e) {
+            return "ERROR - El archivo " + rutaDeArchivo + " no existe.";
+        } catch (IOException e) {
+            return "ERROR - No se pudo abrir el archivo " + rutaDeArchivo;
+        } catch (Exception e) {
+            return "ERROR - error en la compilación del archivo  " + rutaDeArchivo;
+        }
+        return "ERROR - El archivo " + rutaDeArchivo + " está vacio";
+    }
+
+    public String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
+        return null;
+    }
+
+    public String chequearSyntaxisDeLineaASM(String line, int nLinea) {
+        String[] split = line.split("\\s+");
+        String error = null;
+
+        if (split.length == 0) return null;
+
+        if (split.length == 1 && !split[0].equals("stp")) {
+            error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
+        }
+
+        if (error == null && split.length > 2) {
+            error = validarComentariosASM(nLinea, split[2]);
+        }
+
+        if (error == null) {
+            error = validarOperacionASM(nLinea, split[0]);
+        }
+
+        if (error == null) {
+            error = validarParametrosOperacionASM(nLinea, split[0], split[1]);
+        }
+
+        return error;
+    }
+
+    private String validarParametrosOperacionASM(int nLinea, String op, String params) {
+        // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
+        String[] paramSplit = params.split("\\s*,\\s*");
+        String regex = traductorParamRegexASM.obtenerTraduccion(op);
+        if (cantParamsOpASM.get(op) != paramSplit.length)
+            return "Error de sintaxis - Linea " + nLinea + " - Numero de parametros incorrectos";
+        else if (!params.matches(regex))
+            return "Error de sintaxis - Linea " + nLinea + " - Tipo de parametros incorrectos. Se esperaba: " + regex;
+        return null;
+    }
+
+    private String validarOperacionASM(int nLinea, String op) {
+        if (!traductorOpsCdesASM.existeValorKey(op))
+            return "Error de syntaxis - Linea " + nLinea + " - Operación desconocida";
+        return null;
+    }
+
+    private String validarComentariosASM(int nLinea, String comments) {
+        if (comments.charAt(0) != ';')
+            return "Error de syntaxis - Linea " + nLinea + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
         return null;
     }
 }
