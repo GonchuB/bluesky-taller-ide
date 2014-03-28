@@ -52,13 +52,7 @@ public class TraductorASMtoMAQ {
             String line;
             int i = 0;
             while ((line = reader.readLine()) != null) {
-                String error = compilador.chequearSyntaxisDeLineaASM(line, i);
-                if (error != null) {
-                    File archMAQ = new File(rutaArchivoMAQ);
-                    if (archMAQ.exists()) archMAQ.delete();
-                    return error;
-                }
-
+                //Como precondicion el archivo ya fue compilado.
                 String lineaTraducida = traducirLineaALenguajeMaquina(line);
                 writer.write(lineNumberToBytes(i));
                 writer.write(" ");

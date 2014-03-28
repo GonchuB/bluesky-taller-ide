@@ -1,5 +1,7 @@
 package main.model;
 
+import main.apis.HEXAConversionAPI;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -63,11 +65,45 @@ public class Compilador {
         return "ERROR - El archivo " + rutaDeArchivo + " está vacio";
     }
 
-    public String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
+    private String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
+        String[] split = line.split("\\s+");
+        String error = null;
+
+        if (split.length == 0) return null;
+
+        if (split.length == 1) {
+            error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
+        }
+
+        if (error == null ) {
+            error = validarPosMemoriaMAQ(nLinea,split[0]);
+        }
+
+        if (error == null ) {
+            error = validarInstruccionMAQ(nLinea, split[1]);
+        }
+
+        return error;
+    }
+
+    private String validarInstruccionMAQ(int nLinea, String s) {
+        if (s.length() != 4) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no posee 2 bytes";
+        String ops = "0123456789ABC";
+        if (!ops.contains("" + s.charAt(0))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no posee un código válido";
+        String digits = "0123456789ABCDEF";
+        if (!digits.contains("" + s.charAt(1)) || !digits.contains("" + s.charAt(2)) || !digits.contains("" + s.charAt(3))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no esta en hexadecimal";
+        //TODO - Checkear contenido segun el codigo de instruccion
         return null;
     }
 
-    public String chequearSyntaxisDeLineaASM(String line, int nLinea) {
+    private String validarPosMemoriaMAQ(int nLinea, String s) {
+        if (s.length() != 2) return "Error de syntaxis - Linea " + nLinea + " - La posición de memoria no tiene 2 digitos";
+        String digits = "0123456789ABCDEF";
+        if (!digits.contains("" + s.charAt(0)) || !digits.contains("" + s.charAt(1))) return "Error de syntaxis - Linea " + nLinea + " - La posición de memoria tiene digitos inválidos";
+        return null;
+    }
+
+    private String chequearSyntaxisDeLineaASM(String line, int nLinea) {
         String[] split = line.split("\\s+");
         String error = null;
 
