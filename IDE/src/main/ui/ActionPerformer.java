@@ -313,8 +313,8 @@ public class ActionPerformer {
 
             if (!error) {
                 simulador.init(rutaArchivoMAQ);
-                simulador.iniciarSimulacionCompleta();//TODO MOSTRAR UN DIALOG EN LAS INSTRUCCIONES DE ENTRADA SALIDA
-                simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO
+                simulador.iniciarSimulacionCompleta();
+                //simulador.mostrarEstadoSimulacion();
             }
 
 
@@ -336,7 +336,7 @@ public class ActionPerformer {
             simulador.init(rutaArchivoMAQ);
             //TODO hacer lo de la ejecucucion paso por paso
             //Ejecuta 1ª paso
-            simulador.iniciarSimulacionPasoAPaso();//TODO MOSTRAR UN DIALOG EN LAS INSTRUCCIONES DE ENTRADA SALIDA
+            simulador.iniciarSimulacionPasoAPaso();
             simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO
             //Mientras tenga pasos para ejecutar abrir un dialog con el estado y 2 botones para siguiente paso o cancelar ejecucion
         }
