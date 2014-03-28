@@ -27,8 +27,10 @@ public class InstruccionCargarMemoria extends Instruccion {
             maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
             Scanner scanner = new Scanner(System.in);
             while (hexa.isEmpty() || hexa.length() != 2){
+                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 System.out.print("Entra: ");
                 hexa = scanner.next();
+                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 if (hexa.isEmpty()) System.out.println("No ingreso ningun valor hexadecimal de 2 digitos");
                 if (hexa.length() != 2) System.out.println("El valor hexadecimal ingresado debe tener 2 digitos");
             }

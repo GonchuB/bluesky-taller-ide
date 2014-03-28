@@ -65,6 +65,7 @@ public class Simulador {
 
     public void iniciarSimulacionPasoAPaso(){
         if (instrucciones.isEmpty()){
+            //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
             System.out.println("Ejecución finalizada");
             return;
         }
@@ -72,6 +73,7 @@ public class Simulador {
         simulando = true;
         instruccionActual = iteratorInstrucciones.next();
         if (instruccionActual == null) {
+            //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
             System.out.println("La instrucción es desconocida y no se puede ejecutar el código");
             pararSimulacion();
             return;
@@ -83,6 +85,7 @@ public class Simulador {
         if (iteratorInstrucciones.hasNext()){
             instruccionActual = iteratorInstrucciones.next();
             if (instruccionActual == null) {
+                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 System.out.println("La instrucción es desconocida y no se puede ejecutar el código");
                 pararSimulacion();
                 return;
@@ -96,11 +99,13 @@ public class Simulador {
 
     public void pararSimulacion() {
         simulando = false;
+        //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
         System.out.println("Ejecución finalizada");
     }
 
     public void setearProximaInstruccionSegunNumero(ComplexNumber numeroCeldaMemoria,String instruccionAComparar) {
         if (numeroCeldaMemoria.getDecimalNumber() % 2 != 0){
+            //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
             System.out.println("Instruccion destino inválida");
             pararSimulacion();
         }
@@ -111,11 +116,13 @@ public class Simulador {
                 if(iteratorInstrucciones.hasNext()){
                     instruccionActual = iteratorInstrucciones.next();
                 } else {
+                    //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                     System.out.println("No existe una instruccion en la celda de memoria indicada");
                     pararSimulacion();
                 }
             }
             if(simulando && !instruccionActual.getLineaCodigo().equals(instruccionAComparar)){
+                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 System.out.println("La instruccion en memoria es distinta a la de la posicion que se quizo saltar en el simulador");
                 pararSimulacion();
             }
@@ -124,6 +131,7 @@ public class Simulador {
 
     public void mostrarEstadoSimulacion() {
         EstadoMaquina estadoMaquina = maquinaGenerica.obtenerEstado();
+        //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
         System.out.println("Alu bits: "+ estadoMaquina.getAluControlBits());
         System.out.println("% Mem Used: "+ estadoMaquina.getPorcentajeMemoriaUtilizada());
         System.out.println("% Regs Used: "+ estadoMaquina.getPorcentajeRegistrosUtilizados());

@@ -22,7 +22,7 @@ public class InstruccionAlmacenar extends Instruccion {
         maquina.escribirEnMemoria(numeroDeCelda,hexa);
         if (numeroDeCelda.getDecimalNumber() == 255){
             maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
-            System.out.println("Sale: " + hexa);
+            System.out.println("Sale: " + hexa); //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
             maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
         }
     }
