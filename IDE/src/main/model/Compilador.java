@@ -53,7 +53,6 @@ public class Compilador {
             }
             if (i > 0) {
                 reader.close();
-                return null;
             }
         } catch (FileNotFoundException e) {
             return "ERROR - El archivo " + rutaDeArchivo + " no existe.";
@@ -62,7 +61,7 @@ public class Compilador {
         } catch (Exception e) {
             return "ERROR - error en la compilación del archivo  " + rutaDeArchivo;
         }
-        return "ERROR - El archivo " + rutaDeArchivo + " está vacio";
+        return null;
     }
 
     private String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
