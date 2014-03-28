@@ -26,10 +26,26 @@ public class TraductorASMtoMAQ {
         this.cantParamsOp = fabricaTraductor.crearMapaCantParamsOp();
     }
 
+    /**
+     * Valida y traduce el archivo cuya ruta se recibe por parametro. Devuelve un String
+     * con el error que ocurrio durante la traducción o null si no hubo error. Al traducir,
+     * el archivo MAQ tiene el mismo nombre (y ruta) que el ASM, pero difiere en su extension.
+     *
+     * @param rutaArchivoASM la ruta del archivo ASM a traducir.
+     * @return error ocurrido durante la traduccion.
+     */
     public String traducir(String rutaArchivoASM) {
         return validarYTraducirLineasDeCodigo(rutaArchivoASM);
     }
 
+    /**
+     * Valida y traduce cada una de las lineas del archivo especificado por parametro.
+     * Devuelve un String con el error que ocurrio al traducir la linea o null si no
+     * hubo error.
+     *
+     * @param rutaArchivoASM la ruta del archivo ASM a traducir.
+     * @return error ocurrido durante la traduccion.
+     */
     private String validarYTraducirLineasDeCodigo(String rutaArchivoASM) {
         String rutaArchivoMAQ = rutaArchivoASM;
         rutaArchivoMAQ = rutaArchivoMAQ.replace(".asm", ".maq");
@@ -71,6 +87,14 @@ public class TraductorASMtoMAQ {
         return "ERROR - El archivo " + rutaArchivoASM + " está vacio";
     }
 
+    /**
+     * Traduce el numero de linea recibido por parametro a su expresion
+     * en hexadecimal. El hexadecimal devuelto tiene 2 digitos (se agrega
+     * un 0 adelante del numero si este es menor a 0xF.
+     *
+     * @param i numero de linea.
+     * @return expresion hexadecimal del numero de linea (byte count).
+     */
     public String lineNumberToBytes(Integer i) {
         String posMemoria = HEXAConversionAPI.decimal_to_hex(i * 2);
         if (posMemoria.length() == 1) posMemoria = "0" + posMemoria;
@@ -78,10 +102,24 @@ public class TraductorASMtoMAQ {
         return posMemoria;
     }
 
+    /**
+     * Chequea si el parametro recibido corresponde a un registro.
+     *
+     * @param param parametro a chequear.
+     * @return true si el parametro es un registro. false si no lo es.
+     */
     public boolean isRegisterParam(String param) {
         return param.charAt(0) == 'r';
     }
 
+    /**
+     * Convierte un parametro que es un registro (ASM) a su notacion
+     * en MAQ.
+     *
+     * @param registerParam el registro parametro a traducir.
+     * @param opCode        el codigo de operacion en la que se usa el registro.
+     * @return representacion del registro para ser utilizada en una instruccion MAQ.
+     */
     public String registerParamToString(String registerParam, String opCode) {
         String replaced = registerParam.replaceFirst("r", "");
         if (opCode.equals("4")) {
@@ -90,6 +128,14 @@ public class TraductorASMtoMAQ {
         return HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
     }
 
+
+    /**
+     * Convierte un parametro inmediato (ASM) a su notacion en MAQ.
+     *
+     * @param immediateParam el parametro inmediato a traducir.
+     * @param opCode         el codigo de operacion en la que se usa el registro.
+     * @return representacion del registro para ser utilizada en una instruccion MAQ.
+     */
     public String immediateParamToString(String immediateParam, String opCode) {
         Integer paramInteger = Integer.parseInt(immediateParam);
         if (opCode.equals("A") || paramInteger < 16) {
