@@ -142,4 +142,8 @@ public class Simulador {
         System.out.println("% Mem Used: "+ estadoMaquina.getPorcentajeMemoriaUtilizada());
         System.out.println("% Regs Used: "+ estadoMaquina.getPorcentajeRegistrosUtilizados());
     }
+
+    public boolean isSimulando() {
+        return simulando;
+    }
 }

@@ -173,11 +173,7 @@ public class ActionPerformer {
         } else if (comandoDeAccion.equals("cmd_execute") == true) {    //opción seleccionada: "Ejecutar"
             this.actionExecute();
         } else if (comandoDeAccion.equals("cmd_executeStep") == true){
-        	tpEditor.getJFrame().setVisible(false);
-           StepToStepUI ss = new StepToStepUI();
-           ss.getJFrame().setVisible(true); 
-           ss.setjTextArea(tpEditor.getJTextArea());
-            this.actionExecuteStep();
+        	this.actionExecuteStep();
         } else if (comandoDeAccion.equals("cmd_compile") == true){
             this.actionCompile();
         } else if (comandoDeAccion.equals("cmd_translate") == true){
@@ -198,7 +194,7 @@ public class ActionPerformer {
             //pega en el documento el texto del portapapeles
         	tpEditor.getJTextArea().paste();
         } else if (comandoDeAccion.equals("cmd_nextStep") == true) {         	//opción seleccionada: "Siguiente paso"
-        	
+            this.actionNextStep();
         } /*else if (comandoDeAccion.equals("cmd_gotoline") == true) {    //opción seleccionada: "Ir a la línea..."
             actionPerformer.actionGoToLine();
         } else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
@@ -233,6 +229,18 @@ public class ActionPerformer {
                                           "Acerca de",
                                           JOptionPane.INFORMATION_MESSAGE);
         }*/
+    }
+
+    private void actionNextStep() {
+        //Ejecuta 1ª paso
+        if(!simulador.isSimulando()){
+            simulador.iniciarSimulacionPasoAPaso();
+        } else {
+            simulador.ejecutarSiguienteInstruccion();
+        }
+
+        //TODO - Mostar en la nueva ventana abierta esta info:
+        simulador.mostrarEstadoSimulacion();
     }
 
     private boolean actionTranslate() {
@@ -358,10 +366,10 @@ public class ActionPerformer {
         if (!error) {
             simulador.init(rutaArchivoMAQ);
             //TODO hacer lo de la ejecucucion paso por paso
-            //Ejecuta 1ª paso
-            simulador.iniciarSimulacionPasoAPaso();
-            simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO y que otorgue la posibilidad de correr el siguiente paso o de parar la ejecucion
-            //Mientras tenga pasos para ejecutar abrir un dialog con el estado y 2 botones para siguiente paso o cancelar ejecucion
+            tpEditor.getJFrame().setVisible(false);
+            StepToStepUI ss = new StepToStepUI();
+            ss.getJFrame().setVisible(true);
+            ss.setjTextArea(tpEditor.getJTextArea());
         }
     }
 
