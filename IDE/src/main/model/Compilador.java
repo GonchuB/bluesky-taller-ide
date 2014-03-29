@@ -64,7 +64,7 @@ public class Compilador {
         return null;
     }
 
-    private String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
+    public String chequearSyntaxisDeLineaMAQ(String line, int nLinea) {
         String[] split = line.split("\\s+");
         String error = null;
 
@@ -102,7 +102,7 @@ public class Compilador {
         return null;
     }
 
-    private String chequearSyntaxisDeLineaASM(String line, int nLinea) {
+    public String chequearSyntaxisDeLineaASM(String line, int nLinea) {
         String[] split = line.split("\\s+");
         String error = null;
 
