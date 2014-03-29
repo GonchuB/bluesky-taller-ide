@@ -13,7 +13,7 @@ public abstract class Instruccion {
     private String comentario;
     private String lineaCodigo;
 
-    public abstract void operacion(Simulador simulador, MaquinaGenerica maquina);
+    public abstract String operacion(Simulador simulador, MaquinaGenerica maquina);
 
     public ComplexNumber getPosEnMemoria() {
         return posEnMemoria;

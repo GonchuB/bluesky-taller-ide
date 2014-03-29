@@ -6,7 +6,7 @@ import main.apis.bitvector.BitVector;
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
-public class CeldaMemoria {
+public class CeldaMemoria implements Comparable{
 
     private Boolean modificada;
     private ComplexNumber numero;
@@ -45,5 +45,22 @@ public class CeldaMemoria {
 
     public void setModificada(Boolean modificada) {
         this.modificada = modificada;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return numero == ((CeldaMemoria)obj).numero;
+    }
+
+    @Override
+    public int hashCode() {
+        return numero.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        CeldaMemoria c = (CeldaMemoria) o;
+        return numero.compareTo(c.numero);
+
     }
 }

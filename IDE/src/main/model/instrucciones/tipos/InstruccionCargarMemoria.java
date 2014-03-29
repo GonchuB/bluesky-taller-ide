@@ -19,12 +19,13 @@ public class InstruccionCargarMemoria extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         int decimalNumber = numeroCeldaMemoria.getDecimalNumber();
         String hexa = "";
 
         if (decimalNumber == 253){
-            maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
+            String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
+            if(error != null) return error;
             Scanner scanner = new Scanner(System.in);
             while (hexa.isEmpty() || hexa.length() != 2){
                 //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
@@ -34,12 +35,14 @@ public class InstruccionCargarMemoria extends Instruccion {
                 if (hexa.isEmpty()) System.out.println("No ingreso ningun valor hexadecimal de 2 digitos");
                 if (hexa.length() != 2) System.out.println("El valor hexadecimal ingresado debe tener 2 digitos");
             }
-            maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+            error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+            if(error != null) return error;
         } else {
             hexa = maquina.leerMemoria(numeroCeldaMemoria);
         }
 
 
         maquina.escribirEnRegistro(numeroRegistro,hexa);
+        return null;
     }
 }

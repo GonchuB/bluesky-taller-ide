@@ -23,15 +23,17 @@ public class MaquinaGenerica {
     }
 
 
-    public void ejecutarInstruccion(Simulador simulador, Instruccion instruccion) {
-        if (!enFuncionamiento) return;
-        memoriaPrincipal.setValor(instruccion.getPosEnMemoria(), instruccion.getLineaCodigo());
-        instruccion.operacion(simulador, this);
+    public String ejecutarInstruccion(Simulador simulador, Instruccion instruccion) {
+        if (!enFuncionamiento) return null ;
+        String error = memoriaPrincipal.setValor(instruccion.getPosEnMemoria(), instruccion.getLineaCodigo(),true);
+        if (error == null) error = instruccion.operacion(simulador, this);
+        return error;
     }
 
-    public void escribirEnMemoria(ComplexNumber numeroCelda, String hexa) {
-        if (!enFuncionamiento) return;
-        memoriaPrincipal.setValor(numeroCelda, hexa);
+    public String escribirEnMemoria(ComplexNumber numeroCelda, String hexa) {
+        if (!enFuncionamiento) return null;
+        String error = memoriaPrincipal.setValor(numeroCelda, hexa,false);
+        return error;
     }
 
     public void escribirEnRegistro(ComplexNumber numeroRegistro, String hexa) {

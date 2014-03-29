@@ -78,7 +78,13 @@ public class Simulador {
             pararSimulacion();
             return;
         }
-        maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
+        String error = maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
+        if(error != null){
+            //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
+            System.out.println(error);
+            pararSimulacion();
+            return;
+        }
     }
 
     public void ejecutarSiguienteInstruccion(){
@@ -90,7 +96,14 @@ public class Simulador {
                 pararSimulacion();
                 return;
             }
-            maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
+            String error = maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
+            if(error != null){
+                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
+                System.out.println(error);
+                pararSimulacion();
+                return;
+            }
+
         } else {
             pararSimulacion();
         }

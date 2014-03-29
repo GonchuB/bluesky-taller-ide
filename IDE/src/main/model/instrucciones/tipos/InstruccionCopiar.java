@@ -17,8 +17,9 @@ public class InstruccionCopiar extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String hexa = maquina.leerRegistro(numeroRegistroFuente);
         maquina.escribirEnRegistro(numeroRegistroDestino,hexa);
+        return null;
     }
 }

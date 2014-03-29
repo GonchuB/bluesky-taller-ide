@@ -17,7 +17,7 @@ public class InstruccionSaltar extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String patronNumeroRegistro = maquina.leerRegistro(numeroRegistro);
         String patronRegistroCero = maquina.leerRegistro(new ComplexNumber(0));
         if(patronNumeroRegistro.equals(patronRegistroCero)){
@@ -26,5 +26,6 @@ public class InstruccionSaltar extends Instruccion {
             String instruccion = parte1Instruccion + parte2Instruccion;
             simulador.setearProximaInstruccionSegunNumero(numeroCeldaMemoria,instruccion);
         }
+        return null;
     }
 }

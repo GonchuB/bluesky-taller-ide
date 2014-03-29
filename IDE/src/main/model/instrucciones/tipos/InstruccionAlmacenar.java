@@ -17,13 +17,17 @@ public class InstruccionAlmacenar extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String hexa = maquina.leerRegistro(numeroRegistro);
-        maquina.escribirEnMemoria(numeroDeCelda,hexa);
+        String error = maquina.escribirEnMemoria(numeroDeCelda,hexa);
+        if(error != null) return error;
         if (numeroDeCelda.getDecimalNumber() == 255){
-            maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
+            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
+            if(error != null) return error;
             System.out.println("Sale: " + hexa); //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
-            maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
+            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
+            if(error != null) return error;
         }
+        return null;
     }
 }

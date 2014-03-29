@@ -20,11 +20,12 @@ public class InstruccionRotar extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String hexa = maquina.leerRegistro(numeroDeRegistro);
         BitVector bv = HEXAConversionAPI.hex_to_bitvector(hexa);
         bv.rotateRight(cantidadDeRotaciones);
         String hexNew = HEXAConversionAPI.bitvector_to_hex(bv);
         maquina.escribirEnRegistro(numeroDeRegistro,hexNew);
+        return null;
     }
 }

@@ -3,30 +3,42 @@ package main.model;
 import main.apis.HEXAConversionAPI;
 import main.apis.bitvector.BitVector;
 import main.model.instrucciones.tipos.Instruccion;
+import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
 public class MemoriaPrincipal {
     private static final int TAM_MP = 256;
+    private static final int TAM_MP_INSTRUCCIONES = 192;
 
-    Map<ComplexNumber, CeldaMemoria> celdasMemoria;
+    private Map<ComplexNumber, CeldaMemoria> celdasMemoria;
 
-    CeldaMemoria puertoEntradaControl;
-    CeldaMemoria puertoEntrada;
-    CeldaMemoria puertoSalidaControl;
-    CeldaMemoria puertoSalida;
+    private CeldaMemoria puertoEntradaControl;
+    private CeldaMemoria puertoEntrada;
+    private CeldaMemoria puertoSalidaControl;
+    private CeldaMemoria puertoSalida;
+
+
+    private Map<ComplexNumber, CeldaMemoria> celdasInstrucciones;
+    private Map<ComplexNumber, CeldaMemoria> celdasDatos;
 
     public MemoriaPrincipal() {
         celdasMemoria = new HashMap<ComplexNumber, CeldaMemoria>();
+        celdasInstrucciones = new HashMap<ComplexNumber, CeldaMemoria>();
+        celdasDatos = new HashMap<ComplexNumber, CeldaMemoria>();
         for (int i = 0; i < TAM_MP; i++) {
             ComplexNumber key = new ComplexNumber(i);
             celdasMemoria.put(key, new CeldaMemoria(key));
+            if (i >= TAM_MP_INSTRUCCIONES){
+                //MEMORIA PARA DATOS
+                celdasDatos.put(key, new CeldaMemoria(key));
+            } else {
+                //MEMORIA PARA INSTRUCCIONES
+                celdasInstrucciones.put(key, new CeldaMemoria(key));
+            }
         }
         puertoEntradaControl = celdasMemoria.get(new ComplexNumber(252));
         puertoEntrada = celdasMemoria.get(new ComplexNumber(253));
@@ -39,18 +51,34 @@ public class MemoriaPrincipal {
         return celdasMemoria.get(numeroCelda).getValorHexa();
     }
 
-    public void setValor(ComplexNumber pos, String hexa) {
-        setValor(pos, HEXAConversionAPI.hex_to_bitvector(hexa));
+    public String setValor(ComplexNumber pos, String hexa, boolean isInstruccion) {
+        return setValor(pos, HEXAConversionAPI.hex_to_bitvector(hexa),isInstruccion);
     }
 
-    public void setValor(ComplexNumber pos, BitVector bits) {
+    public String setValor(ComplexNumber pos, BitVector bits, boolean isInstruccion) {
+        if (isInstruccion && !celdasInstrucciones.keySet().contains(pos)){
+            return "ERROR DE SEGMENTACION - Se intentó guardar en memoria una instruccion en un espacio de datos";
+        }
+
+        if (!isInstruccion && !celdasDatos.keySet().contains(pos)){
+            return "ERROR DE SEGMENTACION - Se intentó guardar en memoria un dato en un espacio de instrucciones";
+
+        }
         int cantCeldasNecesarias = cantCeldasNecesarias(bits);
-        if (cantCeldasNecesarias == 0) return;
+        if (cantCeldasNecesarias == 0) return null;
         ArrayList<CeldaMemoria> celdasAEscribir = new ArrayList<CeldaMemoria>();
         for (int i = 0; i < cantCeldasNecesarias; i++) {
             ComplexNumber key = new ComplexNumber(pos.getDecimalNumber() + i);
             CeldaMemoria celda = celdasMemoria.get(key);
             celdasAEscribir.add(celda);
+        }
+
+        if(isInstruccion &&  !CollectionUtils.intersection(celdasAEscribir,celdasMemoria.values()).isEmpty()){
+            return "ERROR DE SEGMENTACION - Se intentó guardar en memoria una instruccion en un espacio de datos";
+        }
+
+        if (!isInstruccion && !CollectionUtils.intersection(celdasAEscribir,celdasInstrucciones.values()).isEmpty()){
+            return "ERROR DE SEGMENTACION - Se intentó guardar en memoria un dato en un espacio de instrucciones";
         }
 
         int cantBitsEscritos = 0;
@@ -64,7 +92,7 @@ public class MemoriaPrincipal {
                 cantBitsEscritos = 0;
             }
         }
-
+        return null;
 
     }
 

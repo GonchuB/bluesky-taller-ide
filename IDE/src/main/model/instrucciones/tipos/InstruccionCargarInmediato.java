@@ -17,7 +17,8 @@ public class InstruccionCargarInmediato extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         maquina.escribirEnRegistro(numeroRegistro,patronACargar);
+        return null;
     }
 }

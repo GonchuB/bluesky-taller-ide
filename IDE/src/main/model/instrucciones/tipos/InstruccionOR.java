@@ -21,12 +21,13 @@ public class InstruccionOR extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String h1 = maquina.leerRegistro(registro1);
         String h2 = maquina.leerRegistro(registro2);
         BitVector bv = HEXAConversionAPI.hex_to_bitvector(h1);
         bv.orVector(HEXAConversionAPI.hex_to_bitvector(h2));
         String hResult = HEXAConversionAPI.bitvector_to_hex(bv);
         maquina.escribirEnRegistro(registroDestino,hResult);
+        return null;
     }
 }

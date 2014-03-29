@@ -8,7 +8,8 @@ import main.model.Simulador;
  */
 public class InstruccionParar extends Instruccion {
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         simulador.pararSimulacion();
+        return null;
     }
 }

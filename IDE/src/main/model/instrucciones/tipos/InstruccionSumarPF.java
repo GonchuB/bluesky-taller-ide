@@ -20,7 +20,7 @@ public class InstruccionSumarPF extends Instruccion {
     }
 
     @Override
-    public void operacion(Simulador simulador, MaquinaGenerica maquina) {
+    public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         String valor1 = HEXAConversionAPI.hex_to_decimal(maquina.leerRegistro(registro1), HEXAConversionAPI.ConversionType.FLOATINGPOINT);
         String valor2 = HEXAConversionAPI.hex_to_decimal(maquina.leerRegistro(registro2), HEXAConversionAPI.ConversionType.FLOATINGPOINT);
         Float f1 = new Float(valor1);
@@ -28,6 +28,6 @@ public class InstruccionSumarPF extends Instruccion {
         Float resultadoFinal = maquina.getAluControl().addTwoNumbers(f1, f2);
         String valorAGuardar = HEXAConversionAPI.fp_decimal_to_hex(resultadoFinal);
         maquina.escribirEnRegistro(registroDestino, valorAGuardar);
-
+        return null;
     }
 }
