@@ -185,15 +185,15 @@ public class TraductorASMtoMAQ {
             newParsedParams.add("0");
             newParsedParams.addAll(parsedParams);
             parsedParams.clear();
-            parsedParams.addAll(parsedParams);
+            parsedParams.addAll(newParsedParams);
         }
-        else if(opCode.equals("a")){
+        else if(opCode.equals("A")){
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add(parsedParams.get(0));
             newParsedParams.add("0");
             newParsedParams.add(parsedParams.get(1));
             parsedParams.clear();
-            parsedParams.addAll(parsedParams);
+            parsedParams.addAll(newParsedParams);
         }
         else if(opCode.equals("C")){
             ArrayList<String> newParsedParams = new ArrayList<String>();
@@ -201,7 +201,7 @@ public class TraductorASMtoMAQ {
             newParsedParams.add("0");
             newParsedParams.add("0");
             parsedParams.clear();
-            parsedParams.addAll(parsedParams);
+            parsedParams.addAll(newParsedParams);
         }
     }
 
