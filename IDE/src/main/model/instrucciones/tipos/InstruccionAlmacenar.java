@@ -4,6 +4,8 @@ import main.model.ComplexNumber;
 import main.model.MaquinaGenerica;
 import main.model.Simulador;
 
+import javax.swing.*;
+
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
@@ -24,7 +26,7 @@ public class InstruccionAlmacenar extends Instruccion {
         if (numeroDeCelda.getDecimalNumber() == 255){
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
             if(error != null) return error;
-            System.out.println("Sale: " + hexa); //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
+            JOptionPane.showMessageDialog(null, "Sale: " + hexa, "Instruccion Almacenar", JOptionPane.INFORMATION_MESSAGE);
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
             if(error != null) return error;
         }

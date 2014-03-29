@@ -354,7 +354,7 @@ public class ActionPerformer {
             //TODO hacer lo de la ejecucucion paso por paso
             //Ejecuta 1ª paso
             simulador.iniciarSimulacionPasoAPaso();
-            simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO
+            simulador.mostrarEstadoSimulacion();//TODO MOSTRAR UN DIALOG PARA MOSTRAR EL ESTADO DE LA MAQUINA EN PASO A PASO y que otorgue la posibilidad de correr el siguiente paso o de parar la ejecucion
             //Mientras tenga pasos para ejecutar abrir un dialog con el estado y 2 botones para siguiente paso o cancelar ejecucion
         }
     }

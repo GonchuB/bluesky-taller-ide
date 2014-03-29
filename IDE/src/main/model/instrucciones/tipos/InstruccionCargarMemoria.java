@@ -26,12 +26,11 @@ public class InstruccionCargarMemoria extends Instruccion {
         if (decimalNumber == 253){
             String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
             if(error != null) return error;
+            //TODO - Cambiar esto por un popup que lea 2 digitos
             Scanner scanner = new Scanner(System.in);
             while (hexa.isEmpty() || hexa.length() != 2){
-                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 System.out.print("Entra: ");
                 hexa = scanner.next();
-                //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
                 if (hexa.isEmpty()) System.out.println("No ingreso ningun valor hexadecimal de 2 digitos");
                 if (hexa.length() != 2) System.out.println("El valor hexadecimal ingresado debe tener 2 digitos");
             }

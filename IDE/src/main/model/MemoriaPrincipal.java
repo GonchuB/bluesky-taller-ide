@@ -73,7 +73,7 @@ public class MemoriaPrincipal {
             celdasAEscribir.add(celda);
         }
 
-        if(isInstruccion &&  !CollectionUtils.intersection(celdasAEscribir,celdasMemoria.values()).isEmpty()){
+        if(isInstruccion &&  !CollectionUtils.intersection(celdasAEscribir,celdasDatos.values()).isEmpty()){
             return "ERROR DE SEGMENTACION - Se intentó guardar en memoria una instruccion en un espacio de datos";
         }
 

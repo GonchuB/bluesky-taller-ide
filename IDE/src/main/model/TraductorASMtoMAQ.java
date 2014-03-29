@@ -1,5 +1,6 @@
 package main.model;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import main.apis.HEXAConversionAPI;
 
 import java.io.*;
@@ -173,8 +174,7 @@ public class TraductorASMtoMAQ {
         for (String param : parsedParams) {
             translatedInstruction += param;
         }
-
-        translatedInstruction += " " + comments;
+        if (!comments.isEmpty()) translatedInstruction += " " + comments;
 
         return translatedInstruction;
     }
