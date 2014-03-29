@@ -108,19 +108,26 @@ public class Compilador {
 
         if (split.length == 0) return null;
 
-        if (split.length == 1 && !split[0].equals("stp")) {
-            error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
+        if (split.length == 1){
+                if(!split[0].equals("stp")) {
+                    error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
+                }
+            else{
+                    return null;
+                }
         }
 
-        if (error == null && split.length > 2) {
-            error = validarComentariosASM(nLinea, split[2]);
+        int comments_value = 2;
+        if(split[0].equals("stp")) comments_value = 1;
+        if (error == null && split.length > comments_value) {
+            error = validarComentariosASM(nLinea, split[comments_value]);
         }
 
         if (error == null) {
             error = validarOperacionASM(nLinea, split[0]);
         }
 
-        if (error == null) {
+        if (error == null && !split[0].equals("stp")) {
             error = validarParametrosOperacionASM(nLinea, split[0], split[1]);
         }
 

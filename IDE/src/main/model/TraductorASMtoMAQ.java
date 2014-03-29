@@ -138,7 +138,14 @@ public class TraductorASMtoMAQ {
 
         String opName = split[0];
         String opCode = traductorOpsCdes.obtenerTraduccion(opName);
-        String[] params = split[1].split("\\s*,\\s*");
+        String[] params = new String[]{};
+        int comments_counter = 2;
+
+        if(!opCode.equals("C")){
+            params = split[1].split("\\s*,\\s*");
+        } else {
+            comments_counter = 1;
+        }
         ArrayList<String> parsedParams = new ArrayList<String>();
 
         for (String param : params) {
@@ -149,11 +156,13 @@ public class TraductorASMtoMAQ {
             }
         }
 
+        checkSpecialParamsForOPs(opCode,parsedParams);
+
         String comments = "";
 
-        if (split.length > 2) {
-            comments = split[2].replace(";", "");
-            for (int i = 3; i < split.length; i++) {
+        if (split.length > comments_counter) {
+            comments = split[comments_counter].replace(";", "");
+            for (int i = (comments_counter+1); i < split.length; i++) {
                 comments += " " + split[i];
             }
         }
@@ -170,6 +179,31 @@ public class TraductorASMtoMAQ {
         return translatedInstruction;
     }
 
+    private void checkSpecialParamsForOPs(String opCode, ArrayList<String> parsedParams) {
+        if(opCode.equals("4")){
+            ArrayList<String> newParsedParams = new ArrayList<String>();
+            newParsedParams.add("0");
+            newParsedParams.addAll(parsedParams);
+            parsedParams.clear();
+            parsedParams.addAll(parsedParams);
+        }
+        else if(opCode.equals("a")){
+            ArrayList<String> newParsedParams = new ArrayList<String>();
+            newParsedParams.add(parsedParams.get(0));
+            newParsedParams.add("0");
+            newParsedParams.add(parsedParams.get(1));
+            parsedParams.clear();
+            parsedParams.addAll(parsedParams);
+        }
+        else if(opCode.equals("C")){
+            ArrayList<String> newParsedParams = new ArrayList<String>();
+            newParsedParams.add("0");
+            newParsedParams.add("0");
+            newParsedParams.add("0");
+            parsedParams.clear();
+            parsedParams.addAll(parsedParams);
+        }
+    }
 
 
 }
