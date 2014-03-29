@@ -2,10 +2,12 @@ package main.model;
 
 import main.apis.HEXAConversionAPI;
 import main.apis.bitvector.BitVector;
-import main.model.instrucciones.tipos.Instruccion;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Juan-Asus on 21/03/2014.

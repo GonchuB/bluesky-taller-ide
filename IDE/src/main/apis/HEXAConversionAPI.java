@@ -8,66 +8,65 @@ import main.apis.bitvector.BitVector;
 public class HEXAConversionAPI {
 
 
-
     public enum ConversionType {
         A2COMPLEMENT, FLOATINGPOINT
     }
 
-    public static String zero_pad_bin_char(String bin_char){
+    public static String zero_pad_bin_char(String bin_char) {
         int len = bin_char.length();
-        if(len == 8) return bin_char;
+        if (len == 8) return bin_char;
         String zero_pad = "0";
-        for(int i=1;i<8-len;i++) zero_pad = zero_pad + "0";
+        for (int i = 1; i < 8 - len; i++) zero_pad = zero_pad + "0";
         return zero_pad + bin_char;
     }
 
     public static String binary_to_hex(String binary) {
         String hex = "";
         String hex_char;
-        int len = binary.length()/8;
-        for(int i=0;i<len;i++){
-            String bin_char = binary.substring(8*i,8*i+8);
-            int conv_int = Integer.parseInt(bin_char,2);
+        int len = binary.length() / 8;
+        for (int i = 0; i < len; i++) {
+            String bin_char = binary.substring(8 * i, 8 * i + 8);
+            int conv_int = Integer.parseInt(bin_char, 2);
             hex_char = Integer.toHexString(conv_int);
-            if(i==0) hex = hex_char;
-            else hex = hex+hex_char;
+            if (i == 0) hex = hex_char;
+            else hex = hex + hex_char;
         }
-        if(hex.length() == 1 ) hex = "0" + hex;
+        if (hex.length() == 1) hex = "0" + hex;
         return hex.toUpperCase();
     }
 
-    public static BitVector hex_to_bitvector(String hex){
+    public static BitVector hex_to_bitvector(String hex) {
         String ff = hex_to_binary(hex);
         BitVector bv = new BitVector(ff.length());
-        for(int i=0;i<ff.length();i++){
+        for (int i = 0; i < ff.length(); i++) {
             Boolean val = false;
             if (ff.charAt(i) == '1') val = true;
-            bv.setBit(i,val);
+            bv.setBit(i, val);
         }
         return bv;
     }
 
-    public static String bitvector_to_hex(BitVector bv){
+    public static String bitvector_to_hex(BitVector bv) {
         String binary = "";
-        for(int i=0;i<bv.size();i++){
+        for (int i = 0; i < bv.size(); i++) {
             if (bv.getBit(i)) binary += "1";
             else binary += "0";
         }
         return binary_to_hex(binary);
-     }
+    }
 
     public static String hex_to_binary(String hex) {
-        String hex_char,bin_char,binary;
+        String hex_char, bin_char, binary;
         binary = "";
         if (hex.length() == 1) hex = "0" + hex;
-        int len = hex.length()/2;
-        for(int i=0;i<len;i++){
-            hex_char = hex.substring(2*i,2*i+2);
-            int conv_int = Integer.parseInt(hex_char,16);
+        int len = hex.length() / 2;
+        for (int i = 0; i < len; i++) {
+            hex_char = hex.substring(2 * i, 2 * i + 2);
+            int conv_int = Integer.parseInt(hex_char, 16);
             bin_char = Integer.toBinaryString(conv_int);
             bin_char = zero_pad_bin_char(bin_char);
-            if(i==0) binary = bin_char;
-            else binary = binary+bin_char;
+            if (i == 0) binary = bin_char;
+            else binary = binary + bin_char;
             //out.printf("%s %s\n", hex_char,bin_char);
         }
         return binary;
@@ -80,7 +79,7 @@ public class HEXAConversionAPI {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             int d = digits.indexOf(c);
-            val = 16*val + d;
+            val = 16 * val + d;
         }
         return Integer.toString(val);
     }
@@ -103,11 +102,11 @@ public class HEXAConversionAPI {
         return hex;
     }
 
-    public static String hex_to_decimal(String hex,ConversionType type){
-        String auxHex = hex.replaceFirst("0x","");
-        if (ConversionType.A2COMPLEMENT.equals(type)){
+    public static String hex_to_decimal(String hex, ConversionType type) {
+        String auxHex = hex.replaceFirst("0x", "");
+        if (ConversionType.A2COMPLEMENT.equals(type)) {
             return hex_to_a2_decimal(auxHex).toString();
-        } else if (ConversionType.FLOATINGPOINT.equals(type)){
+        } else if (ConversionType.FLOATINGPOINT.equals(type)) {
             return hex_to_fp_decimal(auxHex).toString();
         }
 
@@ -115,25 +114,26 @@ public class HEXAConversionAPI {
     }
 
 
-    public static Integer hex_to_a2_decimal(String str)  {
+    public static Integer hex_to_a2_decimal(String str) {
         Integer num = Integer.valueOf(str, 16);
         double pow = Math.pow(2, 8);
         int i = new Double(pow).intValue();
         return (num >= (i / 2)) ? (num - i) : num;
     }
 
-    public static Float hex_to_fp_decimal(String str){
+    public static Float hex_to_fp_decimal(String str) {
         float f = Float.intBitsToFloat(Integer.parseInt(hex_to_decimal(str)));
         return new Float(f);
     }
 
-    public static String a2_decimal_to_hex(Integer i)  {
+    public static String a2_decimal_to_hex(Integer i) {
         Integer newN = i;
         if (i < 0) newN = 256 + i;
         return decimal_to_hex(newN.intValue());
     }
 
-    public static String fp_decimal_to_hex(Float f){
+    public static String fp_decimal_to_hex(Float f) {
+        // FIXME: esto es para floats de 32 bits. Corregir para floats de 8 bits como dice el enunciado. Seguramente haya que hacerlo a manopla.
         int i = Float.floatToIntBits(f);
         return decimal_to_hex(i);
     }
