@@ -300,22 +300,29 @@ public class ActionPerformer {
     }
 
     private void actionExecute() {
-            boolean error = false;
-            String rutaArchivoMAQ = "";
+        boolean error = false;
+        String rutaArchivoMAQ = "";
 
-            if (tpEditor.getCurrentFile().getName().endsWith(".asm")) {
+        File currentFile = tpEditor.getCurrentFile();
+        if (currentFile == null) {
+            boolean saved = actionSave();
+            if (!saved) error = true;
+            else currentFile = tpEditor.getCurrentFile();
+        }
+        if (!error) {
+            if (currentFile.getName().endsWith(".asm")) {
                 error = !actionTranslate();
-                rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm", ".maq");
+                rutaArchivoMAQ = currentFile.getAbsolutePath().replace(".asm", ".maq");
             } else {
                 error = !actionCompile();
-                rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath();
+                rutaArchivoMAQ = currentFile.getAbsolutePath();
             }
-
-            if (!error) {
-                simulador.init(rutaArchivoMAQ);
-                simulador.iniciarSimulacionCompleta();
-                //simulador.mostrarEstadoSimulacion();
-            }
+        }
+        if (!error) {
+            simulador.init(rutaArchivoMAQ);
+            simulador.iniciarSimulacionCompleta();
+            //simulador.mostrarEstadoSimulacion();
+        }
 
 
     }
@@ -324,12 +331,22 @@ public class ActionPerformer {
         boolean error = false;
         String rutaArchivoMAQ = "";
 
-        if (tpEditor.getCurrentFile().getName().endsWith(".asm")) {
-            error = !actionTranslate();
-            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath().replace(".asm", ".maq");
-        } else {
-            error = !actionCompile();
-            rutaArchivoMAQ = tpEditor.getCurrentFile().getAbsolutePath();
+        File currentFile = tpEditor.getCurrentFile();
+        if (currentFile == null) {
+            boolean saved = actionSave();
+            if (!saved) {
+                error = true;
+            }
+            else currentFile = tpEditor.getCurrentFile();
+        }
+        if (!error) {
+            if (currentFile.getName().endsWith(".asm")) {
+                error = !actionTranslate();
+                rutaArchivoMAQ = currentFile.getAbsolutePath().replace(".asm", ".maq");
+            } else {
+                error = !actionCompile();
+                rutaArchivoMAQ = currentFile.getAbsolutePath();
+            }
         }
 
         if (!error) {
@@ -600,7 +617,7 @@ public class ActionPerformer {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -620,7 +637,6 @@ public class ActionPerformer {
                     "Error al Guardar", JOptionPane.ERROR_MESSAGE
             );
             state = fc.showSaveDialog(tpEditor.getJFrame());
-            ;
         }
         if (state == JFileChooser.APPROVE_OPTION) {    //si elige guardar en el archivo
             File f = fc.getSelectedFile();    //obtiene el archivo seleccionado
@@ -651,6 +667,7 @@ public class ActionPerformer {
                         ex.getMessage(),
                         ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
         return false;

@@ -3,6 +3,7 @@ package main.model;
 import main.model.instrucciones.FabricaInstrucciones;
 import main.model.instrucciones.tipos.Instruccion;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -66,6 +67,7 @@ public class Simulador {
     public void iniciarSimulacionPasoAPaso(){
         if (instrucciones.isEmpty()){
             //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType);
+            JOptionPane.showMessageDialog(null, "Ejecución finalizada", "Ejecución Paso a Paso", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("Ejecución finalizada");
             return;
         }
