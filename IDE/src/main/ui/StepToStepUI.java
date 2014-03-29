@@ -1,6 +1,6 @@
-
 package main.ui;
 import java.awt.BorderLayout;
+import main.ui.Editor;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -41,19 +41,18 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.undo.UndoManager;
-import main.ui.StepToStepUI;
-/**
- * Clase principal donde se construye la GUI del editor.
- *
- * @author Dark[byte]
- */
-public class Editor {
-	private StepToStepUI sts;
+
+import main.ui.Editor.EventHandler;
+public class StepToStepUI extends Editor {
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
     private JTextArea jTextArea;      //instancia de JTextArea (área de edición)
-    //private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
+    public void setjTextArea(JTextArea jTextArea) {
+		this.jTextArea.setText(jTextArea.getText());
+	}
+
+	//private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
     private JPanel statusBar;         //instancia de JPanel (barra de estado)
     private JPanel compilationResultsBar; //instancia de JPanel (resultado de compilacion)
    /* private JCheckBoxMenuItem itemLineWrap;         //instancias de algunos items de menú que necesitan ser accesibles
@@ -65,19 +64,19 @@ public class Editor {
     private JMenuItem mpItemUndo;
     private JMenuItem mpItemRedo;*/
  
-    private JButton buttonUndo;    //instancias de algunos botones que necesitan ser accesibles
-    private JButton buttonRedo;
+//    private JButton buttonUndo;    //instancias de algunos botones que necesitan ser accesibles
+//    private JButton buttonRedo;
  
-    protected JLabel sbFilePath;    //etiqueta que muestra la ubicación del archivo actual
-    protected JLabel sbFileSize;    //etiqueta que muestra el tamaño del archivo actual
-    protected JLabel sbCaretPos;    //etiqueta que muestra la posición del cursor en el área de edición
+//    private JLabel sbFilePath;    //etiqueta que muestra la ubicación del archivo actual
+//    private JLabel sbFileSize;    //etiqueta que muestra el tamaño del archivo actual
+//    private JLabel sbCaretPos;    //etiqueta que muestra la posición del cursor en el área de edición
  
-    protected boolean hasChanged = false;    //el estado del documento actual, no modificado por defecto
-    protected File currentFile = null;       //el archivo actual, ninguno por defecto
- 
-    protected EventHandler eventHandler;          //instancia de EventHandler (la clase que maneja eventos)
-    protected ActionPerformer actionPerformer;    //instancia de ActionPerformer (la clase que ejecuta acciones)
-    protected UndoManager undoManager;            //instancia de UndoManager (administrador de edición)
+//    private boolean hasChanged = false;    //el estado del documento actual, no modificado por defecto
+//    private File currentFile = null;       //el archivo actual, ninguno por defecto
+// 
+////    private final EventHandler eventHandler;          //instancia de EventHandler (la clase que maneja eventos)
+//    private final ActionPerformer actionPerformer;    //instancia de ActionPerformer (la clase que ejecuta acciones)
+//    private final UndoManager undoManager;            //instancia de UndoManager (administrador de edición)
  
     /**
      * Punto de entrada del programa.
@@ -102,7 +101,7 @@ public class Editor {
      *
      * Se construye la GUI del editor, y se instancian clases importantes.
      */
-    public Editor() {
+    public StepToStepUI() {
         try {    //LookAndFeel nativo
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
@@ -110,7 +109,7 @@ public class Editor {
         }
  
         //construye un JFrame con título
-        jFrame = new JFrame("Simulador");
+        jFrame = new JFrame("StepToStep");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
  
         //asigna un manejador de eventos para el cierre del JFrame
@@ -118,7 +117,7 @@ public class Editor {
  
             @Override
             public void windowClosing(WindowEvent we) {
-                actionPerformer.actionExit();    //invoca el método actionExit()
+            	goClose();  //invoca el método actionExit()
             }
         });
  
@@ -148,12 +147,17 @@ public class Editor {
         jFrame.setLocationRelativeTo(null);
     }
  
+    
+    private void goClose()
+    {
+    	actionPerformer.actionExitToPrincipal(this); 
+    }
     /**
      * Construye el área de edición.
      */
     private void buildTextArea() {
         jTextArea = new JTextArea();    //construye un JTextArea
- 
+        jTextArea.setEditable(false);
         //se configura por defecto para que se ajusten las líneas al tamaño del área de texto ...
         jTextArea.setLineWrap(true);
         //... y que se respete la integridad de las palaras en el ajuste
@@ -180,94 +184,94 @@ public class Editor {
     private void buildToolBar() {
         jToolBar = new JToolBar();       //construye un JToolBar
         jToolBar.setFloatable(false);    //se configura por defecto como barra fija
- 
-        //construye el botón "Nuevo"
-        JButton buttonNew = new JButton();
-        //le asigna una etiqueta flotante
-        buttonNew.setToolTipText("Nuevo");
-        //le asigna una imagen ubicada en los recursos del proyecto
-        buttonNew.setIcon(new ImageIcon(getClass().getClassLoader().getResource("papel.png").getPath()));
-        //le asigna un nombre de comando
-        buttonNew.setActionCommand("cmd_new");
- 
-        JButton buttonOpen = new JButton();
-        buttonOpen.setToolTipText("Abrir");
-        buttonOpen.setIcon(new ImageIcon(getClass().getClassLoader().getResource("carpeta.png").getPath()));
-        buttonOpen.setActionCommand("cmd_open");
- 
-        JButton buttonSave = new JButton();
-        buttonSave.setToolTipText("Guardar");
-        buttonSave.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_save.png").getPath()));
-        buttonSave.setActionCommand("cmd_save");
- 
-        JButton buttonSaveAs = new JButton();
-        buttonSaveAs.setToolTipText("Guardar como...");
-        buttonSaveAs.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_saveas.png").getPath()));
-        buttonSaveAs.setActionCommand("cmd_saveas");
- 
-       JButton buttonExecute = new JButton();
-       buttonExecute.setToolTipText("Ejecutar");
-       buttonExecute.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png").getPath()));
-       buttonExecute.setActionCommand("cmd_execute");
-        
-        JButton buttonCompile = new JButton();
-        buttonCompile.setToolTipText("Compilar");
-        buttonCompile.setIcon(new ImageIcon(getClass().getClassLoader().getResource("compilar.png").getPath()));
-        buttonCompile.setActionCommand("cmd_compile");
+// 
+//        //construye el botón "Nuevo"
+//        JButton buttonNew = new JButton();
+//        //le asigna una etiqueta flotante
+//        buttonNew.setToolTipText("Nuevo");
+//        //le asigna una imagen ubicada en los recursos del proyecto
+//        buttonNew.setIcon(new ImageIcon(getClass().getClassLoader().getResource("papel.png").getPath()));
+//        //le asigna un nombre de comando
+//        buttonNew.setActionCommand("cmd_new");
+// 
+//        JButton buttonOpen = new JButton();
+//        buttonOpen.setToolTipText("Abrir");
+//        buttonOpen.setIcon(new ImageIcon(getClass().getClassLoader().getResource("carpeta.png").getPath()));
+//        buttonOpen.setActionCommand("cmd_open");
+// 
+//        JButton buttonSave = new JButton();
+//        buttonSave.setToolTipText("Guardar");
+//        buttonSave.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_save.png").getPath()));
+//        buttonSave.setActionCommand("cmd_save");
+// 
+//        JButton buttonSaveAs = new JButton();
+//        buttonSaveAs.setToolTipText("Guardar como...");
+//        buttonSaveAs.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_saveas.png").getPath()));
+//        buttonSaveAs.setActionCommand("cmd_saveas");
+// 
+//       JButton buttonExecute = new JButton();
+//       buttonExecute.setToolTipText("Ejecutar");
+//       buttonExecute.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png").getPath()));
+//       buttonExecute.setActionCommand("cmd_execute");
+//        
+//        JButton buttonCompile = new JButton();
+//        buttonCompile.setToolTipText("Compilar");
+//        buttonCompile.setIcon(new ImageIcon(getClass().getClassLoader().getResource("compilar.png").getPath()));
+//        buttonCompile.setActionCommand("cmd_compile");
         
         JButton buttonExecuteStep = new JButton();
         buttonExecuteStep.setToolTipText("Ejecutar paso a paso");
         buttonExecuteStep.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play_pause.png").getPath()));
-        buttonExecuteStep.setActionCommand("cmd_executeStep");
+        buttonExecuteStep.setActionCommand("cmd_nextStep");
         
-        JButton buttonTranslate = new JButton();
-        buttonTranslate.setToolTipText("Traducir");
-        buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("traducor.png").getPath()));
-        buttonTranslate.setActionCommand("cmd_translate");
+//        JButton buttonTranslate = new JButton();
+//        buttonTranslate.setToolTipText("Traducir");
+//        buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("traducor.png").getPath()));
+//        buttonTranslate.setActionCommand("cmd_translate");
+// 
+//        buttonUndo = new JButton();
+//        buttonUndo.setEnabled(false);
+//        buttonUndo.setToolTipText("Deshacer");
+//        buttonUndo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_undo.png").getPath()));
+//        buttonUndo.setActionCommand("cmd_undo");
+// 
+//        buttonRedo = new JButton();
+//        buttonRedo.setEnabled(false);
+//        buttonRedo.setToolTipText("Rehacer");
+//        buttonRedo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_redo.png").getPath()));
+//        buttonRedo.setActionCommand("cmd_redo");
+// 
+//        JButton buttonCut = new JButton();
+//        buttonCut.setToolTipText("Cortar");
+//        buttonCut.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_cut.png").getPath()));
+//        buttonCut.setActionCommand("cmd_cut");
+// 
+//        JButton buttonCopy = new JButton();
+//        buttonCopy.setToolTipText("Copiar");
+//        buttonCopy.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_copy.png").getPath()));
+//        buttonCopy.setActionCommand("cmd_copy");
+// 
+//        JButton buttonPaste = new JButton();
+//        buttonPaste.setToolTipText("Pegar");
+//        buttonPaste.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_paste.png").getPath()));
+//        buttonPaste.setActionCommand("cmd_paste");
  
-        buttonUndo = new JButton();
-        buttonUndo.setEnabled(false);
-        buttonUndo.setToolTipText("Deshacer");
-        buttonUndo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_undo.png").getPath()));
-        buttonUndo.setActionCommand("cmd_undo");
- 
-        buttonRedo = new JButton();
-        buttonRedo.setEnabled(false);
-        buttonRedo.setToolTipText("Rehacer");
-        buttonRedo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_redo.png").getPath()));
-        buttonRedo.setActionCommand("cmd_redo");
- 
-        JButton buttonCut = new JButton();
-        buttonCut.setToolTipText("Cortar");
-        buttonCut.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_cut.png").getPath()));
-        buttonCut.setActionCommand("cmd_cut");
- 
-        JButton buttonCopy = new JButton();
-        buttonCopy.setToolTipText("Copiar");
-        buttonCopy.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_copy.png").getPath()));
-        buttonCopy.setActionCommand("cmd_copy");
- 
-        JButton buttonPaste = new JButton();
-        buttonPaste.setToolTipText("Pegar");
-        buttonPaste.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_paste.png").getPath()));
-        buttonPaste.setActionCommand("cmd_paste");
- 
-        jToolBar.add(buttonNew);    //se añaden los botones construidos a la barra de herramientas
-        jToolBar.add(buttonOpen);
-        jToolBar.add(buttonSave);
-        jToolBar.add(buttonSaveAs);
+//        jToolBar.add(buttonNew);    //se añaden los botones construidos a la barra de herramientas
+//        jToolBar.add(buttonOpen);
+//        jToolBar.add(buttonSave);
+//        jToolBar.add(buttonSaveAs);
         jToolBar.addSeparator();    //añade separadores entre algunos botones
-        jToolBar.add(buttonExecute);
+//        jToolBar.add(buttonExecute);
         jToolBar.add(buttonExecuteStep);
-        jToolBar.add(buttonCompile);
-        jToolBar.add(buttonTranslate);
-        jToolBar.addSeparator();
-        jToolBar.add(buttonUndo);
-        jToolBar.add(buttonRedo);
-        jToolBar.addSeparator();
-        jToolBar.add(buttonCut);
-        jToolBar.add(buttonCopy);
-        jToolBar.add(buttonPaste);
+//        jToolBar.add(buttonCompile);
+//        jToolBar.add(buttonTranslate);
+//        jToolBar.addSeparator();
+//        jToolBar.add(buttonUndo);
+//        jToolBar.add(buttonRedo);
+//        jToolBar.addSeparator();
+//        jToolBar.add(buttonCut);
+//        jToolBar.add(buttonCopy);
+//        jToolBar.add(buttonPaste);
  
         /** itera sobre todos los componentes de la barra de herramientas, se les asigna el
         mismo margen y el mismo manejador de eventos unicamente a los botones */
@@ -324,7 +328,7 @@ public class Editor {
         //construye la etiqueta para mostrar la ubicación del archivo actual
         sbFilePath = new JLabel("...");
         //construye la etiqueta para mostrar el tamaño del archivo actual
-        sbFileSize = new JLabel("");
+        sbFileSize = new JLabel("PASO A PASO");
         //construye la etiqueta para mostrar la posición del cursor en el documento actual
         sbCaretPos = new JLabel("...");
  
@@ -353,8 +357,8 @@ public class Editor {
         //mbItemRedo.setEnabled(canRedo);
  
         //activa o desactiva las opciones en la barra de herramientas
-        buttonUndo.setEnabled(canUndo);
-        buttonRedo.setEnabled(canRedo);
+//        buttonUndo.setEnabled(canUndo);
+//        buttonRedo.setEnabled(canRedo);
  
         //activa o desactiva las opciones en el menú emergente
        // mpItemUndo.setEnabled(canUndo);
@@ -366,9 +370,9 @@ public class Editor {
      *
      * @return el manejador de eventos.
      */
-    protected EventHandler getEventHandler() {
-        return eventHandler;
-    }
+//    EventHandler getEventHandler() {
+//        return eventHandler;
+//    }
  
     /**
      * Retorna la instancia de UndoManager, la cual administra las ediciones sobre
@@ -455,63 +459,59 @@ public class Editor {
     }
 
 
-class EventHandler extends MouseAdapter implements ActionListener,CaretListener,UndoableEditListener {
-	
-	public void actionPerformed(ActionEvent ae) {
-        String ac = ae.getActionCommand();    //se obtiene el nombre del comando ejecutado
-        actionPerformer.DoAction(ac);
-       
-    }
-
-    /**
-     * Atiende y maneja los eventos del cursor.
-     *
-     */
-    @Override
-    public void caretUpdate(CaretEvent e) {
-        final int caretPos;  //valor de la posición del cursor sin inicializar
-        int y = 1;           //valor de la línea inicialmente en 1
-        int x = 1;           //valor de la columna inicialmente en 1
-
-        try {
-            //obtiene la posición del cursor con respecto al inicio del JTextArea (área de edición)
-            caretPos = jTextArea.getCaretPosition();
-            //sabiendo lo anterior se obtiene el valor de la línea actual (se cuenta desde 0)
-            y = jTextArea.getLineOfOffset(caretPos);
-
-            /** a la posición del cursor se le resta la posición del inicio de la línea para
-            determinar el valor de la columna actual */
-            x = caretPos - jTextArea.getLineStartOffset(y);
-
-            //al valor de la línea actual se le suma 1 porque estas comienzan contándose desde 0
-            y += 1;
-        } catch (BadLocationException ex) {    //en caso de que ocurra una excepción
-            System.err.println(ex);
-        }
-
-        /** muestra la información recolectada en la etiqueta sbCaretPos de la
-        barra de estado, también se incluye el número total de lineas */
-        sbCaretPos.setText("Líneas: " + jTextArea.getLineCount() + " - Y: " + y + " - X: " + x);
-    }
-
-    /**
-     * Atiende y maneja los eventos sobre el documento en el área de edición.
-     *
-     * @param uee evento de edición
-     */
-    @Override
-    public void undoableEditHappened(UndoableEditEvent uee) {
-        /** el cambio realizado en el área de edición se guarda en el buffer
-        del administrador de edición */
-        undoManager.addEdit(uee.getEdit());
-        updateControls();    //actualiza el estado de las opciones "Deshacer" y "Rehacer"
-
-        hasChanged = true;
-    }
-
-}
-public void setjTextArea(JTextArea jTextArea) {
-	this.jTextArea.setText(jTextArea.getText());
-}
-
+//class EventHandler extends MouseAdapter implements ActionListener,CaretListener,UndoableEditListener {
+//	
+//	public void actionPerformed(ActionEvent ae) {
+//        String ac = ae.getActionCommand();    //se obtiene el nombre del comando ejecutado
+//        actionPerformer.DoAction(ac);
+//       
+//    }
+//
+//    /**
+//     * Atiende y maneja los eventos del cursor.
+//     *
+//     */
+//    @Override
+//    public void caretUpdate(CaretEvent e) {
+//        final int caretPos;  //valor de la posición del cursor sin inicializar
+//        int y = 1;           //valor de la línea inicialmente en 1
+//        int x = 1;           //valor de la columna inicialmente en 1
+//
+//        try {
+//            //obtiene la posición del cursor con respecto al inicio del JTextArea (área de edición)
+//            caretPos = jTextArea.getCaretPosition();
+//            //sabiendo lo anterior se obtiene el valor de la línea actual (se cuenta desde 0)
+//            y = jTextArea.getLineOfOffset(caretPos);
+//
+//            /** a la posición del cursor se le resta la posición del inicio de la línea para
+//            determinar el valor de la columna actual */
+//            x = caretPos - jTextArea.getLineStartOffset(y);
+//
+//            //al valor de la línea actual se le suma 1 porque estas comienzan contándose desde 0
+//            y += 1;
+//        } catch (BadLocationException ex) {    //en caso de que ocurra una excepción
+//            System.err.println(ex);
+//        }
+//
+//        /** muestra la información recolectada en la etiqueta sbCaretPos de la
+//        barra de estado, también se incluye el número total de lineas */
+//        sbCaretPos.setText("Líneas: " + jTextArea.getLineCount() + " - Y: " + y + " - X: " + x);
+//    }
+//
+//    /**
+//     * Atiende y maneja los eventos sobre el documento en el área de edición.
+//     *
+//     * @param uee evento de edición
+//     */
+//    @Override
+//    public void undoableEditHappened(UndoableEditEvent uee) {
+//        /** el cambio realizado en el área de edición se guarda en el buffer
+//        del administrador de edición */
+//        undoManager.addEdit(uee.getEdit());
+//        updateControls();    //actualiza el estado de las opciones "Deshacer" y "Rehacer"
+//
+//        hasChanged = true;
+//    }
+//
+//}
 }
