@@ -29,7 +29,15 @@ public class FPConversionAPITest extends TestCase {
     }
 
     public void testFloatToBinaryFloatPart() throws Exception {
+        Float float1 = 0.390625f;
+        Float float2 = 0.5f;
+        Float float3 = 0.25f;
+        Float float4 = 0.125f;
 
+        Assert.assertEquals("011001", converter.floatToBinaryFloatPart(float1));
+        Assert.assertEquals("1", converter.floatToBinaryFloatPart(float2));
+        Assert.assertEquals("01", converter.floatToBinaryFloatPart(float3));
+        Assert.assertEquals("001", converter.floatToBinaryFloatPart(float4));
     }
 
     public void testFloatToBinary() throws Exception {

@@ -27,7 +27,17 @@ public class FPConversionAPI {
     }
 
     public String floatToBinaryFloatPart(Float floatNum) {
-        return "0";
+        String parsedBinary = "";
+        while (floatNum != 0.0f) {
+            floatNum = floatNum * 2;
+            if (floatNum >= 1.0f) {
+                parsedBinary += "1";
+                floatNum = floatNum - 1.0f;
+            } else {
+                parsedBinary += "0";
+            }
+        }
+        return parsedBinary;
     }
 
     public String floatToBinary(Float floatNum) {
