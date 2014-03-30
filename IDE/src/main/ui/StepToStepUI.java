@@ -15,35 +15,26 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.undo.UndoManager;
+import java.util.Vector;
+
 
 import main.ui.Editor.EventHandler;
 public class StepToStepUI extends Editor {
+    Vector<String> nRegistros;
+    Vector<String> registros;
+    private JTable  tablaRegistros;
+    private JTable tablaFlags;
+    private JScrollPane regArea;
+    private JScrollPane flagArea;
+
+
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
@@ -131,12 +122,15 @@ public class StepToStepUI extends Editor {
         buildToolBar();      //construye la barra de herramientas
         buildCompilationBar();
         buildStatusBar();	//construye la barra de estado
+        buildRegArea();
         //buildPopupMenu();    //construye el menú emergente
        // jFrame.setJMenuBar(jMenuBar);                              //designa la barra de menú del JFrame
         Container c = jFrame.getContentPane();                     //obtiene el contendor principal
         c.add(jToolBar, BorderLayout.NORTH);                       //añade la barra de herramientas, orientación NORTE del contendor
         c.add(new JScrollPane(jTextArea), BorderLayout.CENTER);    //añade el area de edición en el CENTRO
         c.add(statusBar, BorderLayout.SOUTH);                      //añade la barra de estado, orientación SUR
+        c.add(regArea, BorderLayout.EAST);
+        c.add(flagArea, BorderLayout.CENTER);
 //        c.add(compilationResultsBar, BorderLayout.PAGE_START);
 //        c.add(compilationResultsBar);
         //configura el JFrame con un tamaño inicial proporcionado con respecto a la pantalla
@@ -376,6 +370,49 @@ public class StepToStepUI extends Editor {
      */
     JLabel getJLabelFileSize() {
         return sbFileSize;
+    }
+
+
+    private void buildRegArea()
+    {
+
+        Vector<Vector> data = new Vector<Vector>();
+        Vector<Vector> dataFlags  = new Vector<Vector>();
+//    	registros.clear();
+
+        Vector<String> columnNames = new Vector<String>();
+        columnNames.add("NumRegs");
+        columnNames.add("Regs");
+        for (int i = 0 ; i < 16 ; i++)
+        {
+            registros = new Vector<String>();
+
+            registros.add("R"+String.valueOf(i));
+            registros.add("0");	//TODO ACA IRIA LA CONSULTA AL CONTROLADOR
+            data.add(registros);
+
+        }
+        tablaRegistros = new JTable(data,columnNames);
+        tablaRegistros.setAutoscrolls(true);
+
+        Vector<String> columnFlags = new Vector();
+        columnFlags.add("C");
+        columnFlags.add("Z");
+        columnFlags.add("O");
+        columnFlags.add("F");
+        Vector<String> flags = new Vector<String>();
+        //TODO aca se pasarían los flags //
+        flags.add("0");
+        flags.add("0");
+        flags.add("0");
+        flags.add("0");
+        dataFlags.add(flags);
+        JTable tablaFlags = new JTable(dataFlags, columnFlags);
+        tablaFlags.setVisible(true);
+        tablaFlags.setAutoscrolls(true);
+        tablaFlags.setLocation(15, 15);
+        regArea = new JScrollPane(tablaRegistros);
+        flagArea = new JScrollPane(tablaFlags);
     }
 
 
