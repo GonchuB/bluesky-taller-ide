@@ -109,7 +109,7 @@ public class StepToStepUI extends Editor {
         }
  
         //construye un JFrame con título
-        jFrame = new JFrame("StepToStep");
+        jFrame = new JFrame("Ejecución Paso a Paso");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
  
         //asigna un manejador de eventos para el cierre del JFrame
@@ -184,95 +184,15 @@ public class StepToStepUI extends Editor {
     private void buildToolBar() {
         jToolBar = new JToolBar();       //construye un JToolBar
         jToolBar.setFloatable(false);    //se configura por defecto como barra fija
-// 
-//        //construye el botón "Nuevo"
-//        JButton buttonNew = new JButton();
-//        //le asigna una etiqueta flotante
-//        buttonNew.setToolTipText("Nuevo");
-//        //le asigna una imagen ubicada en los recursos del proyecto
-//        buttonNew.setIcon(new ImageIcon(getClass().getClassLoader().getResource("papel.png").getPath()));
-//        //le asigna un nombre de comando
-//        buttonNew.setActionCommand("cmd_new");
-// 
-//        JButton buttonOpen = new JButton();
-//        buttonOpen.setToolTipText("Abrir");
-//        buttonOpen.setIcon(new ImageIcon(getClass().getClassLoader().getResource("carpeta.png").getPath()));
-//        buttonOpen.setActionCommand("cmd_open");
-// 
-//        JButton buttonSave = new JButton();
-//        buttonSave.setToolTipText("Guardar");
-//        buttonSave.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_save.png").getPath()));
-//        buttonSave.setActionCommand("cmd_save");
-// 
-//        JButton buttonSaveAs = new JButton();
-//        buttonSaveAs.setToolTipText("Guardar como...");
-//        buttonSaveAs.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_saveas.png").getPath()));
-//        buttonSaveAs.setActionCommand("cmd_saveas");
-// 
-//       JButton buttonExecute = new JButton();
-//       buttonExecute.setToolTipText("Ejecutar");
-//       buttonExecute.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png").getPath()));
-//       buttonExecute.setActionCommand("cmd_execute");
-//        
-//        JButton buttonCompile = new JButton();
-//        buttonCompile.setToolTipText("Compilar");
-//        buttonCompile.setIcon(new ImageIcon(getClass().getClassLoader().getResource("compilar.png").getPath()));
-//        buttonCompile.setActionCommand("cmd_compile");
-        
+
         JButton buttonExecuteStep = new JButton();
-        buttonExecuteStep.setToolTipText("Ejecutar paso a paso");
+        buttonExecuteStep.setToolTipText("Ejecutar siguiente instrucción");
         buttonExecuteStep.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play_pause.png").getPath()));
         buttonExecuteStep.setActionCommand("cmd_nextStep");
         
-//        JButton buttonTranslate = new JButton();
-//        buttonTranslate.setToolTipText("Traducir");
-//        buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("traducor.png").getPath()));
-//        buttonTranslate.setActionCommand("cmd_translate");
-// 
-//        buttonUndo = new JButton();
-//        buttonUndo.setEnabled(false);
-//        buttonUndo.setToolTipText("Deshacer");
-//        buttonUndo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_undo.png").getPath()));
-//        buttonUndo.setActionCommand("cmd_undo");
-// 
-//        buttonRedo = new JButton();
-//        buttonRedo.setEnabled(false);
-//        buttonRedo.setToolTipText("Rehacer");
-//        buttonRedo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_redo.png").getPath()));
-//        buttonRedo.setActionCommand("cmd_redo");
-// 
-//        JButton buttonCut = new JButton();
-//        buttonCut.setToolTipText("Cortar");
-//        buttonCut.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_cut.png").getPath()));
-//        buttonCut.setActionCommand("cmd_cut");
-// 
-//        JButton buttonCopy = new JButton();
-//        buttonCopy.setToolTipText("Copiar");
-//        buttonCopy.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_copy.png").getPath()));
-//        buttonCopy.setActionCommand("cmd_copy");
-// 
-//        JButton buttonPaste = new JButton();
-//        buttonPaste.setToolTipText("Pegar");
-//        buttonPaste.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_paste.png").getPath()));
-//        buttonPaste.setActionCommand("cmd_paste");
- 
-//        jToolBar.add(buttonNew);    //se añaden los botones construidos a la barra de herramientas
-//        jToolBar.add(buttonOpen);
-//        jToolBar.add(buttonSave);
-//        jToolBar.add(buttonSaveAs);
         jToolBar.addSeparator();    //añade separadores entre algunos botones
-//        jToolBar.add(buttonExecute);
         jToolBar.add(buttonExecuteStep);
-//        jToolBar.add(buttonCompile);
-//        jToolBar.add(buttonTranslate);
-//        jToolBar.addSeparator();
-//        jToolBar.add(buttonUndo);
-//        jToolBar.add(buttonRedo);
-//        jToolBar.addSeparator();
-//        jToolBar.add(buttonCut);
-//        jToolBar.add(buttonCopy);
-//        jToolBar.add(buttonPaste);
- 
+
         /** itera sobre todos los componentes de la barra de herramientas, se les asigna el
         mismo margen y el mismo manejador de eventos unicamente a los botones */
         for (Component c : jToolBar.getComponents()) {

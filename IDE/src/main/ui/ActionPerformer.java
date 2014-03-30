@@ -369,6 +369,7 @@ public class ActionPerformer {
     private void actionNextStep() {
         //Ejecuta 1ª paso
         if(!simulador.isSimulando()){
+            JOptionPane.showMessageDialog(null, "No Quedan Instrucciones para procesar", "Simulador", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if(simulador.isSimulando()){
