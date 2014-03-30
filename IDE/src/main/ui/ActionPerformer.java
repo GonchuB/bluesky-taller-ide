@@ -7,6 +7,8 @@ import main.model.TraductorASMtoMAQ;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,9 +16,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Pattern;
-import javax.swing.JColorChooser;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.undo.CannotRedoException;
@@ -197,9 +199,9 @@ public class ActionPerformer {
         	tpEditor.getJTextArea().paste();
         } else if (comandoDeAccion.equals("cmd_nextStep") == true) {         	//opción seleccionada: "Siguiente paso"
             this.actionNextStep();
-        } /*else if (comandoDeAccion.equals("cmd_gotoline") == true) {    //opción seleccionada: "Ir a la línea..."
-            actionPerformer.actionGoToLine();
-        } else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
+        } else if (comandoDeAccion.equals("cmd_hexa") == true) {    //opción seleccionada: "Ir a la línea..."
+            this.actionHexaConversion();
+        } /*else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
             actionPerformer.actionSearch();
         } else if (comandoDeAccion.equals("cmd_searchnext") == true) {    //opción seleccionada: "Buscar siguiente"
             actionPerformer.actionSearchNext();
@@ -233,6 +235,27 @@ public class ActionPerformer {
         }*/
     }
 
+    private void actionHexaConversion() {
+        JTextField hexaField = new JTextField();
+        JTextField deciField = new JTextField();
+        JRadioButton a2Radio = new JRadioButton();
+        a2Radio.setLabel("Conversion a2");
+        JRadioButton fpRadio = new JRadioButton();
+        fpRadio.setLabel("Conversion punto flotante");
+        final JComponent[] inputs = new JComponent[] {
+                new JLabel("Valor Hexadecimal"),
+                hexaField,
+                new JLabel("Valor Decimal"),
+                deciField,
+                new JSeparator(),
+                a2Radio,
+                fpRadio
+
+        };
+        //TODO - Hacer mejor este dialog!
+        JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+
+    }
 
 
     private boolean actionTranslate() {

@@ -224,6 +224,11 @@ public class Editor {
         buttonTranslate.setToolTipText("Traducir");
         buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("traducor.png").getPath()));
         buttonTranslate.setActionCommand("cmd_translate");
+
+        JButton buttonHexaCoonversion = new JButton();
+        buttonTranslate.setToolTipText("Conversion Hexadecimal");
+        buttonTranslate.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bit_refresh.png").getPath()));
+        buttonTranslate.setActionCommand("cmd_hexa");
  
         buttonUndo = new JButton();
         buttonUndo.setEnabled(false);
@@ -260,7 +265,9 @@ public class Editor {
         jToolBar.add(buttonExecute);
         jToolBar.add(buttonExecuteStep);
         jToolBar.add(buttonCompile);
+        jToolBar.addSeparator();
         jToolBar.add(buttonTranslate);
+        jToolBar.add(buttonHexaCoonversion);
         jToolBar.addSeparator();
         jToolBar.add(buttonUndo);
         jToolBar.add(buttonRedo);
