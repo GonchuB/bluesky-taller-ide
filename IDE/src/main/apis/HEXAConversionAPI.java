@@ -58,7 +58,7 @@ public class HEXAConversionAPI {
     public static String hex_to_binary(String hex) {
         String hex_char, bin_char, binary;
         binary = "";
-        if (hex.length() == 1) hex = "0" + hex;
+        if (hex.length() % 2 == 1) hex = "0" + hex;
         int len = hex.length() / 2;
         for (int i = 0; i < len; i++) {
             hex_char = hex.substring(2 * i, 2 * i + 2);
