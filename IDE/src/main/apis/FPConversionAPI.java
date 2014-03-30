@@ -40,23 +40,55 @@ public class FPConversionAPI {
         return parsedBinary;
     }
 
-    public String floatToBinary(Float floatNum) {
-        String binaryNum = null;
+    public String roundBinaryMantissa(String binary) {
+        String rounded = "";
+        for (int i = 0; i < MANTISSA_LENGTH; i++) {
+            if (binary.length() > i) {
+                rounded += binary.charAt(i);
+            } else {
+                rounded += "0";
+            }
+        }
+        return rounded;
+    }
 
+    public String floatToBinary(Float floatNum) {
+
+        // Sign calculation.
+        String binarySign;
         if (floatNum < 0) {
-            binaryNum = "1";
+            binarySign = "1";
             floatNum = -floatNum;
         } else {
-            binaryNum = "0";
+            binarySign = "0";
         }
 
+        // Mantissa calculation.
         Integer integerPart = floatNum.intValue();
         Float floatPart = floatNum - (float) integerPart;
 
-        binaryNum += floatToBinaryIntegerPart(integerPart);
-        binaryNum += floatToBinaryFloatPart(floatPart);
+        String integerPartBinary = floatToBinaryIntegerPart(integerPart);
+        String floatPartBinary = floatToBinaryFloatPart(floatPart);
+        String mantissa = roundBinaryMantissa(integerPartBinary + floatPartBinary);
 
-        return binaryNum;
+        // Exponent calculation.
+        Integer exponentCandidate = 0;
+        if (integerPartBinary.length() > 0) {
+            exponentCandidate = integerPartBinary.length();
+        } else if (floatPartBinary.length() > 0) {
+            for (int i = 0; i < floatPartBinary.length(); i++) {
+                if (floatPartBinary.charAt(i) != '0') {
+                    exponentCandidate = -i;
+                    break;
+                }
+            }
+        } else {
+            exponentCandidate = 0;
+        }
+        String exponentBinary = HEXAConversionAPI.hex_to_binary(HEXAConversionAPI.a2_decimal_to_hex(exponentCandidate));
+
+        // Concatenate sign + mantissa + exponent.
+        return binarySign + mantissa + exponentBinary;
     }
 
     public Float binaryToFloat(String binaryNum) {

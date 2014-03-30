@@ -40,6 +40,26 @@ public class FPConversionAPITest extends TestCase {
         Assert.assertEquals("001", converter.floatToBinaryFloatPart(float4));
     }
 
+    public void testRoundBinaryMantissa() throws Exception {
+        String binary1 = "1111";
+        String binary2 = "11111";
+        String binary3 = "11110";
+        String binary4 = "1010";
+        String binary5 = "1101";
+        String binary6 = "111";
+        String binary7 = "11";
+        String binary8 = "1";
+
+        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary1));
+        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary2));
+        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary3));
+        Assert.assertEquals("1010", converter.roundBinaryMantissa(binary4));
+        Assert.assertEquals("1101", converter.roundBinaryMantissa(binary5));
+        Assert.assertEquals("1110", converter.roundBinaryMantissa(binary6));
+        Assert.assertEquals("1100", converter.roundBinaryMantissa(binary7));
+        Assert.assertEquals("1000", converter.roundBinaryMantissa(binary8));
+    }
+
     public void testFloatToBinary() throws Exception {
 
     }
