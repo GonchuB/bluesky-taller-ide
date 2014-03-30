@@ -107,9 +107,11 @@ public class Simulador {
 
 
     public void pararSimulacion() {
-        simulando = false;
-        JOptionPane.showMessageDialog(null, "Ejecución finalizada", "Simulador", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("Ejecución finalizada");
+        if(simulando){
+            simulando = false;
+            JOptionPane.showMessageDialog(null, "Ejecución finalizada", "Simulador", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Ejecución finalizada");
+        }
     }
 
     public void setearProximaInstruccionSegunNumero(ComplexNumber numeroCeldaMemoria,String instruccionAComparar) {
@@ -135,12 +137,13 @@ public class Simulador {
         }
     }
 
-    public void mostrarEstadoSimulacion() {
+    public String mostrarEstadoSimulacion() {
         EstadoMaquina estadoMaquina = maquinaGenerica.obtenerEstado();
         //TODO - Cambiar por un JOptionPane.showMessageDialog(tpEditor.getJFrame(), error, title, msgType); o tirar el objeto para arriba para manejarlo en la UI
         System.out.println("Alu bits: "+ estadoMaquina.getAluControlBits());
         System.out.println("% Mem Used: "+ estadoMaquina.getPorcentajeMemoriaUtilizada());
         System.out.println("% Regs Used: "+ estadoMaquina.getPorcentajeRegistrosUtilizados());
+        return "ACA VA EL ESTADO COMPLETO - Estoy ejecutando la linea:  " + instruccionActual.getLineaCodigo();
     }
 
     public boolean isSimulando() {

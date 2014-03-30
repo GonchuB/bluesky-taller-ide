@@ -101,7 +101,7 @@ public class StepToStepUI extends Editor {
      *
      * Se construye la GUI del editor, y se instancian clases importantes.
      */
-    public StepToStepUI() {
+    public StepToStepUI(ActionPerformer actionPerformerInstance) {
         try {    //LookAndFeel nativo
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
@@ -122,7 +122,7 @@ public class StepToStepUI extends Editor {
         });
  
         eventHandler = new EventHandler();              //construye una instancia de EventHandler
-        actionPerformer = new ActionPerformer(this);    //construye una instancia de ActionPerformer
+        actionPerformer = actionPerformerInstance;    //construye una instancia de ActionPerformer
         undoManager = new UndoManager();                //construye una instancia de UndoManager
         undoManager.setLimit(50);                       //le asigna un límite al buffer de ediciones
  
@@ -150,7 +150,7 @@ public class StepToStepUI extends Editor {
     
     private void goClose()
     {
-    	actionPerformer.actionExitToPrincipal(this); 
+    	actionPerformer.actionExitToPrincipal();
     }
     /**
      * Construye el área de edición.

@@ -85,6 +85,7 @@ public class ActionPerformer {
         }
     };
     private final Editor tpEditor;    //instancia de TPEditor (la clase principal)
+    private StepToStepUI ss;
     private final Simulador simulador;
     private final Compilador compilador;
     private final TraductorASMtoMAQ traductor;
@@ -100,6 +101,7 @@ public class ActionPerformer {
         this.simulador = new Simulador();
         this.compilador = new Compilador();
         this.traductor = new TraductorASMtoMAQ();
+        ss = null;
     }
 
     /**
@@ -356,23 +358,23 @@ public class ActionPerformer {
         if (!error) {
             simulador.init(rutaArchivoMAQ);
             //TODO hacer lo de la ejecucucion paso por paso
+            simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
-            StepToStepUI ss = new StepToStepUI();
+            ss = new StepToStepUI(this);
+            ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
             ss.getJFrame().setVisible(true);
-            ss.setjTextArea(tpEditor.getJTextArea());
         }
     }
 
     private void actionNextStep() {
         //Ejecuta 1ª paso
         if(!simulador.isSimulando()){
-            simulador.iniciarSimulacionPasoAPaso();
-        } else {
+            return;
+        }
+        if(simulador.isSimulando()){
             simulador.ejecutarSiguienteInstruccion();
         }
-
-        //TODO - Mostar en la nueva ventana abierta esta info:
-        simulador.mostrarEstadoSimulacion();
+        ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
     }
 
     /**
@@ -713,12 +715,12 @@ public class ActionPerformer {
         System.exit(0);    //finaliza el programa con el código 0 (sin errores)
     }
     
-    public void actionExitToPrincipal(Editor e)
+    public void actionExitToPrincipal()
     {
-    	Editor edPrincipal = new Editor();
-    	edPrincipal.getJFrame().setVisible(true);
-    	edPrincipal.setjTextArea(e.getJTextArea());
-    	e.getJFrame().setVisible(false);
+        simulador.pararSimulacion();
+        ss.getJFrame().setVisible(false);
+        tpEditor.getJFrame().setVisible(true);
+
     }
  
     /**
