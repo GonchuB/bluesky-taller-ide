@@ -7,12 +7,8 @@ public class FPConversionAPI {
 
     public static Integer MANTISSA_LENGTH = 4;
     public static Integer EXP_LENGTH = 3;
-    public static Integer BINARY_LENGTH = 8;
 
-    public static String PRECISION_ERROR = "PRECISION_ERROR";
-    public static String OVERFLOW_ERROR = "OVERFLOW_ERROR";
-
-    public String floatToBinaryIntegerPart(Integer intNum) {
+    public static String floatToBinaryIntegerPart(Integer intNum) {
         String result = "";
         String binary = HEXAConversionAPI.hex_to_binary(HEXAConversionAPI.decimal_to_hex(intNum));
         boolean mostSignificative = false;
@@ -26,7 +22,7 @@ public class FPConversionAPI {
         return result;
     }
 
-    public String floatToBinaryFloatPart(Float floatNum) {
+    public static String floatToBinaryFloatPart(Float floatNum) {
         String parsedBinary = "";
         while (floatNum != 0.0f) {
             floatNum = floatNum * 2;
@@ -40,7 +36,7 @@ public class FPConversionAPI {
         return parsedBinary;
     }
 
-    public String roundBinaryMantissa(String binary) {
+    public static String roundBinaryMantissa(String binary) {
 
         // Strip 0's from msbs.
         String stripped = "";
@@ -64,7 +60,17 @@ public class FPConversionAPI {
         return rounded;
     }
 
-    public String floatToBinary(Float floatNum) {
+    public static boolean isPrecisionLostInConversion(Float floatNum) {
+        Integer integerPart = floatNum.intValue();
+        Float floatPart = floatNum - (float) integerPart;
+
+        String integerPartBinary = floatToBinaryIntegerPart(integerPart);
+        String floatPartBinary = floatToBinaryFloatPart(floatPart);
+        String mantissa = roundBinaryMantissa(integerPartBinary + floatPartBinary);
+        return mantissa.length() < integerPartBinary.length() + floatPartBinary.length();
+    }
+
+    public static String floatToBinary(Float floatNum) {
 
         // Sign calculation.
         String binarySign;
@@ -103,7 +109,7 @@ public class FPConversionAPI {
         return binarySign + mantissa + exponentBinary;
     }
 
-    public Float binaryToFloat(String binaryNum) {
+    public static Float binaryToFloat(String binaryNum) {
         return 0.0f;
     }
 

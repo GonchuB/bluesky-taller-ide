@@ -8,24 +8,16 @@ import junit.framework.TestCase;
  */
 public class FPConversionAPITest extends TestCase {
 
-    private FPConversionAPI converter;
-
-    public void setUp() throws Exception {
-        super.setUp();
-
-        converter = new FPConversionAPI();
-    }
-
     public void testFloatToBinaryIntegerPart() throws Exception {
         Integer int1 = 123;
         Integer int2 = 256;
         Integer int3 = 0;
         Integer int4 = 1025;
 
-        Assert.assertEquals("1111011", converter.floatToBinaryIntegerPart(int1));
-        Assert.assertEquals("100000000", converter.floatToBinaryIntegerPart(int2));
-        Assert.assertEquals("", converter.floatToBinaryIntegerPart(int3));
-        Assert.assertEquals("10000000001", converter.floatToBinaryIntegerPart(int4));
+        Assert.assertEquals("1111011", FPConversionAPI.floatToBinaryIntegerPart(int1));
+        Assert.assertEquals("100000000", FPConversionAPI.floatToBinaryIntegerPart(int2));
+        Assert.assertEquals("", FPConversionAPI.floatToBinaryIntegerPart(int3));
+        Assert.assertEquals("10000000001", FPConversionAPI.floatToBinaryIntegerPart(int4));
     }
 
     public void testFloatToBinaryFloatPart() throws Exception {
@@ -34,10 +26,10 @@ public class FPConversionAPITest extends TestCase {
         Float float3 = 0.25f;
         Float float4 = 0.125f;
 
-        Assert.assertEquals("011001", converter.floatToBinaryFloatPart(float1));
-        Assert.assertEquals("1", converter.floatToBinaryFloatPart(float2));
-        Assert.assertEquals("01", converter.floatToBinaryFloatPart(float3));
-        Assert.assertEquals("001", converter.floatToBinaryFloatPart(float4));
+        Assert.assertEquals("011001", FPConversionAPI.floatToBinaryFloatPart(float1));
+        Assert.assertEquals("1", FPConversionAPI.floatToBinaryFloatPart(float2));
+        Assert.assertEquals("01", FPConversionAPI.floatToBinaryFloatPart(float3));
+        Assert.assertEquals("001", FPConversionAPI.floatToBinaryFloatPart(float4));
     }
 
     public void testRoundBinaryMantissa() throws Exception {
@@ -50,14 +42,14 @@ public class FPConversionAPITest extends TestCase {
         String binary7 = "11";
         String binary8 = "1";
 
-        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary1));
-        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary2));
-        Assert.assertEquals("1111", converter.roundBinaryMantissa(binary3));
-        Assert.assertEquals("1010", converter.roundBinaryMantissa(binary4));
-        Assert.assertEquals("1101", converter.roundBinaryMantissa(binary5));
-        Assert.assertEquals("1110", converter.roundBinaryMantissa(binary6));
-        Assert.assertEquals("1100", converter.roundBinaryMantissa(binary7));
-        Assert.assertEquals("1000", converter.roundBinaryMantissa(binary8));
+        Assert.assertEquals("1111", FPConversionAPI.roundBinaryMantissa(binary1));
+        Assert.assertEquals("1111", FPConversionAPI.roundBinaryMantissa(binary2));
+        Assert.assertEquals("1111", FPConversionAPI.roundBinaryMantissa(binary3));
+        Assert.assertEquals("1010", FPConversionAPI.roundBinaryMantissa(binary4));
+        Assert.assertEquals("1101", FPConversionAPI.roundBinaryMantissa(binary5));
+        Assert.assertEquals("1110", FPConversionAPI.roundBinaryMantissa(binary6));
+        Assert.assertEquals("1100", FPConversionAPI.roundBinaryMantissa(binary7));
+        Assert.assertEquals("1000", FPConversionAPI.roundBinaryMantissa(binary8));
     }
 
     public void testFloatToBinary() throws Exception {
@@ -66,10 +58,22 @@ public class FPConversionAPITest extends TestCase {
         Float float3 = 0.25f;
         Float float4 = 0.125f;
 
-        Assert.assertEquals("01000000", converter.floatToBinary(float1));
-        Assert.assertEquals("01010010", converter.floatToBinary(float2));
-        Assert.assertEquals("01000111", converter.floatToBinary(float3));
-        Assert.assertEquals("01000110", converter.floatToBinary(float4));
+        Assert.assertEquals("01000000", FPConversionAPI.floatToBinary(float1));
+        Assert.assertEquals("01010010", FPConversionAPI.floatToBinary(float2));
+        Assert.assertEquals("01000111", FPConversionAPI.floatToBinary(float3));
+        Assert.assertEquals("01000110", FPConversionAPI.floatToBinary(float4));
+    }
+
+    public void testIsPrecisionLostInConversion() throws Exception {
+        Float float1 = 0.5f;
+        Float float2 = 0.390625f;
+        Float float3 = 1.125f;
+        Float float4 = 2.125f;
+
+        Assert.assertFalse(FPConversionAPI.isPrecisionLostInConversion(float1));
+        Assert.assertTrue(FPConversionAPI.isPrecisionLostInConversion(float2));
+        Assert.assertFalse(FPConversionAPI.isPrecisionLostInConversion(float3));
+        Assert.assertTrue(FPConversionAPI.isPrecisionLostInConversion(float4));
     }
 
     public void testBinaryToFloat() throws Exception {
