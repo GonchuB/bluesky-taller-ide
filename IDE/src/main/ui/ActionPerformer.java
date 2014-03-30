@@ -231,17 +231,7 @@ public class ActionPerformer {
         }*/
     }
 
-    private void actionNextStep() {
-        //Ejecuta 1ª paso
-        if(!simulador.isSimulando()){
-            simulador.iniciarSimulacionPasoAPaso();
-        } else {
-            simulador.ejecutarSiguienteInstruccion();
-        }
 
-        //TODO - Mostar en la nueva ventana abierta esta info:
-        simulador.mostrarEstadoSimulacion();
-    }
 
     private boolean actionTranslate() {
         boolean wasSaved = actionSave();
@@ -371,6 +361,18 @@ public class ActionPerformer {
             ss.getJFrame().setVisible(true);
             ss.setjTextArea(tpEditor.getJTextArea());
         }
+    }
+
+    private void actionNextStep() {
+        //Ejecuta 1ª paso
+        if(!simulador.isSimulando()){
+            simulador.iniciarSimulacionPasoAPaso();
+        } else {
+            simulador.ejecutarSiguienteInstruccion();
+        }
+
+        //TODO - Mostar en la nueva ventana abierta esta info:
+        simulador.mostrarEstadoSimulacion();
     }
 
     /**
