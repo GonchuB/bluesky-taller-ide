@@ -41,10 +41,22 @@ public class FPConversionAPI {
     }
 
     public String roundBinaryMantissa(String binary) {
+
+        // Strip 0's from msbs.
+        String stripped = "";
+        boolean mostSignificative = false;
+        for (int i = 0; i < binary.length(); i++) {
+            char charAt = binary.charAt(i);
+            if (charAt != '0' || mostSignificative) {
+                mostSignificative = true;
+                stripped += charAt;
+            }
+        }
+
         String rounded = "";
         for (int i = 0; i < MANTISSA_LENGTH; i++) {
-            if (binary.length() > i) {
-                rounded += binary.charAt(i);
+            if (stripped.length() > i) {
+                rounded += stripped.charAt(i);
             } else {
                 rounded += "0";
             }
@@ -85,7 +97,7 @@ public class FPConversionAPI {
         } else {
             exponentCandidate = 0;
         }
-        String exponentBinary = HEXAConversionAPI.hex_to_binary(HEXAConversionAPI.a2_decimal_to_hex(exponentCandidate));
+        String exponentBinary = HEXAConversionAPI.a2_decimal_to_binary(exponentCandidate, EXP_LENGTH);
 
         // Concatenate sign + mantissa + exponent.
         return binarySign + mantissa + exponentBinary;

@@ -126,6 +126,22 @@ public class HEXAConversionAPI {
         return new Float(f);
     }
 
+    public static String a2_decimal_to_binary(Integer i, Integer numberOfBits) {
+        Integer newN = i;
+        if (i < 0) newN = (int) Math.pow(2, numberOfBits) + i;
+        String fullBinary = Integer.toBinaryString(newN);
+        if (fullBinary.length() > numberOfBits) {
+            return fullBinary.substring(fullBinary.length() - numberOfBits - 1);
+        } else {
+            String prepend = "";
+            for (int j = 0; j < numberOfBits - fullBinary.length(); j++) {
+                prepend = prepend + 0;
+            }
+            return prepend + fullBinary;
+        }
+
+    }
+
     public static String a2_decimal_to_hex(Integer i) {
         Integer newN = i;
         if (i < 0) newN = 256 + i;

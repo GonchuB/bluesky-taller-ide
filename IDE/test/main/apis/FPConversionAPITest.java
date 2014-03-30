@@ -61,7 +61,15 @@ public class FPConversionAPITest extends TestCase {
     }
 
     public void testFloatToBinary() throws Exception {
+        Float float1 = 0.5f;
+        Float float2 = 2.5f;
+        Float float3 = 0.25f;
+        Float float4 = 0.125f;
 
+        Assert.assertEquals("01000000", converter.floatToBinary(float1));
+        Assert.assertEquals("01010010", converter.floatToBinary(float2));
+        Assert.assertEquals("01000111", converter.floatToBinary(float3));
+        Assert.assertEquals("01000110", converter.floatToBinary(float4));
     }
 
     public void testBinaryToFloat() throws Exception {
