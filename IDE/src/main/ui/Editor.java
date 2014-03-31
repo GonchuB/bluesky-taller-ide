@@ -123,7 +123,7 @@ public class Editor {
         });
  
         eventHandler = new EventHandler();              //construye una instancia de EventHandler
-        actionPerformer = new ActionPerformer(this);    //construye una instancia de ActionPerformer
+        
         undoManager = new UndoManager();                //construye una instancia de UndoManager
         undoManager.setLimit(50);                       //le asigna un límite al buffer de ediciones
  
@@ -132,6 +132,7 @@ public class Editor {
         buildToolBar();      //construye la barra de herramientas
         buildCompilationBar();
         buildStatusBar();	//construye la barra de estado
+        actionPerformer = new ActionPerformer(this);    //construye una instancia de ActionPerformer
         //buildPopupMenu();    //construye el menú emergente
        // jFrame.setJMenuBar(jMenuBar);                              //designa la barra de menú del JFrame
         Container c = jFrame.getContentPane();                     //obtiene el contendor principal

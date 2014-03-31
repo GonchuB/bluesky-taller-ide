@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Pattern;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -92,7 +93,8 @@ public class ActionPerformer {
     private final Compilador compilador;
     private final TraductorASMtoMAQ traductor;
     private String lastSearch = "";     //la última búsqueda de texto realizada, por defecto no contiene nada
-
+    private AutoCompilador autoCompilador;
+    
     /**
      * Constructor de la clase.
      *
@@ -103,6 +105,7 @@ public class ActionPerformer {
         this.simulador = new Simulador();
         this.compilador = new Compilador();
         this.traductor = new TraductorASMtoMAQ();
+        this.autoCompilador = new AutoCompilador(tpEditor.getJTextArea(), this.compilador);
         ss = null;
     }
 
@@ -620,6 +623,7 @@ public class ActionPerformer {
  
                 //establece el archivo cargado como el archivo actual
                 tpEditor.setCurrentFile(f);
+                autoCompilador.setNombreArchivo(f.getPath());
                 //marca el estado del documento como no modificado
                 tpEditor.setDocumentChanged(false);
             } catch (IOException ex) {    //en caso de que ocurra una excepción
@@ -700,6 +704,7 @@ public class ActionPerformer {
  
                 //establece el archivo guardado como el archivo actual
                 tpEditor.setCurrentFile(f);
+                autoCompilador.setNombreArchivo(f.getPath());
                 //marca el estado del documento como no modificado
                 tpEditor.setDocumentChanged(false);
                 return true;
