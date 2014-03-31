@@ -4,7 +4,7 @@ import main.model.ComplexNumber;
 import main.model.MaquinaGenerica;
 import main.model.Simulador;
 
-import java.util.Scanner;
+import javax.swing.*;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
@@ -23,25 +23,51 @@ public class InstruccionCargarMemoria extends Instruccion {
         int decimalNumber = numeroCeldaMemoria.getDecimalNumber();
         String hexa = "";
 
-        if (decimalNumber == 253){
+        if (decimalNumber == 253) {
             String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
-            if(error != null) return error;
-            //TODO - Cambiar esto por un popup que lea 2 digitos
-            Scanner scanner = new Scanner(System.in);
-            while (hexa.isEmpty() || hexa.length() != 2){
-                System.out.print("Entra: ");
-                hexa = scanner.next();
-                if (hexa.isEmpty()) System.out.println("No ingreso ningun valor hexadecimal de 2 digitos");
-                if (hexa.length() != 2) System.out.println("El valor hexadecimal ingresado debe tener 2 digitos");
+            if (error != null) return error;
+            final String posibleVals = "0123456789ABCDEF";
+            while (hexa.isEmpty() || hexa.length() != 2 || !posibleVals.contains("" + hexa.charAt(0)) || !posibleVals.contains("" + hexa.charAt(1))){
+            JTextField hexaField = new JTextField();
+            final JLabel validationLabel = new JLabel();
+                hexaField.setInputVerifier(new InputVerifier() {
+                    @Override
+                    public boolean verify(JComponent input) {
+                        String text = ((JTextField) input).getText();
+                        if (text.isEmpty()) {
+                            validationLabel.setText("No ingreso ningun valor");
+                            return false;
+                        }
+
+                        if (text.length() != 2) {
+                            validationLabel.setText("El valor debe tener 2 digitos");
+                            return false;
+                        }
+                        if (!posibleVals.contains("" + text.charAt(0)) || !posibleVals.contains("" + text.charAt(1))) {
+                            validationLabel.setText("Valores posibles: " + posibleVals);
+                            return false;
+                        }
+
+                        validationLabel.setText("");
+                        return true;
+                    }
+                });
+            final JComponent[] inputs = new JComponent[]{
+                    new JLabel("Entra: "),
+                    hexaField, validationLabel
+            };
+            JOptionPane.showMessageDialog(null, inputs, "Ingresar valor hexadecimal de 2 digitos", JOptionPane.PLAIN_MESSAGE);
+            hexa = hexaField.getText();
             }
+
             error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
-            if(error != null) return error;
+            if (error != null) return error;
         } else {
             hexa = maquina.leerMemoria(numeroCeldaMemoria);
         }
 
 
-        maquina.escribirEnRegistro(numeroRegistro,hexa);
+        maquina.escribirEnRegistro(numeroRegistro, hexa);
         return null;
     }
 }

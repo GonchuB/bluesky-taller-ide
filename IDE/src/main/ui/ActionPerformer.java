@@ -380,11 +380,11 @@ public class ActionPerformer {
 
         if (!error) {
             simulador.init(rutaArchivoMAQ);
-            //TODO hacer lo de la ejecucucion paso por paso
             simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);
-            ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
+            //TODO - COnfigurar StepTOStep con el estado
+            //ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
             ss.getJFrame().setVisible(true);
         }
     }
@@ -398,7 +398,8 @@ public class ActionPerformer {
         if(simulador.isSimulando()){
             simulador.ejecutarSiguienteInstruccion();
         }
-        ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
+        //TODO - COnfigurar StepTOStep con el estado
+        //ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
     }
 
     /**
