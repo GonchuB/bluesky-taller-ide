@@ -383,8 +383,7 @@ public class ActionPerformer {
             simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);
-            //TODO - COnfigurar StepTOStep con el estado
-            //ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
+            ss.setEstadoActual(simulador.mostrarEstadoSimulacion());
             ss.getJFrame().setVisible(true);
         }
     }
@@ -398,8 +397,8 @@ public class ActionPerformer {
         if(simulador.isSimulando()){
             simulador.ejecutarSiguienteInstruccion();
         }
-        //TODO - COnfigurar StepTOStep con el estado
-        //ss.getJTextArea().setText(simulador.mostrarEstadoSimulacion());
+        ss.setEstadoActual(simulador.mostrarEstadoSimulacion());
+
     }
 
     /**

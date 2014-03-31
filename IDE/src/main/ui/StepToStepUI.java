@@ -1,5 +1,7 @@
 package main.ui;
 import java.awt.BorderLayout;
+
+import main.model.EstadoMaquina;
 import main.ui.Editor;
 import java.awt.Component;
 import java.awt.Container;
@@ -388,7 +390,7 @@ public class StepToStepUI extends Editor {
             registros = new Vector<String>();
 
             registros.add("R"+String.valueOf(i));
-            registros.add("0");	//TODO ACA IRIA LA CONSULTA AL CONTROLADOR
+            registros.add("0");	//Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepToStepUI
             data.add(registros);
 
         }
@@ -401,7 +403,7 @@ public class StepToStepUI extends Editor {
         columnFlags.add("O");
         columnFlags.add("F");
         Vector<String> flags = new Vector<String>();
-        //TODO aca se pasarían los flags //
+        //TODO NOTA: Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepTOStep
         flags.add("0");
         flags.add("0");
         flags.add("0");
@@ -413,6 +415,10 @@ public class StepToStepUI extends Editor {
         tablaFlags.setLocation(15, 15);
         regArea = new JScrollPane(tablaRegistros);
         flagArea = new JScrollPane(tablaFlags);
+    }
+
+    public void setEstadoActual(EstadoMaquina estadoMaquina) {
+        //TODO - Setear a partir de estado maquina l oque se quiere mostrar
     }
 
 
