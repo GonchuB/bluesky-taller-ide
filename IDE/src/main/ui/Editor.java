@@ -1,11 +1,6 @@
 
 package main.ui;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -78,7 +73,8 @@ public class Editor {
     protected EventHandler eventHandler;          //instancia de EventHandler (la clase que maneja eventos)
     protected ActionPerformer actionPerformer;    //instancia de ActionPerformer (la clase que ejecuta acciones)
     protected UndoManager undoManager;            //instancia de UndoManager (administrador de edición)
- 
+
+    protected boolean textAreaEnable;
     /**
      * Punto de entrada del programa.
      *
@@ -147,8 +143,27 @@ public class Editor {
  
         //centra el JFrame en pantalla
         jFrame.setLocationRelativeTo(null);
+        disableTextArea();
     }
- 
+
+    public boolean isTextAreaEnable(){
+        return textAreaEnable;
+    }
+
+    public void enableTextArea() {
+        jTextArea.setText("");
+        jTextArea.setEditable(true);
+        jTextArea.setBackground(Color.WHITE);
+        textAreaEnable = true;
+    }
+
+    public void disableTextArea() {
+        jTextArea.setText("Bienvenido al Simulador de Maquina Generica! \n\t\t Utilice los botones nuevo o abrir para comenzar");
+        jTextArea.setEditable(false);
+        jTextArea.setBackground(Color.LIGHT_GRAY);
+        textAreaEnable = false;
+    }
+
     /**
      * Construye el área de edición.
      */

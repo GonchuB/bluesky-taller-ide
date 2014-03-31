@@ -55,6 +55,7 @@ public class AutoCompilador {
                         String error = compilarLinea();
                         if (error != null){
                             //TODO - Mostrar por pantalla el error asociado a la linea de alguna manera
+                            System.out.println(error);
                         }
 
                     }
@@ -81,7 +82,6 @@ public class AutoCompilador {
         	}
 		}
 
-        System.out.println("ERROR - El auto compilador no tiene un archivo asociado");
         return "ERROR - El auto compilador no tiene un archivo asociado";
     }
 	

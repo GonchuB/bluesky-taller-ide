@@ -174,33 +174,42 @@ public class ActionPerformer {
         } else if (comandoDeAccion.equals("cmd_open") == true) {    //opción seleccionada: "Abrir"
             this.actionOpen();
         } else if (comandoDeAccion.equals("cmd_save") == true) {    //opción seleccionada: "Guardar"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionSave();
         } else if (comandoDeAccion.equals("cmd_saveas") == true) {    //opción seleccionada: "Guardar como"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionSaveAs();
         } else if (comandoDeAccion.equals("cmd_execute") == true) {    //opción seleccionada: "Ejecutar"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionExecute();
         } else if (comandoDeAccion.equals("cmd_executeStep") == true){
-        	this.actionExecuteStep();
+            if (!tpEditor.isTextAreaEnable()) return;
+            this.actionExecuteStep();
         } else if (comandoDeAccion.equals("cmd_compile") == true){
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionCompile();
         } else if (comandoDeAccion.equals("cmd_translate") == true){
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionTranslate();
         } else if (comandoDeAccion.equals("cmd_exit") == true) {    //opción seleccionada: "Salir"
             this.actionExit();
         } else if (comandoDeAccion.equals("cmd_undo") == true) {    //opción seleccionada: "Deshacer"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionUndo();
         } else if (comandoDeAccion.equals("cmd_redo") == true) {    //opción seleccionada: "Rehacer"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionRedo();
         } else if (comandoDeAccion.equals("cmd_cut") == true) {    //opción seleccionada: "Cortar"
-            //corta el texto seleccionado en el documento
+            if (!tpEditor.isTextAreaEnable()) return;
             tpEditor.getJTextArea().cut();
         } else if (comandoDeAccion.equals("cmd_copy") == true) {    //opción seleccionada: "Copiar"
-            //copia el texto seleccionado en el documento
+            if (!tpEditor.isTextAreaEnable()) return;
             tpEditor.getJTextArea().copy();
         } else if (comandoDeAccion.equals("cmd_paste") == true) {    //opción seleccionada: "Pegar"
-            //pega en el documento el texto del portapapeles
-        	tpEditor.getJTextArea().paste();
+            if (!tpEditor.isTextAreaEnable()) return;
+            tpEditor.getJTextArea().paste();
         } else if (comandoDeAccion.equals("cmd_nextStep") == true) {         	//opción seleccionada: "Siguiente paso"
+            if (!tpEditor.isTextAreaEnable()) return;
             this.actionNextStep();
         } else if (comandoDeAccion.equals("cmd_hexa") == true) {    //opción seleccionada: "Ir a la línea..."
             this.actionHexaConversion();
@@ -411,7 +420,7 @@ public class ActionPerformer {
      * Reemplaza el documento actual por uno nuevo vacío.
      */
     public void actionNew() {
-        if (tpEditor.documentHasChanged() == true) {    //si el documento esta marcado como modificado
+        if (tpEditor.documentHasChanged() == true && tpEditor.isTextAreaEnable()) {    //si el documento esta marcado como modificado
             //le ofrece al usuario guardar los cambios
             int option = JOptionPane.showConfirmDialog(tpEditor.getJFrame(), "¿Desea guardar los cambios?");
  
@@ -424,8 +433,9 @@ public class ActionPerformer {
                 //en otro caso se continúa con la operación y no se guarda el documento actual
             }
         }
- 
-        tpEditor.getJFrame().setTitle("Simulador de Máquina Genérica - Sin Título");    //nuevo título de la ventana
+
+        if (!tpEditor.isTextAreaEnable()) tpEditor.enableTextArea();
+        tpEditor.getJFrame().setTitle("Simulador de Máquina Genérica");    //nuevo título de la ventana
  
         //limpia el contenido del area de edición
         tpEditor.getJTextArea().setText("");
@@ -442,7 +452,8 @@ public class ActionPerformer {
         tpEditor.setDocumentChanged(false);
 
         //Guardo el nuevo documento
-        actionSaveAs();
+        boolean resultSave = actionSaveAs();
+        if(!resultSave) tpEditor.disableTextArea();
     }
 
 
@@ -580,7 +591,7 @@ public class ActionPerformer {
      * Le permite al usuario elegir un archivo para cargar en el área de edición.
      */
     public void actionOpen() {
-        if (tpEditor.documentHasChanged() == true) {    //si el documento esta marcado como modificado
+        if (tpEditor.documentHasChanged() == true && tpEditor.isTextAreaEnable()) {    //si el documento esta marcado como modificado
             //le ofrece al usuario guardar los cambios
             int option = JOptionPane.showConfirmDialog(tpEditor.getJFrame(), "¿Desea guardar los cambios?");
  
@@ -603,6 +614,7 @@ public class ActionPerformer {
             File f = fc.getSelectedFile();    //obtiene el archivo seleccionado
  
             try {
+                tpEditor.enableTextArea();
                 //abre un flujo de datos desde el archivo seleccionado
                 BufferedReader br = new BufferedReader(new FileReader(f));
                 //lee desde el flujo de datos hacia el area de edición
@@ -634,6 +646,8 @@ public class ActionPerformer {
                         ex.toString(),
                         JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            if (!tpEditor.isTextAreaEnable()) tpEditor.disableTextArea();
         }
     }
  
@@ -727,7 +741,7 @@ public class ActionPerformer {
      * Finaliza el programa.
      */
     public void actionExit() {
-        if (tpEditor.documentHasChanged() == true) {    //si el documento esta marcado como modificado
+        if (tpEditor.documentHasChanged() == true && tpEditor.isTextAreaEnable()) {    //si el documento esta marcado como modificado
             //le ofrece al usuario guardar los cambios
             int option = JOptionPane.showConfirmDialog(tpEditor.getJFrame(), "¿Desea guardar los cambios?");
  
