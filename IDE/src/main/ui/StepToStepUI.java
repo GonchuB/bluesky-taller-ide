@@ -1,13 +1,9 @@
 package main.ui;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 import main.model.EstadoMaquina;
 import main.ui.Editor;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -128,11 +124,18 @@ public class StepToStepUI extends Editor {
         //buildPopupMenu();    //construye el menú emergente
        // jFrame.setJMenuBar(jMenuBar);                              //designa la barra de menú del JFrame
         Container c = jFrame.getContentPane();                     //obtiene el contendor principal
-        c.add(jToolBar, BorderLayout.NORTH);                       //añade la barra de herramientas, orientación NORTE del contendor
-        c.add(new JScrollPane(jTextArea), BorderLayout.CENTER);    //añade el area de edición en el CENTRO
-        c.add(statusBar, BorderLayout.SOUTH);                      //añade la barra de estado, orientación SUR
-        c.add(regArea, BorderLayout.EAST);
-        c.add(flagArea, BorderLayout.CENTER);
+        BorderLayout experimentLayout = new BorderLayout();
+        jFrame.setLayout(experimentLayout);
+
+        jFrame.add(jToolBar, BorderLayout.PAGE_START);                       //añade la barra de herramientas, orientación NORTE del contendor
+        JScrollPane tSP = new JScrollPane(jTextArea);
+        tSP.setSize(200,50);
+        jFrame.add(tSP, BorderLayout.CENTER);    //añade el area de edición en el CENTRO
+        jFrame.add(statusBar, BorderLayout.PAGE_END);                      //añade la barra de estado, orientación SUR
+        jFrame.add(regArea, BorderLayout.LINE_START);
+        jFrame.add(flagArea, BorderLayout.LINE_END);
+
+        jFrame.pack();
 //        c.add(compilationResultsBar, BorderLayout.PAGE_START);
 //        c.add(compilationResultsBar);
         //configura el JFrame con un tamaño inicial proporcionado con respecto a la pantalla
@@ -414,7 +417,11 @@ public class StepToStepUI extends Editor {
         tablaFlags.setAutoscrolls(true);
         tablaFlags.setLocation(15, 15);
         regArea = new JScrollPane(tablaRegistros);
+
         flagArea = new JScrollPane(tablaFlags);
+
+        flagArea.setPreferredSize(new Dimension(100,100));
+        regArea.setPreferredSize(new Dimension(100,100));
     }
 
     public void setEstadoActual(EstadoMaquina estadoMaquina) {
