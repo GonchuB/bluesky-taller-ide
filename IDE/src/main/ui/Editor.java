@@ -158,7 +158,7 @@ public class Editor {
     }
 
     public void disableTextArea() {
-        jTextArea.setText("Bienvenido al Simulador de Maquina Generica! \n\t Utilice los botones Nuevo o Abrir para comenzar");
+        jTextArea.setText("Bienvenido al Simulador de Máquina Genérica! \n\t Utilice los botones Nuevo o Abrir para comenzar");
         jTextArea.setEditable(false);
         jTextArea.setBackground(Color.LIGHT_GRAY);
         textAreaEnable = false;
