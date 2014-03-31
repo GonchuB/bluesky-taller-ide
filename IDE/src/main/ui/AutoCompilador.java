@@ -51,8 +51,13 @@ public class AutoCompilador {
 						ex.printStackTrace();
 					}
 					
-					if(numeroLineaEditada >= 0)
-						compilarLinea();
+					if(numeroLineaEditada >= 0){
+                        String error = compilarLinea();
+                        if (error != null){
+                            //TODO - Mostrar por pantalla el error asociado a la linea de alguna manera
+                        }
+
+                    }
 				}
 			}
 			});
@@ -68,15 +73,16 @@ public class AutoCompilador {
         		else
         			error = compilador.chequearSyntaxisDeLineaMAQ(lineaEditada,numeroLineaEditada);
              
-        		if (error != null) 
-        			return error;
+
+        		return error;
        
         	} catch (Exception e) {
         		return "ERROR - error en la compilación del archivo  " + nombreArchivoAEditar;
         	}
-		}else
-			System.out.println("no se procede a la auto-compilacion por no encontrarse guardado el archivo.");
-        return "no se procede a la auto-compilacion por no encontrarse guardado el archivo";
+		}
+
+        System.out.println("ERROR - El auto compilador no tiene un archivo asociado");
+        return "ERROR - El auto compilador no tiene un archivo asociado";
     }
 	
 	public void setNombreArchivo (String nombre){
