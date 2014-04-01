@@ -22,12 +22,14 @@ public class AutoCompilador {
 	private Compilador compilador;
 	private String nombreArchivoAEditar;
 	private int numeroLineaEditada;
+	private VistaAutoCompilador vistaAutoCompilador;
 	
 	public AutoCompilador(JTextArea areaText, Compilador elCompilador){
 		areaTexto = areaText;
 		compilador = elCompilador;
 		lineaEditada = "";
 		nombreArchivoAEditar = "";
+		vistaAutoCompilador = null;
 		areaTexto.addKeyListener(new KeyAdapter(){
 			public void keyTyped(KeyEvent e){
 			
@@ -50,12 +52,17 @@ public class AutoCompilador {
 					} catch (BadLocationException ex) {
 						ex.printStackTrace();
 					}
-					
+					PointerInfo a = MouseInfo.getPointerInfo();
+					Point b = a.getLocation();
+					int posXCursor = (int) b.getX();
+					int posYCursor = (int) b.getY();
 					if(numeroLineaEditada >= 0){
                         String error = compilarLinea();
                         if (error != null){
-                            //TODO - Mostrar por pantalla el error asociado a la linea de alguna manera
-                            System.out.println(error);
+                        	if(vistaAutoCompilador == null)
+                        		vistaAutoCompilador = new VistaAutoCompilador(posYCursor,posYCursor);
+                        	vistaAutoCompilador.mostrarResultadoCompilacionLinea(lineaEditada,error);
+                            //System.out.println(error);
                         }
 
                     }
