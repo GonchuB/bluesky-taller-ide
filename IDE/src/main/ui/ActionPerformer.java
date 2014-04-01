@@ -106,7 +106,7 @@ public class ActionPerformer {
         this.simulador = new Simulador();
         this.compilador = new Compilador();
         this.traductor = new TraductorASMtoMAQ();
-      //  this.autoCompilador = new AutoCompilador(tpEditor.getJTextArea(), this.compilador);
+        this.autoCompilador = new AutoCompilador(tpEditor.getJTextArea(), this.compilador);
         ss = null;
     }
 
@@ -645,7 +645,7 @@ public class ActionPerformer {
  
                 //establece el archivo cargado como el archivo actual
                 tpEditor.setCurrentFile(f);
-           //      autoCompilador.setNombreArchivo(f.getPath());
+                autoCompilador.setNombreArchivo(f.getPath());
                 //marca el estado del documento como no modificado
                 tpEditor.setDocumentChanged(false);
             } catch (IOException ex) {    //en caso de que ocurra una excepción
