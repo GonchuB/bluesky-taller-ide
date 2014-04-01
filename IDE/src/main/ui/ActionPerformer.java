@@ -812,6 +812,10 @@ public class ActionPerformer {
 
     private void hexaTo(boolean aA2, String entrada)
     {
+        if(!isValidHexa(entrada)){
+            tpEditor.setdeciField("");
+            return;
+        }
         HEXAConversionAPI aux = new HEXAConversionAPI();
         if (aA2)
         {
@@ -823,6 +827,15 @@ public class ActionPerformer {
             Float a =  aux.hex_to_fp_decimal(entrada);
             tpEditor.setdeciField(String.valueOf(a));
         }
+    }
+
+    private boolean isValidHexa(String entrada) {
+        if(entrada.isEmpty()) return false;
+        String posibleValues = "0123456789ABCDEF";
+        for (int i=0; i<entrada.length();i++){
+            if (!posibleValues.contains(""+entrada.charAt(0))) return false;
+        }
+        return true;
     }
 
 }
