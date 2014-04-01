@@ -85,6 +85,12 @@ public class Editor {
      *
      * Se construye la GUI del editor, y se instancian clases importantes.
      */
+
+    public Editor(String foo)
+    {
+
+    }
+
     public Editor() {
         try {    //LookAndFeel nativo
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

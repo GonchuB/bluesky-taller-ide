@@ -1,7 +1,7 @@
 package main.ui;
 import java.awt.*;
 
-import main.model.EstadoMaquina;
+import main.model.*;
 import main.ui.Editor;
 
 import java.awt.event.ActionEvent;
@@ -28,6 +28,7 @@ public class StepToStepUI extends Editor {
     Vector<String> nRegistros;
     Vector<String> registros;
     private JTable  tablaRegistros;
+
     private JTable tablaFlags;
     private JScrollPane regArea;
     private JScrollPane flagArea;
@@ -39,7 +40,7 @@ public class StepToStepUI extends Editor {
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
     private JTextArea jTextArea;      //instancia de JTextArea (área de edición)
     public void setjTextArea(JTextArea jTextArea) {
-		this.jTextArea.setText(jTextArea.getText());
+	//	this.jTextArea.setText(jTextArea.getText());
 	}
 
 	//private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
@@ -91,7 +92,8 @@ public class StepToStepUI extends Editor {
      *
      * Se construye la GUI del editor, y se instancian clases importantes.
      */
-    public StepToStepUI(ActionPerformer actionPerformerInstance) {
+     public StepToStepUI(ActionPerformer actionPerformerInstance) {
+         super("Sol temporal");//TODO resolver esto de una forma mejor
         try {    //LookAndFeel nativo
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
@@ -101,7 +103,7 @@ public class StepToStepUI extends Editor {
         //construye un JFrame con título
         jFrame = new JFrame("Ejecución Paso a Paso");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
- 
+         this.jTextArea = new JTextArea();
         //asigna un manejador de eventos para el cierre del JFrame
         jFrame.addWindowListener(new WindowAdapter() {
  
@@ -402,7 +404,7 @@ public class StepToStepUI extends Editor {
         tablaRegistros.setAutoscrolls(true);
 
         Vector<String> columnFlags = new Vector();
-        columnFlags.add("C");
+        columnFlags.add("N");
         columnFlags.add("Z");
         columnFlags.add("O");
         columnFlags.add("F");
@@ -413,7 +415,7 @@ public class StepToStepUI extends Editor {
         flags.add(String.valueOf(this.O));
         flags.add(String.valueOf(this.F));
         dataFlags.add(flags);
-        JTable tablaFlags = new JTable(dataFlags, columnFlags);
+        tablaFlags = new JTable(dataFlags, columnFlags);
         tablaFlags.setVisible(true);
         tablaFlags.setAutoscrolls(true);
         tablaFlags.setLocation(15, 15);
@@ -427,6 +429,21 @@ public class StepToStepUI extends Editor {
 
     public void setEstadoActual(EstadoMaquina estadoMaquina) {
         //TODO - Setear a partir de estado maquina l oque se quiere mostrar
+       BancoRegistros b =  estadoMaquina.getBancoRegistros();
+        MemoriaPrincipal m = estadoMaquina.getMemoriaPrincipal();
+        ALUControl a = estadoMaquina.getAluControlBits();
+        for (int i = 0 ; i < 16 ; i++)
+        {
+
+          //  this.valoresRegistros[i] = b.leerRegistro(j);
+            tablaRegistros.setValueAt(b.leerRegistro(new ComplexNumber(i)),i,1);
+
+        }
+
+        tablaFlags.setValueAt(a.isNegative(),0,1);
+            tablaFlags.setValueAt(a.isZero(),0,1);
+        tablaFlags.setValueAt(a.isOverflow(),0,2);
+        tablaFlags.setValueAt(a.isPrecisionLost(),0,3);
 
     }
 
@@ -494,4 +511,9 @@ public class StepToStepUI extends Editor {
 //    }
 //
 //}
+
+    private void update()
+    {
+
+    }
 }
