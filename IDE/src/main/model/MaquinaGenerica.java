@@ -22,7 +22,6 @@ public class MaquinaGenerica {
         enFuncionamiento = true;
     }
 
-
     public String ejecutarInstruccion(Simulador simulador, Instruccion instruccion) {
         if (!enFuncionamiento) return null;
         String error = memoriaPrincipal.setValor(instruccion.getPosEnMemoria(), instruccion.getLineaCodigo(), true);

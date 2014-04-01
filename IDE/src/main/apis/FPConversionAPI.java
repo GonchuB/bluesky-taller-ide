@@ -110,7 +110,31 @@ public class FPConversionAPI {
     }
 
     public static Float binaryToFloat(String binaryNum) {
-        return 0.0f;
+
+        // Separate binary in its 3 components (sign, mantissa, exponent).
+        boolean isNegative = binaryNum.charAt(0) == '1';
+        String mantissa = binaryNum.substring(1, 5);
+        String exponent = binaryNum.substring(5, 8);
+
+        // Extend exponent sign to be an 8 bit binary.
+        char exponentExtender = exponent.charAt(0);
+        for (int i = 0; i < 5; i++) {
+            exponent = exponentExtender + exponent;
+        }
+        // Extend mantissa to be an 8 bit binary.
+        for (int i = 0; i < 4; i++) {
+            mantissa = '0' + mantissa;
+        }
+
+        // Convert exponent and mantissa.
+        Integer exponentValue = HEXAConversionAPI.hex_to_a2_decimal(HEXAConversionAPI.binary_to_hex(exponent));
+        Integer mantissaValueNoComma = Integer.parseInt(HEXAConversionAPI.hex_to_decimal(HEXAConversionAPI.binary_to_hex(mantissa)));
+        Float mantissaValue = (float) (mantissaValueNoComma / Math.pow(2, 4));
+
+        // float = (sign) * mantissa * 2^exponent.
+        Float finalValue = (float) (mantissaValue * Math.pow(2, exponentValue));
+        if (isNegative) return -finalValue;
+        return finalValue;
     }
 
 }

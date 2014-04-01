@@ -77,6 +77,14 @@ public class FPConversionAPITest extends TestCase {
     }
 
     public void testBinaryToFloat() throws Exception {
+        String binary1 = "01000000";
+        String binary2 = "01010010";
+        String binary3 = "01000111";
+        String binary4 = "01000110";
 
+        Assert.assertEquals(0.5f, FPConversionAPI.binaryToFloat(binary1));
+        Assert.assertEquals(2.5f, FPConversionAPI.binaryToFloat(binary2));
+        Assert.assertEquals(0.25f, FPConversionAPI.binaryToFloat(binary3));
+        Assert.assertEquals(0.125f, FPConversionAPI.binaryToFloat(binary4));
     }
 }
