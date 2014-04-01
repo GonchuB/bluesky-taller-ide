@@ -54,6 +54,7 @@ public class TraductorASMtoMAQ {
             int i = 0;
             while ((line = reader.readLine()) != null) {
                 //Como precondicion el archivo ya fue compilado.
+                if(line.isEmpty() || line.charAt(0) == ';') continue;
                 String lineaTraducida = traducirLineaALenguajeMaquina(line);
                 writer.write(lineNumberToBytes(i));
                 writer.write(" ");

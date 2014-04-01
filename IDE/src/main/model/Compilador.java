@@ -1,7 +1,5 @@
 package main.model;
 
-import main.apis.HEXAConversionAPI;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -106,13 +104,15 @@ public class Compilador {
 
         if (split.length == 0) return null;
 
+        if (isCommentLine(split[0])) return null;
+
         if (split.length == 1){
-                if(!split[0].equals("stp")) {
+            if(!split[0].equals("stp")) {
                     error = "Error de syntaxis - Linea " + nLinea + " - Formato instrucción inválido";
-                }
+            }
             else{
-                    return null;
-                }
+                return null;
+            }
         }
 
         int comments_value = 2;
@@ -130,6 +130,10 @@ public class Compilador {
         }
 
         return error;
+    }
+
+    private boolean isCommentLine(String s) {
+        return s.charAt(0) == ';';
     }
 
     private String validarParametrosOperacionASM(int nLinea, String op, String params) {
