@@ -82,7 +82,6 @@ public class FabricaTraductor {
     }
 
     private String getParamRegexByCode(int i) {
-        //TODO - Verificar los regex versus el documento de las instrucciones... algunos nada que ver.. NO SE SOPORTAN HEXAS EN LOS .asm
         switch (i) {
             case 1:
                 // "^r[0-15],[0-15]{1,2}$"

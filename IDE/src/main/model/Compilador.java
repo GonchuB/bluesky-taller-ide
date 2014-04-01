@@ -133,7 +133,6 @@ public class Compilador {
     }
 
     private String validarParametrosOperacionASM(int nLinea, String op, String params) {
-        // TODO: matchear el string de parametros con traductorParamRegex. Actualizar valores en FabricaTraductor.
         String[] paramSplit = params.split("\\s*,\\s*");
         String regex = traductorParamRegexASM.obtenerTraduccion(op);
         if (cantParamsOpASM.get(op) != paramSplit.length)
