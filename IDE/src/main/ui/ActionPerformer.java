@@ -1,6 +1,7 @@
 package main.ui;
 
 
+import main.apis.HEXAConversionAPI;
 import main.model.Compilador;
 import main.model.Simulador;
 import main.model.TraductorASMtoMAQ;
@@ -105,7 +106,7 @@ public class ActionPerformer {
         this.simulador = new Simulador();
         this.compilador = new Compilador();
         this.traductor = new TraductorASMtoMAQ();
-        this.autoCompilador = new AutoCompilador(tpEditor.getJTextArea(), this.compilador);
+      //  this.autoCompilador = new AutoCompilador(tpEditor.getJTextArea(), this.compilador);
         ss = null;
     }
 
@@ -213,7 +214,14 @@ public class ActionPerformer {
             this.actionNextStep();
         } else if (comandoDeAccion.equals("cmd_hexa") == true) {    //opción seleccionada: "Ir a la línea..."
             this.actionHexaConversion();
-        } /*else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
+
+        } else if (comandoDeAccion.equals("cmd_hexaToA2") == true) {    //opción seleccionada: "Ir a la línea..."
+        this.hexaTo(true,tpEditor.getHexaField().getText());
+
+        } else if (comandoDeAccion.equals("cmd_hexaToFP") == true) {    //opción seleccionada: "Ir a la línea..."
+        this.hexaTo(false,tpEditor.getHexaField().getText());
+
+          }/*else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
             actionPerformer.actionSearch();
         } else if (comandoDeAccion.equals("cmd_searchnext") == true) {    //opción seleccionada: "Buscar siguiente"
             actionPerformer.actionSearchNext();
@@ -248,7 +256,8 @@ public class ActionPerformer {
     }
 
     private void actionHexaConversion() {
-        JTextField hexaField = new JTextField();
+        tpEditor.setHexaToDecimal();
+       /* JTextField hexaField = new JTextField();
         JTextField deciField = new JTextField();
         JRadioButton a2Radio = new JRadioButton();
         a2Radio.setLabel("Conversion a2");
@@ -265,7 +274,7 @@ public class ActionPerformer {
 
         };
         //TODO - Hacer mejor este dialog!
-        JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);*/
 
     }
 
@@ -636,7 +645,7 @@ public class ActionPerformer {
  
                 //establece el archivo cargado como el archivo actual
                 tpEditor.setCurrentFile(f);
-                 autoCompilador.setNombreArchivo(f.getPath());
+           //      autoCompilador.setNombreArchivo(f.getPath());
                 //marca el estado del documento como no modificado
                 tpEditor.setDocumentChanged(false);
             } catch (IOException ex) {    //en caso de que ocurra una excepción
@@ -799,6 +808,21 @@ public class ActionPerformer {
  
         //actualiza el estado de las opciones "Deshacer" y "Rehacer"
         tpEditor.updateControls();
+    }
+
+    private void hexaTo(boolean aA2, String entrada)
+    {
+        HEXAConversionAPI aux = new HEXAConversionAPI();
+        if (aA2)
+        {
+           Integer a =  aux.hex_to_a2_decimal(entrada);
+            tpEditor.setdeciField(String.valueOf(a));
+        }
+        else
+        {
+            Float a =  aux.hex_to_fp_decimal(entrada);
+            tpEditor.setdeciField(String.valueOf(a));
+        }
     }
 
 }

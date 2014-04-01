@@ -10,26 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.UndoableEditEvent;
@@ -51,6 +32,12 @@ public class Editor {
     //private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
     private JPanel statusBar;         //instancia de JPanel (barra de estado)
     private JPanel compilationResultsBar; //instancia de JPanel (resultado de compilacion)
+
+
+    private JButton fpRadio;
+    private JButton a2Radio;
+    private JTextField hexaField;
+    private JTextField deciField;
    /* private JCheckBoxMenuItem itemLineWrap;         //instancias de algunos items de menú que necesitan ser accesibles
     private JCheckBoxMenuItem itemShowToolBar;
     private JCheckBoxMenuItem itemFixedToolBar;
@@ -104,7 +91,12 @@ public class Editor {
         } catch (Exception ex) {
             System.err.println(ex);
         }
- 
+
+
+
+
+        hexaField = new JTextField();
+        deciField = new JTextField();
         //construye un JFrame con título
         jFrame = new JFrame("Simulador de Máquina Genérica");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -122,13 +114,21 @@ public class Editor {
         
         undoManager = new UndoManager();                //construye una instancia de UndoManager
         undoManager.setLimit(50);                       //le asigna un límite al buffer de ediciones
- 
+
+
+        a2Radio = new JButton();
+        a2Radio.setLabel("Conversion a2");
+        fpRadio = new JButton();
+        fpRadio.setLabel("Conversion punto flotante");
+
+        buildPopUp();
         buildTextArea();     //construye el área de edición, es importante que esta sea la primera parte en construirse
        // buildMenuBar();      //construye la barra de menú
         buildToolBar();      //construye la barra de herramientas
         buildCompilationBar();
         buildStatusBar();	//construye la barra de estado
         actionPerformer = new ActionPerformer(this);    //construye una instancia de ActionPerformer
+
         //buildPopupMenu();    //construye el menú emergente
        // jFrame.setJMenuBar(jMenuBar);                              //designa la barra de menú del JFrame
         Container c = jFrame.getContentPane();                     //obtiene el contendor principal
@@ -188,7 +188,15 @@ public class Editor {
         jTextArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK), "none");    //remueve CTRL + V ("Pegar")
     }
  
-    
+    ///// Construye iconos dentro de popUps ////////
+
+    private void buildPopUp()
+    {
+        a2Radio.setActionCommand("cmd_hexaToA2");
+        fpRadio.setActionCommand("cmd_hexaToFP");
+        a2Radio.addActionListener(eventHandler);
+        fpRadio.addActionListener(eventHandler);
+    }
  
     /**
      * Construye la barra de herramientas.
@@ -291,7 +299,7 @@ public class Editor {
         jToolBar.add(buttonCut);
         jToolBar.add(buttonCopy);
         jToolBar.add(buttonPaste);
- 
+
         /** itera sobre todos los componentes de la barra de herramientas, se les asigna el
         mismo margen y el mismo manejador de eventos unicamente a los botones */
         for (Component c : jToolBar.getComponents()) {
@@ -536,5 +544,34 @@ class EventHandler extends MouseAdapter implements ActionListener,CaretListener,
 public void setjTextArea(JTextArea jTextArea) {
 	this.jTextArea.setText(jTextArea.getText());
 }
+
+public void setHexaToDecimal() {
+
+
+        final JComponent[] inputs = new JComponent[]{
+                new JLabel("Valor Hexadecimal"),
+                hexaField,
+                new JLabel("Valor Decimal"),
+                deciField,
+                new JSeparator(),
+                a2Radio,
+                fpRadio
+        };
+        JOptionPane.showMessageDialog(null, inputs, "Conversion", JOptionPane.PLAIN_MESSAGE);
+
+
+    }
+
+//////////////////// setters && getters ////////////////
+
+    public JTextField getHexaField() {
+        return hexaField;
+    }
+
+    public void setdeciField(String text)
+    {
+        deciField.setText(text);
+    }
+
 
 }

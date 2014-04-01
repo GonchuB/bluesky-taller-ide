@@ -31,7 +31,8 @@ public class StepToStepUI extends Editor {
     private JTable tablaFlags;
     private JScrollPane regArea;
     private JScrollPane flagArea;
-
+    private String valoresRegistros[];
+    private boolean C,Z,O,F;
 
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
@@ -114,7 +115,7 @@ public class StepToStepUI extends Editor {
         actionPerformer = actionPerformerInstance;    //construye una instancia de ActionPerformer
         undoManager = new UndoManager();                //construye una instancia de UndoManager
         undoManager.setLimit(50);                       //le asigna un límite al buffer de ediciones
- 
+        inicializarValoresStep();
         buildTextArea();     //construye el área de edición, es importante que esta sea la primera parte en construirse
        // buildMenuBar();      //construye la barra de menú
         buildToolBar();      //construye la barra de herramientas
@@ -393,7 +394,7 @@ public class StepToStepUI extends Editor {
             registros = new Vector<String>();
 
             registros.add("R"+String.valueOf(i));
-            registros.add("0");	//Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepToStepUI
+            registros.add(this.valoresRegistros[i]);	//Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepToStepUI
             data.add(registros);
 
         }
@@ -407,10 +408,10 @@ public class StepToStepUI extends Editor {
         columnFlags.add("F");
         Vector<String> flags = new Vector<String>();
         //TODO NOTA: Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepTOStep
-        flags.add("0");
-        flags.add("0");
-        flags.add("0");
-        flags.add("0");
+        flags.add(String.valueOf(this.C));
+        flags.add(String.valueOf(this.Z));
+        flags.add(String.valueOf(this.O));
+        flags.add(String.valueOf(this.F));
         dataFlags.add(flags);
         JTable tablaFlags = new JTable(dataFlags, columnFlags);
         tablaFlags.setVisible(true);
@@ -426,7 +427,16 @@ public class StepToStepUI extends Editor {
 
     public void setEstadoActual(EstadoMaquina estadoMaquina) {
         //TODO - Setear a partir de estado maquina l oque se quiere mostrar
+
     }
+
+    private void inicializarValoresStep()
+    {
+        this.valoresRegistros = new String[16];
+        for (int i = 0 ; i < 16 ; i++) this.valoresRegistros[i] = String.valueOf("0");
+        this.C = this.F = this.Z = this.O = false;
+    }
+
 
 
 //class EventHandler extends MouseAdapter implements ActionListener,CaretListener,UndoableEditListener {
