@@ -1,7 +1,5 @@
 package main.model;
 
-import java.util.Map;
-
 /**
  * Created by gonchub on 24/03/14.
  */
@@ -9,11 +7,11 @@ public class EstadoMaquina {
 
     private BancoRegistros bancoRegistros;
     private MemoriaPrincipal memoriaPrincipal;
-    private String aluControlBits;
+    private ALUControl aluControlBits;
     private Float porcentajeMemoriaUtilizada;
     private Float porcentajeRegistrosUtilizados;
 
-    public EstadoMaquina(BancoRegistros regs, MemoriaPrincipal mem, String aluBits) {
+    public EstadoMaquina(BancoRegistros regs, MemoriaPrincipal mem, ALUControl aluBits) {
         bancoRegistros = regs;
         memoriaPrincipal = mem;
         aluControlBits = aluBits;
@@ -36,11 +34,11 @@ public class EstadoMaquina {
         return porcentajeRegistrosUtilizados;
     }
 
-    public String getAluControlBits() {
+    public ALUControl getAluControlBits() {
         return aluControlBits;
     }
 
-    public void setAluControlBits(String aluControlBits) {
+    public void setAluControlBits(ALUControl aluControlBits) {
         this.aluControlBits = aluControlBits;
     }
 

@@ -24,15 +24,15 @@ public class MaquinaGenerica {
 
 
     public String ejecutarInstruccion(Simulador simulador, Instruccion instruccion) {
-        if (!enFuncionamiento) return null ;
-        String error = memoriaPrincipal.setValor(instruccion.getPosEnMemoria(), instruccion.getLineaCodigo(),true);
+        if (!enFuncionamiento) return null;
+        String error = memoriaPrincipal.setValor(instruccion.getPosEnMemoria(), instruccion.getLineaCodigo(), true);
         if (error == null) error = instruccion.operacion(simulador, this);
         return error;
     }
 
     public String escribirEnMemoria(ComplexNumber numeroCelda, String hexa) {
         if (!enFuncionamiento) return null;
-        String error = memoriaPrincipal.setValor(numeroCelda, hexa,false);
+        String error = memoriaPrincipal.setValor(numeroCelda, hexa, false);
         return error;
     }
 
@@ -50,7 +50,7 @@ public class MaquinaGenerica {
     }
 
     public EstadoMaquina obtenerEstado() {
-        EstadoMaquina estadoActual = new EstadoMaquina(bancoRegistros, memoriaPrincipal, "");
+        EstadoMaquina estadoActual = new EstadoMaquina(bancoRegistros, memoriaPrincipal, aluControl);
         estadoActual.calcularEstadoMaquina();
         return estadoActual;
     }
