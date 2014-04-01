@@ -28,10 +28,11 @@ public class StepToStepUI extends Editor {
     Vector<String> nRegistros;
     Vector<String> registros;
     private JTable  tablaRegistros;
-
+    private JTable tablaRam;
     private JTable tablaFlags;
     private JScrollPane regArea;
     private JScrollPane flagArea;
+    private JScrollPane ramArea;
     private String valoresRegistros[];
     private boolean C,Z,O,F;
 
@@ -46,52 +47,9 @@ public class StepToStepUI extends Editor {
 	//private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
     private JPanel statusBar;         //instancia de JPanel (barra de estado)
     private JPanel compilationResultsBar; //instancia de JPanel (resultado de compilacion)
-   /* private JCheckBoxMenuItem itemLineWrap;         //instancias de algunos items de menú que necesitan ser accesibles
-    private JCheckBoxMenuItem itemShowToolBar;
-    private JCheckBoxMenuItem itemFixedToolBar;
-    private JCheckBoxMenuItem itemShowStatusBar;
-    private JMenuItem mbItemUndo;
-    private JMenuItem mbItemRedo;
-    private JMenuItem mpItemUndo;
-    private JMenuItem mpItemRedo;*/
+
  
-//    private JButton buttonUndo;    //instancias de algunos botones que necesitan ser accesibles
-//    private JButton buttonRedo;
- 
-//    private JLabel sbFilePath;    //etiqueta que muestra la ubicación del archivo actual
-//    private JLabel sbFileSize;    //etiqueta que muestra el tamaño del archivo actual
-//    private JLabel sbCaretPos;    //etiqueta que muestra la posición del cursor en el área de edición
- 
-//    private boolean hasChanged = false;    //el estado del documento actual, no modificado por defecto
-//    private File currentFile = null;       //el archivo actual, ninguno por defecto
-// 
-////    private final EventHandler eventHandler;          //instancia de EventHandler (la clase que maneja eventos)
-//    private final ActionPerformer actionPerformer;    //instancia de ActionPerformer (la clase que ejecuta acciones)
-//    private final UndoManager undoManager;            //instancia de UndoManager (administrador de edición)
- 
-    /**
-     * Punto de entrada del programa.
-     *
-     * Instanciamos esta clase para construir la GUI y hacerla visible.
-     *
-     * @param args argumentos de la línea de comandos.
-     */
-    /*public static void main(String[] args) {
-        //construye la GUI en el EDT (Event Dispatch Thread)
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
- 
-            @Override
-            public void run() {
-                new Editor().jFrame.setVisible(true);    //hace visible la GUI creada por la clase TPEditor
-            }
-        });
-    }*/
- 
-    /**
-     * Constructor de la clase.
-     *
-     * Se construye la GUI del editor, y se instancian clases importantes.
-     */
+
      public StepToStepUI(ActionPerformer actionPerformerInstance) {
          super("Sol temporal");//TODO resolver esto de una forma mejor
         try {    //LookAndFeel nativo
@@ -124,6 +82,7 @@ public class StepToStepUI extends Editor {
         buildCompilationBar();
         buildStatusBar();	//construye la barra de estado
         buildRegArea();
+         buildRamArea();
         //buildPopupMenu();    //construye el menú emergente
        // jFrame.setJMenuBar(jMenuBar);                              //designa la barra de menú del JFrame
         Container c = jFrame.getContentPane();                     //obtiene el contendor principal
@@ -191,10 +150,16 @@ public class StepToStepUI extends Editor {
         buttonExecuteStep.setToolTipText("Ejecutar siguiente instrucción");
         buttonExecuteStep.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play_pause.png").getPath()));
         buttonExecuteStep.setActionCommand("cmd_nextStep");
-        
+
+        JButton buttonGetMemory = new JButton();
+        buttonGetMemory.setToolTipText("Ver estado de memoria");
+        buttonGetMemory.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_ram.png").getPath()));
+        buttonGetMemory.setActionCommand("cmd_show_ram");
+
+
         jToolBar.addSeparator();    //añade separadores entre algunos botones
         jToolBar.add(buttonExecuteStep);
-
+        jToolBar.add(buttonGetMemory);
         /** itera sobre todos los componentes de la barra de herramientas, se les asigna el
         mismo margen y el mismo manejador de eventos unicamente a los botones */
         for (Component c : jToolBar.getComponents()) {
@@ -287,21 +252,7 @@ public class StepToStepUI extends Editor {
         //mpItemRedo.setEnabled(canRedo);
     }
  
-    /**
-     * Retorna la instancia de EventHandler, la clase interna que maneja eventos.
-     *
-     * @return el manejador de eventos.
-     */
-//    EventHandler getEventHandler() {
-//        return eventHandler;
-//    }
- 
-    /**
-     * Retorna la instancia de UndoManager, la cual administra las ediciones sobre
-     * el documento en el área de texto.
-     *
-     * @return el administrador de edición.
-     */
+
     UndoManager getUndoManager() {
         return undoManager;
     }
@@ -445,6 +396,11 @@ public class StepToStepUI extends Editor {
         tablaFlags.setValueAt(a.isOverflow(),0,2);
         tablaFlags.setValueAt(a.isPrecisionLost(),0,3);
 
+        for (int i = 0 ; i < 256 ; i++)
+        {
+         tablaRam.setValueAt(m.leerCelda(new ComplexNumber(i)),i,1);
+        }
+
     }
 
     private void inicializarValoresStep()
@@ -454,66 +410,35 @@ public class StepToStepUI extends Editor {
         this.C = this.F = this.Z = this.O = false;
     }
 
-
-
-//class EventHandler extends MouseAdapter implements ActionListener,CaretListener,UndoableEditListener {
-//	
-//	public void actionPerformed(ActionEvent ae) {
-//        String ac = ae.getActionCommand();    //se obtiene el nombre del comando ejecutado
-//        actionPerformer.DoAction(ac);
-//       
-//    }
-//
-//    /**
-//     * Atiende y maneja los eventos del cursor.
-//     *
-//     */
-//    @Override
-//    public void caretUpdate(CaretEvent e) {
-//        final int caretPos;  //valor de la posición del cursor sin inicializar
-//        int y = 1;           //valor de la línea inicialmente en 1
-//        int x = 1;           //valor de la columna inicialmente en 1
-//
-//        try {
-//            //obtiene la posición del cursor con respecto al inicio del JTextArea (área de edición)
-//            caretPos = jTextArea.getCaretPosition();
-//            //sabiendo lo anterior se obtiene el valor de la línea actual (se cuenta desde 0)
-//            y = jTextArea.getLineOfOffset(caretPos);
-//
-//            /** a la posición del cursor se le resta la posición del inicio de la línea para
-//            determinar el valor de la columna actual */
-//            x = caretPos - jTextArea.getLineStartOffset(y);
-//
-//            //al valor de la línea actual se le suma 1 porque estas comienzan contándose desde 0
-//            y += 1;
-//        } catch (BadLocationException ex) {    //en caso de que ocurra una excepción
-//            System.err.println(ex);
-//        }
-//
-//        /** muestra la información recolectada en la etiqueta sbCaretPos de la
-//        barra de estado, también se incluye el número total de lineas */
-//        sbCaretPos.setText("Líneas: " + jTextArea.getLineCount() + " - Y: " + y + " - X: " + x);
-//    }
-//
-//    /**
-//     * Atiende y maneja los eventos sobre el documento en el área de edición.
-//     *
-//     * @param uee evento de edición
-//     */
-//    @Override
-//    public void undoableEditHappened(UndoableEditEvent uee) {
-//        /** el cambio realizado en el área de edición se guarda en el buffer
-//        del administrador de edición */
-//        undoManager.addEdit(uee.getEdit());
-//        updateControls();    //actualiza el estado de las opciones "Deshacer" y "Rehacer"
-//
-//        hasChanged = true;
-//    }
-//
-//}
-
-    private void update()
+    private void buildRamArea()
     {
+        Vector<Vector> data = new Vector<Vector>();
+        Vector<Vector> dataFlags  = new Vector<Vector>();
+//    	registros.clear();
 
+        Vector<String> columnNames = new Vector<String>();
+        columnNames.add("Celda");
+        columnNames.add("Valor");
+
+        for (int i = 0 ; i < 256 ; i++)
+        {
+            registros = new Vector<String>();
+
+            registros.add(String.valueOf(i));
+            registros.add("0");
+            data.add(registros);
+
+        }
+        tablaRam = new JTable(data,columnNames);
+        tablaRam.setAutoscrolls(true);
+        ramArea = new JScrollPane(tablaRam);
+    }
+
+    public void showMemoryRam()
+    {
+        final JComponent[] inputs = new JComponent[]{
+            ramArea
+        };
+        JOptionPane.showMessageDialog(null, inputs, "Memoria Ram", JOptionPane.PLAIN_MESSAGE);
     }
 }

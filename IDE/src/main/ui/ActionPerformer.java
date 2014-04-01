@@ -221,7 +221,10 @@ public class ActionPerformer {
         } else if (comandoDeAccion.equals("cmd_hexaToFP") == true) {    //opción seleccionada: "Ir a la línea..."
         this.hexaTo(false,tpEditor.getHexaField().getText());
 
-          }/*else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
+          }else if (comandoDeAccion.equals("cmd_show_ram")){
+            showRam();
+        }
+          /*else if (comandoDeAccion.equals("cmd_search") == true) {    //opción seleccionada: "Buscar"
             actionPerformer.actionSearch();
         } else if (comandoDeAccion.equals("cmd_searchnext") == true) {    //opción seleccionada: "Buscar siguiente"
             actionPerformer.actionSearchNext();
@@ -836,6 +839,11 @@ public class ActionPerformer {
             if (!posibleValues.contains(""+entrada.charAt(0))) return false;
         }
         return true;
+    }
+
+    private void showRam()
+    {
+        ss.showMemoryRam();
     }
 
 }
