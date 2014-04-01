@@ -28,7 +28,7 @@ public class Editor {
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
-    private JTextArea jTextArea;      //instancia de JTextArea (área de edición)
+    protected JTextArea jTextArea;      //instancia de JTextArea (área de edición)
     //private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
     private JPanel statusBar;         //instancia de JPanel (barra de estado)
     private JPanel compilationResultsBar; //instancia de JPanel (resultado de compilacion)

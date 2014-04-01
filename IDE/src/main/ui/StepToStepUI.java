@@ -39,10 +39,8 @@ public class StepToStepUI extends Editor {
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
-    private JTextArea jTextArea;      //instancia de JTextArea (área de edición)
-    public void setjTextArea(JTextArea jTextArea) {
-	//	this.jTextArea.setText(jTextArea.getText());
-	}
+    //private JTextArea jTextArea;      //instancia de JTextArea (área de edición)
+
 
 	//private JPopupMenu jPopupMenu;    //instancia de JPopupMenu (menú emergente)
     private JPanel statusBar;         //instancia de JPanel (barra de estado)
@@ -61,7 +59,7 @@ public class StepToStepUI extends Editor {
         //construye un JFrame con título
         jFrame = new JFrame("Ejecución Paso a Paso");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-         this.jTextArea = new JTextArea();
+
         //asigna un manejador de eventos para el cierre del JFrame
         jFrame.addWindowListener(new WindowAdapter() {
  
