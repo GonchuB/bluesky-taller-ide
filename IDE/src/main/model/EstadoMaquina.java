@@ -34,6 +34,10 @@ public class EstadoMaquina {
         return porcentajeRegistrosUtilizados;
     }
 
+    public void setPorcentajeRegistrosUtilizados(Float porcentajeRegistrosUtilizados) {
+        this.porcentajeRegistrosUtilizados = porcentajeRegistrosUtilizados;
+    }
+
     public ALUControl getAluControlBits() {
         return aluControlBits;
     }
@@ -42,7 +46,19 @@ public class EstadoMaquina {
         this.aluControlBits = aluControlBits;
     }
 
-    public void setPorcentajeRegistrosUtilizados(Float porcentajeRegistrosUtilizados) {
-        this.porcentajeRegistrosUtilizados = porcentajeRegistrosUtilizados;
+    public BancoRegistros getBancoRegistros() {
+        return bancoRegistros;
+    }
+
+    public void setBancoRegistros(BancoRegistros bancoRegistros) {
+        this.bancoRegistros = bancoRegistros;
+    }
+
+    public MemoriaPrincipal getMemoriaPrincipal() {
+        return memoriaPrincipal;
+    }
+
+    public void setMemoriaPrincipal(MemoriaPrincipal memoriaPrincipal) {
+        this.memoriaPrincipal = memoriaPrincipal;
     }
 }
