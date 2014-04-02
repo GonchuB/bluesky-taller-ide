@@ -358,7 +358,6 @@ public class StepToStepUI extends Editor {
         columnFlags.add("O");
         columnFlags.add("F");
         Vector<String> flags = new Vector<String>();
-        //TODO NOTA: Es el controlador quien afecta la vista, no al reves. Ver metodo public void setEstadoActual(EstadoMaquina estadoMaquina) de StepTOStep
         flags.add(String.valueOf(this.C));
         flags.add(String.valueOf(this.Z));
         flags.add(String.valueOf(this.O));

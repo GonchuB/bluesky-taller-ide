@@ -87,7 +87,21 @@ public class Compilador {
         if (!ops.contains("" + s.charAt(0))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no posee un código válido";
         String digits = "0123456789ABCDEF";
         if (!digits.contains("" + s.charAt(1)) || !digits.contains("" + s.charAt(2)) || !digits.contains("" + s.charAt(3))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no esta en hexadecimal";
-        //TODO - Checkear contenido segun el codigo de instruccion
+        return checkearContenidoInstSCodigo(nLinea,s);
+    }
+
+    private String checkearContenidoInstSCodigo(int nLinea, String s) {
+        switch (s.charAt(0)){
+            case '4':
+                if(s.charAt(1) != '0') return "Error de syntaxis - Linea " + nLinea + " - La instrucción posee un fomato inválido";
+                break;
+            case 'A':
+                if(s.charAt(2) != '0') return "Error de syntaxis - Linea " + nLinea + " - La instrucción posee un fomato inválido";
+                break;
+            case 'C':
+                if(s.charAt(1) != '0' || s.charAt(2) != '0' || s.charAt(3) != '0') return "Error de syntaxis - Linea " + nLinea + " - La instrucción posee un fomato inválido";
+                break;
+        }
         return null;
     }
 

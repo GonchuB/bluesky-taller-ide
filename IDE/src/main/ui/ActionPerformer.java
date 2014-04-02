@@ -228,7 +228,7 @@ public class ActionPerformer {
             actionPerformer.actionSearch();
         } else if (comandoDeAccion.equals("cmd_searchnext") == true) {    //opción seleccionada: "Buscar siguiente"
             actionPerformer.actionSearchNext();
-        } else if (comandoDeAccion.equals("cmd_selectall") == true) {    //opción seleccionada: "Seleccionar todo"
+        } else if (comandoDeAccion.equals("cmd_selectall") == true) {    //opción seleccionada: "Seleccionar tdo"
             jTextArea.selectAll();
         } else if (comandoDeAccion.equals("cmd_linewrap") == true) {    //opción seleccionada: "Ajuste de línea"
             //si esta propiedad esta activada se desactiva, o lo inverso
@@ -260,25 +260,6 @@ public class ActionPerformer {
 
     private void actionHexaConversion() {
         tpEditor.setHexaToDecimal();
-       /* JTextField hexaField = new JTextField();
-        JTextField deciField = new JTextField();
-        JRadioButton a2Radio = new JRadioButton();
-        a2Radio.setLabel("Conversion a2");
-        JRadioButton fpRadio = new JRadioButton();
-        fpRadio.setLabel("Conversion punto flotante");
-        final JComponent[] inputs = new JComponent[] {
-                new JLabel("Valor Hexadecimal"),
-                hexaField,
-                new JLabel("Valor Decimal"),
-                deciField,
-                new JSeparator(),
-                a2Radio,
-                fpRadio
-
-        };
-        //TODO - Hacer mejor este dialog!
-        JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);*/
-
     }
 
 
@@ -486,7 +467,7 @@ public class ActionPerformer {
                 JOptionPane.QUESTION_MESSAGE);
 
         if (text != null) {    //si se introdujo texto (puede ser una cadena vacía)
-            String textAreaContent = tpEditor.getJTextArea().getText();    //obtiene todo el contenido del área de edición
+            String textAreaContent = tpEditor.getJTextArea().getText();    //obtiene tdo el contenido del área de edición
             int pos = textAreaContent.indexOf(text);    //obtiene la posición de la primera ocurrencia del texto
 
             if (pos > -1) {    //si la posición es mayor a -1 significa que la búsqueda fue positiva
@@ -506,7 +487,7 @@ public class ActionPerformer {
      */
    /* public void actionSearchNext() {
         if (lastSearch.length() > 0) {    //si la última búsqueda contiene texto
-            String textAreaContent = tpEditor.getJTextArea().getText();    //se obtiene todo el contenido del área de edición
+            String textAreaContent = tpEditor.getJTextArea().getText();    //se obtiene tdo el contenido del área de edición
             int pos = tpEditor.getJTextArea().getCaretPosition();    //se obtiene la posición del cursor sobre el área de edición
             //buscando a partir desde la posición del cursor, se obtiene la posición de la primera ocurrencia del texto
             pos = textAreaContent.indexOf(lastSearch, pos);
