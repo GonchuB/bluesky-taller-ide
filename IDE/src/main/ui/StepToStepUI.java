@@ -26,6 +26,7 @@ import java.util.Vector;
 import main.ui.Editor.EventHandler;
 public class StepToStepUI extends Editor {
     Vector<String> nRegistros;
+    private int numeroInstruccion;
     Vector<String> registros;
     private JTable  tablaRegistros;
     private JTable tablaRam;
@@ -35,7 +36,7 @@ public class StepToStepUI extends Editor {
     private JScrollPane ramArea;
     private String valoresRegistros[];
     private boolean C,Z,O,F;
-
+    private JTextField currentInstruction;
     private JFrame jFrame;            //instancia de JFrame (ventana principal)
    // private JMenuBar jMenuBar;        //instancia de JMenuBar (barra de menú)
     private JToolBar jToolBar;        //instancia de JToolBar (barra de herramientas)
@@ -55,7 +56,7 @@ public class StepToStepUI extends Editor {
         } catch (Exception ex) {
             System.err.println(ex);
         }
- 
+         numeroInstruccion = 0;
         //construye un JFrame con título
         jFrame = new JFrame("Ejecución Paso a Paso");
         jFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -154,10 +155,19 @@ public class StepToStepUI extends Editor {
         buttonGetMemory.setIcon(new ImageIcon(getClass().getClassLoader().getResource("tp_ram.png").getPath()));
         buttonGetMemory.setActionCommand("cmd_show_ram");
 
+        currentInstruction = new JTextField();
+        currentInstruction.setEditable(false);
+        currentInstruction.setColumns(25);
+
+        //currentInstruction.setText("Aca va la instruccion actuaasdkjaskdjsañkljdsañkljdañljkdlajsdkll");
+
 
         jToolBar.addSeparator();    //añade separadores entre algunos botones
         jToolBar.add(buttonExecuteStep);
         jToolBar.add(buttonGetMemory);
+        jToolBar.addSeparator();
+        jToolBar.add(new JLabel("Instrucción actual: "));
+        jToolBar.add(currentInstruction);
         /** itera sobre todos los componentes de la barra de herramientas, se les asigna el
         mismo margen y el mismo manejador de eventos unicamente a los botones */
         for (Component c : jToolBar.getComponents()) {
@@ -398,6 +408,14 @@ public class StepToStepUI extends Editor {
          tablaRam.setValueAt(m.leerCelda(new ComplexNumber(i)),i,1);
         }
 
+        String lines[] = this.jTextArea.getText().split("\n");
+        //System.out.print(lines[numeroInstruccion]);
+        try {
+            this.currentInstruction.setText(lines[numeroInstruccion]);
+            numeroInstruccion++;
+        }catch (Exception i){
+
+        }
     }
 
     private void inicializarValoresStep()

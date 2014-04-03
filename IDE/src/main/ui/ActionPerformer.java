@@ -388,7 +388,7 @@ public class ActionPerformer {
             simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);
-            System.out.print(tpEditor.getJTextArea().getText());
+            //System.out.print(tpEditor.getJTextArea().getText());
             JTextArea a = ss.getJTextArea();
             ss.getJTextArea().setText(tpEditor.getJTextArea().getText());
             ss.setEstadoActual(simulador.mostrarEstadoSimulacion());

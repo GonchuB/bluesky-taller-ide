@@ -160,6 +160,7 @@ public class Editor {
         jTextArea.setText("");
         jTextArea.setEditable(true);
         jTextArea.setBackground(Color.WHITE);
+
         textAreaEnable = true;
     }
 
