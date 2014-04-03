@@ -411,7 +411,7 @@ public class StepToStepUI extends Editor {
         String lines[] = this.jTextArea.getText().split("\n");
         //System.out.print(lines[numeroInstruccion]);
         try {
-            this.currentInstruction.setText(lines[numeroInstruccion]);
+            this.currentInstruction.setText((lines[numeroInstruccion].split(";"))[0]);
             numeroInstruccion++;
         }catch (Exception i){
 
