@@ -3,6 +3,7 @@ package main.model.instrucciones.tipos;
 import main.model.ComplexNumber;
 import main.model.MaquinaGenerica;
 import main.model.Simulador;
+import main.ui.VistaEntradaSalida;
 
 import javax.swing.*;
 
@@ -12,10 +13,12 @@ import javax.swing.*;
 public class InstruccionAlmacenar extends Instruccion {
     private ComplexNumber numeroRegistro;
     private ComplexNumber numeroDeCelda;
+    private VistaEntradaSalida vistaConversionHexa;
 
     public InstruccionAlmacenar(ComplexNumber numeroRegistro, ComplexNumber numeroDeCelda) {
         this.numeroRegistro = numeroRegistro;
         this.numeroDeCelda = numeroDeCelda;
+        this.vistaConversionHexa = new VistaEntradaSalida();
     }
 
     @Override
@@ -26,7 +29,7 @@ public class InstruccionAlmacenar extends Instruccion {
         if (numeroDeCelda.getDecimalNumber() == 255){
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
             if(error != null) return error;
-            JOptionPane.showMessageDialog(null, "Sale: " + hexa, "Instruccion Almacenar", JOptionPane.INFORMATION_MESSAGE);
+            vistaConversionHexa.mostrarEntradaHexa(hexa);
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
             if(error != null) return error;
         }
