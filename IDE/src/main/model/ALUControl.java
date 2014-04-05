@@ -1,5 +1,7 @@
 package main.model;
 
+import main.apis.FPConversionAPI;
+
 /**
  * Created by gonchub on 24/03/14.
  */
@@ -8,7 +10,7 @@ public class ALUControl {
     private static Integer maxPosIntNumber = 127;
     private static Float maxPosFloatNumber = new Float(0.9999 * Math.pow(10, 3));
     private static Integer maxNegIntNumber = -128;
-    private static Float maxNegFloatNumber = new Float(-0.9999 * Math.pow(10, 3));
+    private static Float maxNegFloatNumber = new Float(-0.9999 * Math.pow(10, 3)); // FIXME: este valor esta mal
     private boolean overflow;
     private boolean precisionLost;
     private boolean zero;
@@ -28,8 +30,7 @@ public class ALUControl {
     }
 
     public boolean checkSumPrecisionLost(Float op1, Float op2) {
-        // FIXME: esto tambien solo sirve para floats de 32 bits. Habria que hacer nuestra conversion a PF de 8 bits y comparar convertir y desconvertir contra el valor original.
-        return roundToSignificantFigures(op1 + op2, 4) != (op1 + op2);
+        return FPConversionAPI.isPrecisionLostInConversion(op1 + op2);
     }
 
     public boolean checkSumOverflow(Float op1, Float op2) {
@@ -39,8 +40,8 @@ public class ALUControl {
     public Float addTwoNumbers(Float op1, Float op2) {
         Float result = op1 + op2;
         this.setOverflow(this.checkSumOverflow(op1, op2));
-        this.setNegative(result < 0);
-        this.setZero(result == 0);
+        this.setNegative(result < 0.0f);
+        this.setZero(result == 0.0f);
         this.setPrecisionLost(checkSumPrecisionLost(op1, op2));
         return result;
     }
