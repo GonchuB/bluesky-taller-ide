@@ -82,29 +82,32 @@ public class FabricaTraductor {
     }
 
     private String getParamRegexByCode(int i) {
+        String regRegex = "(r([0-9]|1[0-5]))";
+        String memRegex = "([01][0-9][0-9]|2[0-4][0-9]|25[0-5])";
+        String immRegex = memRegex;
         switch (i) {
             case 1:
-                return "^r[0-15],([01][0-9][0-9]|2[0-4][0-9]|25[0-5])$";
+                return "^" + regRegex + "," + memRegex +"$";
             case 2:
-                return "^r[0-15],([01][0-9][0-9]|2[0-4][0-9]|25[0-5])$";
+                return "^" + regRegex + "," + immRegex +"$";
             case 3:
-                return "^r[0-15],([01][0-9][0-9]|2[0-4][0-9]|25[0-5])$";
+                return "^" + regRegex + "," + memRegex +"$";
             case 4:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex +"$";
             case 5:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 6:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 7:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 8:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 9:
-                return "^r([0-9]|1[0-5]),r([0-9]|1[0-5]),r([0-9]|1[0-5])$";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 10:
-                return "^r[0-15],([0-9]|1[0-5])$";
+                return "^" + regRegex + "([0-9]|1[0-5])" + "$";
             case 11:
-                return "^r[0-15],([01][0-9][0-9]|2[0-4][0-9]|25[0-5])$";
+                return "^" + regRegex + "," + memRegex + "$";
             case 12:
                 return "^$";
             default:
