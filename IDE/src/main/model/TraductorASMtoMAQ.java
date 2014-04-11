@@ -183,11 +183,6 @@ public class TraductorASMtoMAQ {
         if(opCode.equals("4")){
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add("0");
-            /*for (String s : parsedParams){
-                if (s.length() > 1){
-                    newParsedParams.add("" + s.charAt(1));
-                }
-            }*/
             newParsedParams.addAll(parsedParams);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
@@ -196,7 +191,11 @@ public class TraductorASMtoMAQ {
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add(parsedParams.get(0));
             newParsedParams.add("0");
-            newParsedParams.add(parsedParams.get(1));
+            String e = parsedParams.get(1);
+            if (e.length() == 2){
+                e = "" + e.charAt(1);
+            }
+            newParsedParams.add(e);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
         }
