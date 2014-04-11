@@ -113,10 +113,8 @@ public class TraductorASMtoMAQ {
      */
     public String registerParamToString(String registerParam, String opCode) {
         String replaced = registerParam.replaceFirst("r", "");
-        if (opCode.equals("4")) {
-            return "0" + HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
-        }
-        return HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
+        String decimal_to_hex = HEXAConversionAPI.decimal_to_hex(Integer.parseInt(replaced));
+        return decimal_to_hex;
     }
 
 
@@ -149,6 +147,7 @@ public class TraductorASMtoMAQ {
             comments_counter = 1;
         }
         ArrayList<String> parsedParams = new ArrayList<String>();
+
 
         for (String param : params) {
             if (isRegisterParam(param)) {
@@ -184,6 +183,11 @@ public class TraductorASMtoMAQ {
         if(opCode.equals("4")){
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add("0");
+            /*for (String s : parsedParams){
+                if (s.length() > 1){
+                    newParsedParams.add("" + s.charAt(1));
+                }
+            }*/
             newParsedParams.addAll(parsedParams);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);

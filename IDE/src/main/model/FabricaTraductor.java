@@ -83,7 +83,7 @@ public class FabricaTraductor {
 
     private String getParamRegexByCode(int i) {
         String regRegex = "(r([0-9]|1[0-5]))";
-        String memRegex = "([01][0-9][0-9]|2[0-4][0-9]|25[0-5])";
+        String memRegex = "([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
         String immRegex = memRegex;
         switch (i) {
             case 1:
@@ -105,7 +105,7 @@ public class FabricaTraductor {
             case 9:
                 return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 10:
-                return "^" + regRegex + "([0-9]|1[0-5])" + "$";
+                return "^" + regRegex + "," + "([0-9]|1[0-5])" + "$";
             case 11:
                 return "^" + regRegex + "," + memRegex + "$";
             case 12:
