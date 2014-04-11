@@ -20,6 +20,7 @@ public class VistaEntradaSalida extends Editor {
 		botonConversionHexa.setToolTipText("Conversion Hexadecimal");
         botonConversionHexa.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bit_refresh.png").getPath()));
         botonConversionHexa.setActionCommand("cmd_hexa");
+        botonConversionHexa.addActionListener(eventHandler);
 	}
 	
 	public void mostrarSalidaHexa(String hexa){
