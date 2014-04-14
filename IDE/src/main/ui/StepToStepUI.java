@@ -399,7 +399,7 @@ public class StepToStepUI extends Editor {
         }
 
         tablaFlags.setValueAt(a.isNegative(),0,1);
-            tablaFlags.setValueAt(a.isZero(),0,1);
+        tablaFlags.setValueAt(a.isZero(),0,1);
         tablaFlags.setValueAt(a.isOverflow(),0,2);
         tablaFlags.setValueAt(a.isPrecisionLost(),0,3);
 

@@ -627,7 +627,7 @@ public class ActionPerformer {
                 //muestra la ubicación del archivo actual
                 tpEditor.getJLabelFilePath().setText(shortPathName(f.getAbsolutePath()));
                 //muestra el tamaño del archivo actual
-                tpEditor.getJLabelFileSize().setText(roundFileSize(f.length()));
+                tpEditor.getJLabelFileSize().setText(""/*roundFileSize(f.length())*/);
  
                 //establece el archivo cargado como el archivo actual
                 tpEditor.setCurrentFile(f);
@@ -710,7 +710,7 @@ public class ActionPerformer {
                 //muestra la ubicación del archivo guardado
                 tpEditor.getJLabelFilePath().setText(shortPathName(f.getAbsolutePath()));
                 //muestra el tamaño del archivo guardado
-                tpEditor.getJLabelFileSize().setText(roundFileSize(f.length()));
+                tpEditor.getJLabelFileSize().setText(""/*roundFileSize(f.length())*/);
  
                 //establece el archivo guardado como el archivo actual
                 tpEditor.setCurrentFile(f);
