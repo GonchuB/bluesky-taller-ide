@@ -149,7 +149,6 @@ public class HEXAConversionAPI {
     }
 
     public static String fp_decimal_to_hex(Float f) {
-        // FIXME: esto es para floats de 32 bits. Corregir para floats de 8 bits como dice el enunciado. Seguramente haya que hacerlo a manopla.
         int i = Float.floatToIntBits(f);
         return decimal_to_hex(i);
     }
