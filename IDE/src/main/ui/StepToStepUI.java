@@ -348,8 +348,8 @@ public class StepToStepUI extends Editor {
 //    	registros.clear();
 
         Vector<String> columnNames = new Vector<String>();
-        columnNames.add("NumRegs");
-        columnNames.add("Regs");
+        columnNames.add("Reg");
+        columnNames.add("Valor");
         for (int i = 0 ; i < 16 ; i++)
         {
             registros = new Vector<String>();
