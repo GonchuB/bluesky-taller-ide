@@ -377,6 +377,8 @@ public class StepToStepUI extends Editor {
         tablaFlags.setVisible(true);
         tablaFlags.setAutoscrolls(true);
         tablaFlags.setLocation(15, 15);
+        tablaFlags.setEnabled(false);
+        tablaRegistros.setEnabled(false);
         regArea = new JScrollPane(tablaRegistros);
 
         flagArea = new JScrollPane(tablaFlags);
@@ -446,6 +448,7 @@ public class StepToStepUI extends Editor {
         }
         tablaRam = new JTable(data,columnNames);
         tablaRam.setAutoscrolls(true);
+        tablaRam.setEnabled(false);
         ramArea = new JScrollPane(tablaRam);
     }
 
