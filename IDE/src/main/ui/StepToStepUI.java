@@ -1,29 +1,15 @@
 package main.ui;
-import java.awt.*;
-
 import main.model.*;
-import main.ui.Editor;
 
+import javax.swing.*;
+import javax.swing.undo.UndoManager;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-
-import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.undo.UndoManager;
 import java.util.Vector;
-
-
-import main.ui.Editor.EventHandler;
 public class StepToStepUI extends Editor {
     Vector<String> nRegistros;
     private int numeroInstruccion;
@@ -387,6 +373,12 @@ public class StepToStepUI extends Editor {
         regArea.setPreferredSize(new Dimension(100,100));
     }
 
+    private int boolToInt(boolean a)
+    {
+       if (a == true) return 1 ;
+        else return 0;
+    }
+
     public void setEstadoActual(EstadoMaquina estadoMaquina) {
         //TODO - Setear a partir de estado maquina l oque se quiere mostrar
        BancoRegistros b =  estadoMaquina.getBancoRegistros();
@@ -400,10 +392,10 @@ public class StepToStepUI extends Editor {
 
         }
 
-        tablaFlags.setValueAt(a.isNegative(),0,1);
-        tablaFlags.setValueAt(a.isZero(),0,1);
-        tablaFlags.setValueAt(a.isOverflow(),0,2);
-        tablaFlags.setValueAt(a.isPrecisionLost(),0,3);
+        tablaFlags.setValueAt(boolToInt(a.isNegative()),0,0);
+        tablaFlags.setValueAt(boolToInt(a.isZero()),0,1);
+        tablaFlags.setValueAt(boolToInt(a.isOverflow()),0,2);
+        tablaFlags.setValueAt(boolToInt(a.isPrecisionLost()),0,3);
 
         for (int i = 0 ; i < 256 ; i++)
         {
