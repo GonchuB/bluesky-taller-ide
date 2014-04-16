@@ -36,7 +36,7 @@ public class StepToStepUI extends Editor {
  
 
      public StepToStepUI(ActionPerformer actionPerformerInstance) {
-         super("Sol temporal");//TODO resolver esto de una forma mejor
+         super("Sol temporal");//
         try {    //LookAndFeel nativo
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
@@ -380,7 +380,7 @@ public class StepToStepUI extends Editor {
     }
 
     public void setEstadoActual(EstadoMaquina estadoMaquina) {
-        //TODO - Setear a partir de estado maquina l oque se quiere mostrar
+
        BancoRegistros b =  estadoMaquina.getBancoRegistros();
         MemoriaPrincipal m = estadoMaquina.getMemoriaPrincipal();
         ALUControl a = estadoMaquina.getAluControlBits();
@@ -451,4 +451,6 @@ public class StepToStepUI extends Editor {
         };
         JOptionPane.showMessageDialog(null, inputs, "Memoria Ram", JOptionPane.PLAIN_MESSAGE);
     }
+
+
 }

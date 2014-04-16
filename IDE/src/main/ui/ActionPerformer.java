@@ -6,25 +6,12 @@ import main.model.Compilador;
 import main.model.Simulador;
 import main.model.TraductorASMtoMAQ;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.regex.Pattern;
-
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.text.BadLocationException;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import java.io.*;
+import java.util.regex.Pattern;
 
 public class ActionPerformer {
 
@@ -88,6 +75,7 @@ public class ActionPerformer {
             return ".maq Simulator Files";
         }
     };
+
     private final Editor tpEditor;    //instancia de TPEditor (la clase principal)
     private StepToStepUI ss;
     private final Simulador simulador;
@@ -385,6 +373,7 @@ public class ActionPerformer {
 
         if (!error) {
             simulador.init(rutaArchivoMAQ);
+            simulador.resetearMaquina();
             simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);
