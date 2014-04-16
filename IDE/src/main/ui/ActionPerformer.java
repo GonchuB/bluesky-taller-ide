@@ -373,7 +373,7 @@ public class ActionPerformer {
 
         if (!error) {
             simulador.init(rutaArchivoMAQ);
-            simulador.resetearMaquina();
+           // simulador.resetearMaquina();
             simulador.iniciarSimulacionPasoAPaso();
             tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);

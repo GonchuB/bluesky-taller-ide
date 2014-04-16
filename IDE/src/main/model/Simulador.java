@@ -65,6 +65,7 @@ public class Simulador {
     }
 
     public void iniciarSimulacionPasoAPaso(){
+        resetearMaquina();
         if (instrucciones.isEmpty()){
             JOptionPane.showMessageDialog(null, "Ejecución finalizada", "Simulador", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -141,7 +142,7 @@ public class Simulador {
         return estadoMaquina;
     }
 
-    public void resetearMaquina() {
+    private void resetearMaquina() {
         maquinaGenerica = new MaquinaGenerica();
     }
 
