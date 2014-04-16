@@ -141,6 +141,10 @@ public class Simulador {
         return estadoMaquina;
     }
 
+    public void resetearMaquina() {
+        maquinaGenerica = new MaquinaGenerica();
+    }
+
     public boolean isSimulando() {
         return simulando;
     }
