@@ -32,7 +32,7 @@ public class EstadoMaquinaTest {
     @Test
     public void testCalcularEstadoMaquinaRegistrosModificados() throws Exception {
         for(int i=0; i<8; i++) {
-            bancoRegs.escribirEnRegistro(new ComplexNumber(i), "A");
+            bancoRegs.escribirEnRegistro(new ComplexNumber(i), "0A");
         }
         estadoMaquina.calcularEstadoMaquina();
         Assert.assertEquals(new Float(50), estadoMaquina.getPorcentajeRegistrosUtilizados());
@@ -47,5 +47,21 @@ public class EstadoMaquinaTest {
         estadoMaquina.calcularEstadoMaquina();
         Assert.assertEquals(new Float(12.5f), estadoMaquina.getPorcentajeMemoriaUtilizada());
         Assert.assertEquals(new Float(0), estadoMaquina.getPorcentajeRegistrosUtilizados());
+    }
+
+    @Test
+    public void testObtenerValorSeteadoRegistro() throws Exception {
+        String hexaValue = "0A";
+        ComplexNumber regNumber = new ComplexNumber(4);
+        bancoRegs.escribirEnRegistro(regNumber, hexaValue);
+        Assert.assertEquals(hexaValue, estadoMaquina.getBancoRegistros().leerRegistro(regNumber));
+    }
+
+    @Test
+    public void testObtenerValorSeteadoMemoria() throws Exception {
+        String hexaValue = "0A";
+        ComplexNumber memPos = new ComplexNumber(200);
+        memoria.setValor(memPos, hexaValue, false);
+        Assert.assertEquals(hexaValue, estadoMaquina.getMemoriaPrincipal().leerCelda(memPos));
     }
 }
