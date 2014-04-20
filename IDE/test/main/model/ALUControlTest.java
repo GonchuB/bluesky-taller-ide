@@ -2,6 +2,7 @@ package main.model;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import main.apis.FPConversionAPI;
 
 /**
  * Created by GonchuB on 29/03/2014.
@@ -65,11 +66,11 @@ public class ALUControlTest extends TestCase {
     }
 
     public void testCheckSumOverflow1() throws Exception {
-        Float op11 = 50.0f;
-        Float op12 = 50.0f;
+        Float op11 = 1.0f;
+        Float op12 = 2.0f;
 
-        Float op21 = -50.0f;
-        Float op22 = -50.0f;
+        Float op21 = -1.0f;
+        Float op22 = -2.0f;
 
         Float op31 = new Float(0.999 * Math.pow(10, 3));
         Float op32 = new Float(0.001 * Math.pow(10, 3));
@@ -84,27 +85,15 @@ public class ALUControlTest extends TestCase {
     }
 
     public void testCheckSumPrecisionLost() throws Exception {
-        Float notLost0 = 999.9f;
-        Float notLost1 = 99.99f;
-        Float notLost2 = 9.999f;
-        Float notLost3 = 0.9999f;
-        Float notLost4 = 0.09999f;
-        Float lost0 = 999.91f;
-        Float lost1 = 99.991f;
-        Float lost2 = 9.9991f;
-        Float lost3 = 0.99991f;
-        Float lost4 = 0.099991f;
+        Float notLost0 = 0.125f;
+        Float notLost1 = 0.0625f;
+        Float lost0 = 0.03125f;
+        Float lost1 = 0.015625f;
 
         Assert.assertFalse(aluControl.checkSumPrecisionLost(notLost0, 0.0f));
         Assert.assertFalse(aluControl.checkSumPrecisionLost(notLost1, 0.0f));
-        Assert.assertFalse(aluControl.checkSumPrecisionLost(notLost2, 0.0f));
-        Assert.assertFalse(aluControl.checkSumPrecisionLost(notLost3, 0.0f));
-        Assert.assertFalse(aluControl.checkSumPrecisionLost(notLost4, 0.0f));
         Assert.assertTrue(aluControl.checkSumPrecisionLost(lost0, 0.0f));
         Assert.assertTrue(aluControl.checkSumPrecisionLost(lost1, 0.0f));
-        Assert.assertTrue(aluControl.checkSumPrecisionLost(lost2, 0.0f));
-        Assert.assertTrue(aluControl.checkSumPrecisionLost(lost3, 0.0f));
-        Assert.assertTrue(aluControl.checkSumPrecisionLost(lost4, 0.0f));
     }
 
     public void testAddTwoNumbers1() throws Exception {
@@ -130,17 +119,17 @@ public class ALUControlTest extends TestCase {
         Assert.assertTrue(aluControl.isNegative());
         Assert.assertFalse(aluControl.isZero());
         Assert.assertFalse(aluControl.isPrecisionLost());
-        Assert.assertFalse(aluControl.isOverflow());
+        Assert.assertTrue(aluControl.isOverflow());
 
         aluControl.addTwoNumbers(overflow1, overflow2);
         Assert.assertTrue(aluControl.isOverflow());
         Assert.assertFalse(aluControl.isNegative());
         Assert.assertFalse(aluControl.isZero());
-        Assert.assertFalse(aluControl.isPrecisionLost());
+        Assert.assertTrue(aluControl.isPrecisionLost());
 
         aluControl.addTwoNumbers(precision1, precision2);
         Assert.assertTrue(aluControl.isPrecisionLost());
-        Assert.assertFalse(aluControl.isOverflow());
+        Assert.assertTrue(aluControl.isOverflow());
         Assert.assertFalse(aluControl.isNegative());
         Assert.assertFalse(aluControl.isZero());
     }

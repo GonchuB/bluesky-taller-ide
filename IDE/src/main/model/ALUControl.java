@@ -8,9 +8,9 @@ import main.apis.FPConversionAPI;
 public class ALUControl {
 
     private static Integer maxPosIntNumber = 127;
-    private static Float maxPosFloatNumber = FPConversionAPI.binaryToFloat("01111111");
+    private static Float maxPosFloatNumber = FPConversionAPI.binaryToFloat("01111011");
     private static Integer maxNegIntNumber = -128;
-    private static Float maxNegFloatNumber = FPConversionAPI.binaryToFloat("11111111");
+    private static Float maxNegFloatNumber = FPConversionAPI.binaryToFloat("11111011");
     private boolean overflow;
     private boolean precisionLost;
     private boolean zero;
