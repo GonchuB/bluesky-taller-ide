@@ -7,7 +7,6 @@ import org.junit.Assert;
  * Created by GonchuB on 27/03/2014.
  */
 public class TraductorASMtoMAQTest extends TestCase {
-    //TODO - Actualizar test con nuevas firmas y objetos
     private TraductorASMtoMAQ traductor;
     private Compilador compilador;
 
@@ -85,7 +84,6 @@ public class TraductorASMtoMAQTest extends TestCase {
         String asmLine2 = "add r2,r0,r1 ;Add";
 
         // Tests para nuevas instrucciones.
-        //TODO: que carajo es RRR? Dos parametros?
         String asmLine3 = "rrr r1,r3 ;Rrr";
         String asmLine4 = "jpz r1,10 ;Jump";
         String asmLine5 = "stp ;Stop";
