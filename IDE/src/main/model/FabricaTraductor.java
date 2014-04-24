@@ -80,9 +80,8 @@ public class FabricaTraductor {
                 return "mulf";
             case 14:
                 return "jnc";
-            //TOdo - se puede agregar una funcion
             case 15:
-                return "";
+                return "cmp";
             default:
                 return null;
         }
@@ -117,13 +116,12 @@ public class FabricaTraductor {
                 return "^" + regRegex + "," + memRegex + "$";
             case 12:
                 return "^$";
-            //Todo - Agregar Instrucciones
             case 13:
                 return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 14:
                 return "^" + memRegex +"$";
             case 15:
-                return "";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             default:
                 return null;
         }
@@ -159,9 +157,8 @@ public class FabricaTraductor {
                 return 3;
             case 14:
                 return 1;
-            //Todo - Agregar Instrucciones
             case 15:
-                return 0;
+                return 3;
             default:
                 return null;
         }

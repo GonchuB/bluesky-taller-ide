@@ -60,7 +60,7 @@ public class FabricaInstrucciones {
                 return new CreadorInstruccionSaltarSinOverflow();
             case 'F':
             case 'f':
-                return new CreadorInstruccionParar();
+                return new CreadorInstruccionComparar();
             default: return null;
 
         }

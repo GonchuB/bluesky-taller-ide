@@ -11,4 +11,5 @@ rrr r15,10
 jpz r11,10
 mulf r2,r1,r2
 jnc 10
+cmp r2,r1,r3
 stp

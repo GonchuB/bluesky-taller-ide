@@ -83,7 +83,7 @@ public class Compilador {
 
     private String validarInstruccionMAQ(int nLinea, String s) {
         if (s.length() != 4) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no posee 2 bytes";
-        String ops = "0123456789ABC";
+        String ops = "0123456789ABCDEF";
         if (!ops.contains("" + s.charAt(0))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no posee un código válido";
         String digits = "0123456789ABCDEF";
         if (!digits.contains("" + s.charAt(1)) || !digits.contains("" + s.charAt(2)) || !digits.contains("" + s.charAt(3))) return "Error de syntaxis - Linea " + nLinea + " - La instrucción no esta en hexadecimal";
