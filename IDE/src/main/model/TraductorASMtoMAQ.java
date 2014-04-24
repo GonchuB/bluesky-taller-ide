@@ -180,30 +180,35 @@ public class TraductorASMtoMAQ {
     }
 
     private void checkSpecialParamsForOPs(String opCode, ArrayList<String> parsedParams) {
-        if(opCode.equals("4")){
+        if (opCode.equals("4")) {
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add("0");
             newParsedParams.addAll(parsedParams);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
-        }
-        else if(opCode.equals("A")){
+        } else if (opCode.equals("A")) {
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add(parsedParams.get(0));
             newParsedParams.add("0");
             String e = parsedParams.get(1);
-            if (e.length() == 2){
+            if (e.length() == 2) {
                 e = "" + e.charAt(1);
             }
             newParsedParams.add(e);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
-        }
-        else if(opCode.equals("C")){
+        } else if (opCode.equals("C")) {
             ArrayList<String> newParsedParams = new ArrayList<String>();
             newParsedParams.add("0");
             newParsedParams.add("0");
             newParsedParams.add("0");
+            parsedParams.clear();
+            parsedParams.addAll(newParsedParams);
+        }
+        else if(opCode.equals("E")){
+            ArrayList<String> newParsedParams = new ArrayList<String>();
+            newParsedParams.add("0");
+            newParsedParams.addAll(parsedParams);
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
         }

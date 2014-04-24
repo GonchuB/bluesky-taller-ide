@@ -119,9 +119,9 @@ public class FabricaTraductor {
                 return "^$";
             //Todo - Agregar Instrucciones
             case 13:
-                return "";
+                return "^" + regRegex + "," + regRegex + ","+ regRegex + "$";
             case 14:
-                return "";
+                return "^" + memRegex +"$";
             case 15:
                 return "";
             default:
@@ -155,11 +155,11 @@ public class FabricaTraductor {
                 return 2;
             case 12:
                 return 0;
-            //Todo - Agregar Instrucciones
             case 13:
-                return 0;
+                return 3;
             case 14:
-                return 0;
+                return 1;
+            //Todo - Agregar Instrucciones
             case 15:
                 return 0;
             default:
