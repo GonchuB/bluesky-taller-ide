@@ -2,7 +2,7 @@ ldm r0,0 ; inicializo r0 en 0
 ldm r1,253 ;Leo de teclado numero de celda inicial y lo pongo en r1
 ldm r2,253 ;Leo un numero
 jpz r2,18 ;Termino de leer numeros
-stm r2,*r1   ;Hay q implementar manejo de punteros
+str r2,r1 ;guardo numero en posicion indicada
 ldm r3,1 ;Steto 1
 ;Setear maximos y minimos a medida q voy leyendo
 add r1,r1,r3 ;Muevo al proximo casillero de memoria
