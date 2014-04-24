@@ -104,6 +104,9 @@ public class Compilador {
             case 'E':
                 if(s.charAt(1) != '0') return "Error de syntaxis - Linea " + nLinea + " - La instrucción posee un fomato inválido";
                 break;
+            case '0':
+                if(s.charAt(1) != '0') return "Error de syntaxis - Linea " + nLinea + " - La instrucción posee un fomato inválido";
+                break;
         }
         return null;
     }

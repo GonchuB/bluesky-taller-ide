@@ -12,7 +12,7 @@ public class FabricaTraductor {
 
     public Map<String, Integer> crearMapaCantParamsOp() {
         Map<String, Integer> map = new HashMap<String, Integer>();
-        for (int i = 1; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             map.put(getOpStringByCode(i), getOpParamsCountByCode(i));
         }
         return map;
@@ -20,7 +20,7 @@ public class FabricaTraductor {
 
     public Traductor crearTraductorOpsCdes() {
         Traductor traductor = new Traductor();
-        for (int i = 1; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             traductor.agregarValor(getOpStringByCode(i), HEXAConversionAPI.decimal_to_hex(i));
         }
         return traductor;
@@ -44,7 +44,7 @@ public class FabricaTraductor {
 
     public Traductor crearTraductorParamRegex() {
         Traductor traductor = new Traductor();
-        for (int i = 1; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             traductor.agregarValor(getOpStringByCode(i), getParamRegexByCode(i));
         }
         return traductor;
@@ -52,6 +52,8 @@ public class FabricaTraductor {
 
     private String getOpStringByCode(int i) {
         switch (i) {
+            case 0:
+                return "str";
             case 1:
                 return "ldm";
             case 2:
@@ -92,6 +94,8 @@ public class FabricaTraductor {
         String memRegex = "([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
         String immRegex = memRegex;
         switch (i) {
+            case 0:
+                return "^" + regRegex + "," + regRegex +"$";
             case 1:
                 return "^" + regRegex + "," + memRegex +"$";
             case 2:
@@ -129,6 +133,8 @@ public class FabricaTraductor {
 
     private Integer getOpParamsCountByCode(int i) {
         switch (i) {
+            case 0:
+                return 2;
             case 1:
                 return 2;
             case 2:

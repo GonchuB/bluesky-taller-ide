@@ -212,6 +212,13 @@ public class TraductorASMtoMAQ {
             parsedParams.clear();
             parsedParams.addAll(newParsedParams);
         }
+        else if(opCode.equals("0")){
+            ArrayList<String> newParsedParams = new ArrayList<String>();
+            newParsedParams.add("0");
+            newParsedParams.addAll(parsedParams);
+            parsedParams.clear();
+            parsedParams.addAll(newParsedParams);
+        }
     }
 
 

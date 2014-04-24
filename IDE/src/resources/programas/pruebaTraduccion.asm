@@ -1,3 +1,4 @@
+str r1,r3
 ldm r1,0
 ldi r0,3 ;
 stm r10,3 ;Hola

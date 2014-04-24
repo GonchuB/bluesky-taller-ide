@@ -25,6 +25,8 @@ public class FabricaInstrucciones {
 
     public CreadorInstruccion obtenerCreadorInstruccionSCodigoOP(char codigoOp) {
         switch (codigoOp){
+            case '0':
+                return new CreadorInstruccionAlmacenarReg();
             case '1':
                 return new CreadorInstruccionCargarMemoria();
             case '2':
