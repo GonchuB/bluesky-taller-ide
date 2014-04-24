@@ -61,6 +61,10 @@ public class FPConversionAPI {
     }
 
     public static boolean isPrecisionLostInConversion(Float floatNum) {
+        Boolean negative = floatNum < 0.0f;
+        if (negative) {
+            floatNum = -floatNum;
+        }
         Integer integerPart = floatNum.intValue();
         Float floatPart = floatNum - (float) integerPart;
 

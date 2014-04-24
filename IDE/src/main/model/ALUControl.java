@@ -7,10 +7,10 @@ import main.apis.FPConversionAPI;
  */
 public class ALUControl {
 
-    private static Integer maxPosIntNumber = 127;
-    private static Float maxPosFloatNumber = FPConversionAPI.binaryToFloat("01111011");
-    private static Integer maxNegIntNumber = -128;
-    private static Float maxNegFloatNumber = FPConversionAPI.binaryToFloat("11111011");
+    public static Integer maxPosIntNumber = 127;
+    public static Float maxPosFloatNumber = FPConversionAPI.binaryToFloat("01111011");
+    public static Integer maxNegIntNumber = -128;
+    public static Float maxNegFloatNumber = FPConversionAPI.binaryToFloat("11111011");
     private boolean overflow;
     private boolean precisionLost;
     private boolean zero;
@@ -37,12 +37,10 @@ public class ALUControl {
         return (op1 + op2 > maxPosFloatNumber || op1 + op2 < maxNegFloatNumber);
     }
 
-    //Todo - Fixear los bits de overflow en la multiplicación
     public boolean checkMulOverflow(Float op1, Float op2) {
         return (op1 * op2 > maxPosFloatNumber || op1 * op2 < maxNegFloatNumber);
     }
 
-    //Todo - Fixear los bits de overflow en la multiplicación
     public boolean checkMulPrecisionLost(Float op1, Float op2) {
         return FPConversionAPI.isPrecisionLostInConversion(op1 * op2);
     }
@@ -56,7 +54,6 @@ public class ALUControl {
         return result;
     }
 
-     //Todo - Fixear este metodo
     public Float mulTwoNumbers(Float op1, Float op2) {
         Float result = op1 * op2;
         this.setOverflow(this.checkMulOverflow(op1, op2));
