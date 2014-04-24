@@ -4,7 +4,7 @@ ldm r2,253 ;Leo un numero
 jpz r2,18 ;Termino de leer numeros
 str r2,r1 ;guardo numero en posicion indicada
 ldm r3,1 ;Steto 1
-;Setear maximos y minimos a medida q voy leyendo
+;TODO - Setear maximos y minimos a medida q voy leyendo
 add r1,r1,r3 ;Muevo al proximo casillero de memoria
 ldm r2,0 ; seteo r2 en 0
 jpz r2,4 ;Voy a leer otro numero
