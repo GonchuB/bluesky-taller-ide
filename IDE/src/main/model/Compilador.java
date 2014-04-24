@@ -156,7 +156,7 @@ public class Compilador {
         return s.charAt(0) == ';';
     }
 
-    private String validarParametrosOperacionASM(int nLinea, String op, String params) {
+    public String validarParametrosOperacionASM(int nLinea, String op, String params) {
         String[] paramSplit = params.split("\\s*,\\s*");
         String regex = traductorParamRegexASM.obtenerTraduccion(op);
         if (cantParamsOpASM.get(op) != paramSplit.length)
@@ -166,13 +166,13 @@ public class Compilador {
         return null;
     }
 
-    private String validarOperacionASM(int nLinea, String op) {
+    public String validarOperacionASM(int nLinea, String op) {
         if (!traductorOpsCdesASM.existeValorKey(op))
             return "Error de syntaxis - Linea " + nLinea + " - Operación desconocida";
         return null;
     }
 
-    private String validarComentariosASM(int nLinea, String comments) {
+    public String validarComentariosASM(int nLinea, String comments) {
         if (comments.charAt(0) != ';')
             return "Error de syntaxis - Linea " + nLinea + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
         return null;

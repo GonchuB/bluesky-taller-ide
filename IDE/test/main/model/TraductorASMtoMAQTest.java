@@ -9,10 +9,12 @@ import org.junit.Assert;
 public class TraductorASMtoMAQTest extends TestCase {
     //TODO - Actualizar test con nuevas firmas y objetos
     private TraductorASMtoMAQ traductor;
+    private Compilador compilador;
 
     public void setUp() throws Exception {
         super.setUp();
         traductor = new TraductorASMtoMAQ();
+        compilador = new Compilador();
     }
 
     public void testLineNumberToBytes() throws Exception {
@@ -79,13 +81,28 @@ public class TraductorASMtoMAQTest extends TestCase {
 
     public void testTraducirLineaALenguajeMaquina() throws Exception {
 
-        //FIXME: mas test cases para mas operaciones, sinceramente me dio paja abrir el enunciado ahora.
-
         String asmLine1 = "ldi r0,1 ;Load";
         String asmLine2 = "add r2,r0,r1 ;Add";
 
+        // Tests para nuevas instrucciones.
+        //TODO: que carajo es RRR? Dos parametros?
+        String asmLine3 = "rrr r1,r3 ;Rrr";
+        String asmLine4 = "jpz r1 ;Jump";
+        String asmLine5 = "stp ;Stop";
+        String asmLine6 = "mulf r2,r0,r1 ;Mul";
+        String asmLine7 = "jnc r2,r0,r1 ;JumpC";
+        String asmLine8 = "cmp r2,r0 ;Cmp";
+
         Assert.assertEquals("2001 Load", traductor.traducirLineaALenguajeMaquina(asmLine1));
         Assert.assertEquals("5201 Add", traductor.traducirLineaALenguajeMaquina(asmLine2));
+
+        Assert.assertEquals("A103 Rrr", traductor.traducirLineaALenguajeMaquina(asmLine3));
+        Assert.assertEquals("B1 Jump", traductor.traducirLineaALenguajeMaquina(asmLine4));
+        Assert.assertEquals("C000 Stop", traductor.traducirLineaALenguajeMaquina(asmLine5));
+        Assert.assertEquals("D201 Mul", traductor.traducirLineaALenguajeMaquina(asmLine6));
+        // FIXME: Este test falla, mete un 0 adelante E0201. Mal la traduccion creo.
+        Assert.assertEquals("E201 JumpC", traductor.traducirLineaALenguajeMaquina(asmLine7));
+        Assert.assertEquals("F20 Cmp", traductor.traducirLineaALenguajeMaquina(asmLine8));
     }
 
     public void testChequearSyntaxisDeLinea() throws Exception {
@@ -105,22 +122,22 @@ public class TraductorASMtoMAQTest extends TestCase {
         String asmLine8 = "ldi r1,2 Invalid";
 
         Integer lineNo = 0;
-        String typeRegex = "^r[0-15],[0-9a-fA-F]{1,2}$";
+        String typeRegex = "^(r([0-9]|1[0-5])),([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$";
         String countError = "Error de sintaxis - Linea " + lineNo + " - Numero de parametros incorrectos";
         String typeError = "Error de sintaxis - Linea " + lineNo + " - Tipo de parametros incorrectos. Se esperaba: " + typeRegex;
         String nonExistantError = "Error de syntaxis - Linea " + lineNo + " - Operación desconocida";
         String invalidCommentError = "Error de syntaxis - Linea " + lineNo + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
 
-        /*Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine1, lineNo));
-        Assert.assertEquals(typeError, traductor.chequearSyntaxisDeLinea(asmLine2, lineNo));
-        Assert.assertEquals(typeError, traductor.chequearSyntaxisDeLinea(asmLine3, lineNo));
-        Assert.assertEquals(countError, traductor.chequearSyntaxisDeLinea(asmLine4, lineNo));
+        Assert.assertNull(compilador.chequearSyntaxisDeLineaASM(asmLine1, lineNo));
+        Assert.assertEquals(typeError, compilador.chequearSyntaxisDeLineaASM(asmLine2, lineNo));
+        Assert.assertEquals(typeError, compilador.chequearSyntaxisDeLineaASM(asmLine3, lineNo));
+        Assert.assertEquals(countError, compilador.chequearSyntaxisDeLineaASM(asmLine4, lineNo));
 
-        Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine5, lineNo));
-        Assert.assertEquals(nonExistantError, traductor.chequearSyntaxisDeLinea(asmLine6, lineNo));
+        Assert.assertNull(compilador.chequearSyntaxisDeLineaASM(asmLine5, lineNo));
+        Assert.assertEquals(nonExistantError, compilador.chequearSyntaxisDeLineaASM(asmLine6, lineNo));
 
-        Assert.assertNull(traductor.chequearSyntaxisDeLinea(asmLine7, lineNo));
-        Assert.assertEquals(invalidCommentError, traductor.chequearSyntaxisDeLinea(asmLine8, lineNo));*/
+        Assert.assertNull(compilador.chequearSyntaxisDeLineaASM(asmLine7, lineNo));
+        Assert.assertEquals(invalidCommentError, compilador.chequearSyntaxisDeLineaASM(asmLine8, lineNo));
     }
 
     public void testValidarParametrosOperacion() throws Exception {
@@ -130,14 +147,14 @@ public class TraductorASMtoMAQTest extends TestCase {
         String asmLine4 = "ldi r0,1,2";
 
         Integer lineNo = 0;
-        String typeRegex = "^r[0-15],[0-9a-fA-F]{1,2}$";
+        String typeRegex = "^(r([0-9]|1[0-5])),([0-9]|[0-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$";
         String countError = "Error de sintaxis - Linea " + lineNo + " - Numero de parametros incorrectos";
         String typeError = "Error de sintaxis - Linea " + lineNo + " - Tipo de parametros incorrectos. Se esperaba: " + typeRegex;
 
-       /* Assert.assertNull(traductor.validarParametrosOperacion(0, asmLine1.split("\\s+")[0], asmLine1.split("\\s+")[1]));
-        Assert.assertEquals(typeError, traductor.validarParametrosOperacion(0, asmLine2.split("\\s+")[0], asmLine2.split("\\s+")[1]));
-        Assert.assertEquals(typeError, traductor.validarParametrosOperacion(0, asmLine3.split("\\s+")[0], asmLine3.split("\\s+")[1]));
-        Assert.assertEquals(countError, traductor.validarParametrosOperacion(0, asmLine4.split("\\s+")[0], asmLine4.split("\\s+")[1]));*/
+        Assert.assertNull(compilador.validarParametrosOperacionASM(0, asmLine1.split("\\s+")[0], asmLine1.split("\\s+")[1]));
+        Assert.assertEquals(typeError, compilador.validarParametrosOperacionASM(0, asmLine2.split("\\s+")[0], asmLine2.split("\\s+")[1]));
+        Assert.assertEquals(typeError, compilador.validarParametrosOperacionASM(0, asmLine3.split("\\s+")[0], asmLine3.split("\\s+")[1]));
+        Assert.assertEquals(countError, compilador.validarParametrosOperacionASM(0, asmLine4.split("\\s+")[0], asmLine4.split("\\s+")[1]));
     }
 
     public void testValidarOperacion() throws Exception {
@@ -147,8 +164,8 @@ public class TraductorASMtoMAQTest extends TestCase {
         Integer lineNo = 0;
         String nonExistantError = "Error de syntaxis - Linea " + lineNo + " - Operación desconocida";
 
-        /*Assert.assertNull(traductor.validarOperacion(lineNo, asmLine1.split("\\s+")[0]));
-        Assert.assertEquals(nonExistantError, traductor.validarOperacion(lineNo, asmLine2.split("\\s+")[0]));*/
+        Assert.assertNull(compilador.validarOperacionASM(lineNo, asmLine1.split("\\s+")[0]));
+        Assert.assertEquals(nonExistantError, compilador.validarOperacionASM(lineNo, asmLine2.split("\\s+")[0]));
     }
 
     public void testValidarComentarios() throws Exception {
@@ -158,7 +175,7 @@ public class TraductorASMtoMAQTest extends TestCase {
         Integer lineNo = 0;
         String invalidCommentError = "Error de syntaxis - Linea " + lineNo + " - Exceso de caracteres en linea, posible falta de caracter comentario ';'";
 
-        /*Assert.assertNull(traductor.validarComentarios(lineNo, asmLine1.split("\\s+")[2]));
-        Assert.assertEquals(invalidCommentError, traductor.validarComentarios(lineNo, asmLine2.split("\\s+")[2]));*/
+        Assert.assertNull(compilador.validarComentariosASM(lineNo, asmLine1.split("\\s+")[2]));
+        Assert.assertEquals(invalidCommentError, compilador.validarComentariosASM(lineNo, asmLine2.split("\\s+")[2]));
     }
 }
