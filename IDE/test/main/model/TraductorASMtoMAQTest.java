@@ -52,8 +52,8 @@ public class TraductorASMtoMAQTest extends TestCase {
 
         Assert.assertEquals("0", traductor.registerParamToString(regParam1, opCode1));
         Assert.assertEquals("F", traductor.registerParamToString(regParam2, opCode2));
-        Assert.assertEquals("01", traductor.registerParamToString(regParam3, opCode3));
-        Assert.assertEquals("0F", traductor.registerParamToString(regParam4, opCode4));
+        Assert.assertEquals("1", traductor.registerParamToString(regParam3, opCode3)); //Esto falla, pero porq el 0 se agrega en un metodo aparte
+        Assert.assertEquals("F", traductor.registerParamToString(regParam4, opCode4));
     }
 
     public void testImmediateParamToString() throws Exception {
@@ -87,21 +87,20 @@ public class TraductorASMtoMAQTest extends TestCase {
         // Tests para nuevas instrucciones.
         //TODO: que carajo es RRR? Dos parametros?
         String asmLine3 = "rrr r1,r3 ;Rrr";
-        String asmLine4 = "jpz r1 ;Jump";
+        String asmLine4 = "jpz r1,10 ;Jump";
         String asmLine5 = "stp ;Stop";
         String asmLine6 = "mulf r2,r0,r1 ;Mul";
-        String asmLine7 = "jnc r2,r0,r1 ;JumpC";
+        String asmLine7 = "jnc 250 ;JumpC";
         String asmLine8 = "cmp r2,r0 ;Cmp";
 
         Assert.assertEquals("2001 Load", traductor.traducirLineaALenguajeMaquina(asmLine1));
         Assert.assertEquals("5201 Add", traductor.traducirLineaALenguajeMaquina(asmLine2));
 
         Assert.assertEquals("A103 Rrr", traductor.traducirLineaALenguajeMaquina(asmLine3));
-        Assert.assertEquals("B1 Jump", traductor.traducirLineaALenguajeMaquina(asmLine4));
+        Assert.assertEquals("B10A Jump", traductor.traducirLineaALenguajeMaquina(asmLine4));
         Assert.assertEquals("C000 Stop", traductor.traducirLineaALenguajeMaquina(asmLine5));
         Assert.assertEquals("D201 Mul", traductor.traducirLineaALenguajeMaquina(asmLine6));
-        // FIXME: Este test falla, mete un 0 adelante E0201. Mal la traduccion creo.
-        Assert.assertEquals("E201 JumpC", traductor.traducirLineaALenguajeMaquina(asmLine7));
+        Assert.assertEquals("E0FA JumpC", traductor.traducirLineaALenguajeMaquina(asmLine7));
         Assert.assertEquals("F20 Cmp", traductor.traducirLineaALenguajeMaquina(asmLine8));
     }
 
