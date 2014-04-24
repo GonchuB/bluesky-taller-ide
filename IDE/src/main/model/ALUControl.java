@@ -39,7 +39,12 @@ public class ALUControl {
 
     //Todo - Fixear los bits de overflow en la multiplicación
     public boolean checkMulOverflow(Float op1, Float op2) {
-        return (op1 + op2 > maxPosFloatNumber || op1 + op2 < maxNegFloatNumber);
+        return (op1 * op2 > maxPosFloatNumber || op1 * op2 < maxNegFloatNumber);
+    }
+
+    //Todo - Fixear los bits de overflow en la multiplicación
+    public boolean checkMulPrecisionLost(Float op1, Float op2) {
+        return FPConversionAPI.isPrecisionLostInConversion(op1 * op2);
     }
 
     public Float addTwoNumbers(Float op1, Float op2) {
@@ -57,7 +62,7 @@ public class ALUControl {
         this.setOverflow(this.checkMulOverflow(op1, op2));
         this.setNegative(result < 0.0f);
         this.setZero(result == 0.0f);
-        this.setPrecisionLost(checkSumPrecisionLost(op1, op2));
+        this.setPrecisionLost(checkMulPrecisionLost(op1, op2));
         return result;
     }
 
