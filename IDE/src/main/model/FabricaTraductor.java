@@ -12,7 +12,7 @@ public class FabricaTraductor {
 
     public Map<String, Integer> crearMapaCantParamsOp() {
         Map<String, Integer> map = new HashMap<String, Integer>();
-        for (int i = 1; i < 13; i++) {
+        for (int i = 1; i < 16; i++) {
             map.put(getOpStringByCode(i), getOpParamsCountByCode(i));
         }
         return map;
@@ -20,7 +20,7 @@ public class FabricaTraductor {
 
     public Traductor crearTraductorOpsCdes() {
         Traductor traductor = new Traductor();
-        for (int i = 1; i < 13; i++) {
+        for (int i = 1; i < 16; i++) {
             traductor.agregarValor(getOpStringByCode(i), HEXAConversionAPI.decimal_to_hex(i));
         }
         return traductor;
@@ -44,7 +44,7 @@ public class FabricaTraductor {
 
     public Traductor crearTraductorParamRegex() {
         Traductor traductor = new Traductor();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 1; i < 16; i++) {
             traductor.agregarValor(getOpStringByCode(i), getParamRegexByCode(i));
         }
         return traductor;
@@ -76,6 +76,13 @@ public class FabricaTraductor {
                 return "jpz";
             case 12:
                 return "stp";
+            case 13:
+                return "mulf";
+            case 14:
+                return "jnc";
+            //TOdo - se puede agregar una funcion
+            case 15:
+                return "";
             default:
                 return null;
         }
@@ -110,6 +117,13 @@ public class FabricaTraductor {
                 return "^" + regRegex + "," + memRegex + "$";
             case 12:
                 return "^$";
+            //Todo - Agregar Instrucciones
+            case 13:
+                return "";
+            case 14:
+                return "";
+            case 15:
+                return "";
             default:
                 return null;
         }
@@ -140,6 +154,13 @@ public class FabricaTraductor {
             case 11:
                 return 2;
             case 12:
+                return 0;
+            //Todo - Agregar Instrucciones
+            case 13:
+                return 0;
+            case 14:
+                return 0;
+            case 15:
                 return 0;
             default:
                 return null;

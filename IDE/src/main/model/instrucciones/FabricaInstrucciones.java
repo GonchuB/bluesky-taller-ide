@@ -52,6 +52,15 @@ public class FabricaInstrucciones {
             case 'C':
             case 'c':
                 return new CreadorInstruccionParar();
+            case 'D':
+            case 'd':
+                return new CreadorInstruccionMultiplicarPF();
+            case 'E':
+            case 'e':
+                return new CreadorInstruccionSaltarSinOverflow();
+            case 'F':
+            case 'f':
+                return new CreadorInstruccionParar();
             default: return null;
 
         }
