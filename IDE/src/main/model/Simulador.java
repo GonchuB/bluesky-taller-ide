@@ -120,8 +120,7 @@ public class Simulador {
             pararSimulacion();
         }
         iteratorInstrucciones = instrucciones.values().iterator();
-        if (numeroCeldaMemoria.getDecimalNumber() == 0) instruccionActual = iteratorInstrucciones.next();
-        else {
+        if (numeroCeldaMemoria.getDecimalNumber() != 0) {
             //La proxima instruccion se setea en el metodo ejecutarSiguienteInstruccion(),
             //por lo que aqui debemos dejar la instruccion actual en la posicion anterior a la q se va a ejecutar
             for (int i= 0 ; i < (numeroCeldaMemoria.getDecimalNumber()/2); i++){
