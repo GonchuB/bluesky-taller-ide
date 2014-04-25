@@ -406,7 +406,7 @@ public class StepToStepUI extends Editor {
         //System.out.print(lines[numeroInstruccion]);
         try {
            this.currentInstruction.setText(lines[insActual]);
-            System.out.println(insActual);
+          //  System.out.println(insActual);
             numeroInstruccion++;
         }catch (Exception i){
 
