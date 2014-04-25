@@ -59,7 +59,7 @@ public class FabricaInstrucciones {
                 return new CreadorInstruccionMultiplicarPF();
             case 'E':
             case 'e':
-                return new CreadorInstruccionSaltarSinOverflow();
+                return new CreadorInstruccionSaltarSinCarry();
             case 'F':
             case 'f':
                 return new CreadorInstruccionComparar();

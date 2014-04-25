@@ -7,17 +7,16 @@ import main.model.Simulador;
 /**
  * Created by Juan-Asus on 21/03/2014.
  */
-public class InstruccionSaltarSinOverflow extends Instruccion {
+public class InstruccionSaltarSinCarry extends Instruccion {
     private ComplexNumber numeroCeldaMemoria;
 
-    public InstruccionSaltarSinOverflow(ComplexNumber numeroCeldaMemoria) {
+    public InstruccionSaltarSinCarry(ComplexNumber numeroCeldaMemoria) {
         this.numeroCeldaMemoria = numeroCeldaMemoria;
     }
 
     @Override
     public String operacion(Simulador simulador, MaquinaGenerica maquina) {
-        //Fixme - Todo - Esto no es overflow es CARRY!!!!
-        if(!maquina.getAluControl().isOverflow()){
+        if(!maquina.getAluControl().isCarry()){
             String parte1Instruccion = maquina.leerMemoria(numeroCeldaMemoria);
             String parte2Instruccion = maquina.leerMemoria(new ComplexNumber(numeroCeldaMemoria.getDecimalNumber()+1));
             String instruccion = parte1Instruccion + parte2Instruccion;
