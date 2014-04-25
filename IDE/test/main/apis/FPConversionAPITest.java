@@ -64,6 +64,18 @@ public class FPConversionAPITest extends TestCase {
         Assert.assertEquals("01000110", FPConversionAPI.floatToBinary(float4));
     }
 
+    public void testFloatToHexa() throws Exception {
+        Float float1 = 0.5f;
+        Float float2 = 2.5f;
+        Float float3 = 0.25f;
+        Float float4 = 0.125f;
+
+        Assert.assertEquals("40", FPConversionAPI.floatToHexa(float1));
+        Assert.assertEquals("52", FPConversionAPI.floatToHexa(float2));
+        Assert.assertEquals("47", FPConversionAPI.floatToHexa(float3));
+        Assert.assertEquals("46", FPConversionAPI.floatToHexa(float4));
+    }
+
     public void testIsPrecisionLostInConversion() throws Exception {
         Float float1 = 0.5f;
         Float float2 = 0.390625f;
@@ -86,5 +98,17 @@ public class FPConversionAPITest extends TestCase {
         Assert.assertEquals(2.5f, FPConversionAPI.binaryToFloat(binary2));
         Assert.assertEquals(0.25f, FPConversionAPI.binaryToFloat(binary3));
         Assert.assertEquals(0.125f, FPConversionAPI.binaryToFloat(binary4));
+    }
+
+    public void testHexaToFloat() throws Exception {
+        String binary1 = "40";
+        String binary2 = "52";
+        String binary3 = "47";
+        String binary4 = "46";
+
+        Assert.assertEquals(0.5f, FPConversionAPI.hexaToFloat(binary1));
+        Assert.assertEquals(2.5f, FPConversionAPI.hexaToFloat(binary2));
+        Assert.assertEquals(0.25f, FPConversionAPI.hexaToFloat(binary3));
+        Assert.assertEquals(0.125f, FPConversionAPI.hexaToFloat(binary4));
     }
 }
