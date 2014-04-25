@@ -149,4 +149,9 @@ public class Simulador {
     public boolean isSimulando() {
         return simulando;
     }
+
+    public Instruccion getInstruccionActual()
+    {
+        return this.instruccionActual;
+    }
 }

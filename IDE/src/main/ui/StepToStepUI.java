@@ -1,5 +1,6 @@
 package main.ui;
 import main.model.*;
+import main.model.instrucciones.tipos.Instruccion;
 
 import javax.swing.*;
 import javax.swing.undo.UndoManager;
@@ -379,7 +380,7 @@ public class StepToStepUI extends Editor {
         else return 0;
     }
 
-    public void setEstadoActual(EstadoMaquina estadoMaquina) {
+    public void setEstadoActual(EstadoMaquina estadoMaquina, Instruccion insActual) {
 
        BancoRegistros b =  estadoMaquina.getBancoRegistros();
         MemoriaPrincipal m = estadoMaquina.getMemoriaPrincipal();
@@ -405,7 +406,7 @@ public class StepToStepUI extends Editor {
         String lines[] = this.jTextArea.getText().split("\n");
         //System.out.print(lines[numeroInstruccion]);
         try {
-            this.currentInstruction.setText((lines[numeroInstruccion].split(";"))[0]);
+            this.currentInstruction.setText(insActual.getComentario());
             numeroInstruccion++;
         }catch (Exception i){
 

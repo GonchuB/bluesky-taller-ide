@@ -380,7 +380,7 @@ public class ActionPerformer {
             //System.out.print(tpEditor.getJTextArea().getText());
             JTextArea a = ss.getJTextArea();
             ss.getJTextArea().setText(tpEditor.getJTextArea().getText());
-            ss.setEstadoActual(simulador.mostrarEstadoSimulacion());
+            ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getInstruccionActual());
             ss.getJFrame().setVisible(true);
         }
     }
@@ -394,7 +394,7 @@ public class ActionPerformer {
         if(simulador.isSimulando()){
             simulador.ejecutarSiguienteInstruccion();
         }
-        ss.setEstadoActual(simulador.mostrarEstadoSimulacion());
+        ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getInstruccionActual());
 
     }
 

@@ -4,3 +4,8 @@ ldi r7,0
 ldi r6,0
 add r8,r7,r6
 add r5,r3,r4
+add r6,r7,r6
+ldi r8,0
+jpz r8,20
+ldi r7,1
+ldi r6,1
