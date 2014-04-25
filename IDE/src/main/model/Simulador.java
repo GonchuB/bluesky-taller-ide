@@ -122,7 +122,9 @@ public class Simulador {
         iteratorInstrucciones = instrucciones.values().iterator();
         if (numeroCeldaMemoria.getDecimalNumber() == 0) instruccionActual = iteratorInstrucciones.next();
         else {
-            for (int i= 0 ; i < (numeroCeldaMemoria.getDecimalNumber()/2)+1; i++){
+            //La proxima instruccion se setea en el metodo ejecutarSiguienteInstruccion(),
+            //por lo que aqui debemos dejar la instruccion actual en la posicion anterior a la q se va a ejecutar
+            for (int i= 0 ; i < (numeroCeldaMemoria.getDecimalNumber()/2); i++){
                 if(iteratorInstrucciones.hasNext()){
                     instruccionActual = iteratorInstrucciones.next();
                 } else {
@@ -130,10 +132,11 @@ public class Simulador {
                     pararSimulacion();
                 }
             }
-            if(simulando && !instruccionActual.getLineaCodigo().equals(instruccionAComparar)){
+            //Puede ser que la instruccion no este cargada a memoria todavia! Esa validación no es valida
+            /*if(simulando && !instruccionActual.getLineaCodigo().equals(instruccionAComparar)){
                 JOptionPane.showMessageDialog(null, "La instruccion en memoria es distinta a la de la posicion que se quizo saltar en el simulador", "Simulador", JOptionPane.ERROR_MESSAGE);
                 pararSimulacion();
-            }
+            }*/
         }
     }
 
