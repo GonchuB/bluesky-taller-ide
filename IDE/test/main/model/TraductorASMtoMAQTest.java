@@ -80,26 +80,43 @@ public class TraductorASMtoMAQTest extends TestCase {
 
     public void testTraducirLineaALenguajeMaquina() throws Exception {
 
-        String asmLine1 = "ldi r0,1 ;Load";
-        String asmLine2 = "add r2,r0,r1 ;Add";
+        String asmStr = "str r1,r2 ;Str";
+        String asmLoadMem = "ldm r0,5 ;LoadMem";
+        String asmLoadImm = "ldi r0,1 ;LoadImm";
+        String asmStm = "stm r0,4 ;StoreMem";
+        String asmCpy = "cpy r0,r1 ;Cpy";
+        String asmAddInt = "add r2,r0,r1 ;Add";
+        String asmAddFp = "addf r2,r0,r1 ;AddFp";
+        String asmOr = "oor r2,r0,r1 ;Or";
+        String asmAnd = "and r2,r0,r1 ;And";
+        String asmXor = "xor r2,r0,r1 ;Xor";
 
         // Tests para nuevas instrucciones.
-        String asmLine3 = "rrr r1,r3 ;Rrr";
-        String asmLine4 = "jpz r1,10 ;Jump";
-        String asmLine5 = "stp ;Stop";
-        String asmLine6 = "mulf r2,r0,r1 ;Mul";
-        String asmLine7 = "jnc 250 ;JumpC";
-        String asmLine8 = "cmp r2,r0 ;Cmp";
+        String asmRrr = "rrr r1,r3 ;Rrr";
+        String asmJump = "jpz r1,10 ;Jump";
+        String asmStop = "stp ;Stop";
+        String asmMul = "mulf r2,r0,r1 ;Mul";
+        String asmJumpC = "jnc 250 ;JumpC";
+        String asmCmp = "cmp r2,r0 ;Cmp";
 
-        Assert.assertEquals("2001 Load", traductor.traducirLineaALenguajeMaquina(asmLine1));
-        Assert.assertEquals("5201 Add", traductor.traducirLineaALenguajeMaquina(asmLine2));
+        Assert.assertEquals("0012 Str", traductor.traducirLineaALenguajeMaquina(asmStr));
+        Assert.assertEquals("1005 LoadMem", traductor.traducirLineaALenguajeMaquina(asmLoadMem));
+        Assert.assertEquals("2001 LoadImm", traductor.traducirLineaALenguajeMaquina(asmLoadImm));
+        Assert.assertEquals("3004 StoreMem", traductor.traducirLineaALenguajeMaquina(asmStm));
+        Assert.assertEquals("4001 Cpy", traductor.traducirLineaALenguajeMaquina(asmCpy));
+        Assert.assertEquals("5201 Add", traductor.traducirLineaALenguajeMaquina(asmAddInt));
+        Assert.assertEquals("6201 AddFp", traductor.traducirLineaALenguajeMaquina(asmAddFp));
+        Assert.assertEquals("7201 Or", traductor.traducirLineaALenguajeMaquina(asmOr));
+        Assert.assertEquals("8201 And", traductor.traducirLineaALenguajeMaquina(asmAnd));
+        Assert.assertEquals("9201 Xor", traductor.traducirLineaALenguajeMaquina(asmXor));
 
-        Assert.assertEquals("A103 Rrr", traductor.traducirLineaALenguajeMaquina(asmLine3));
-        Assert.assertEquals("B10A Jump", traductor.traducirLineaALenguajeMaquina(asmLine4));
-        Assert.assertEquals("C000 Stop", traductor.traducirLineaALenguajeMaquina(asmLine5));
-        Assert.assertEquals("D201 Mul", traductor.traducirLineaALenguajeMaquina(asmLine6));
-        Assert.assertEquals("E0FA JumpC", traductor.traducirLineaALenguajeMaquina(asmLine7));
-        Assert.assertEquals("F20 Cmp", traductor.traducirLineaALenguajeMaquina(asmLine8));
+        // Tests para nuevas instrucciones.
+        Assert.assertEquals("A103 Rrr", traductor.traducirLineaALenguajeMaquina(asmRrr));
+        Assert.assertEquals("B10A Jump", traductor.traducirLineaALenguajeMaquina(asmJump));
+        Assert.assertEquals("C000 Stop", traductor.traducirLineaALenguajeMaquina(asmStop));
+        Assert.assertEquals("D201 Mul", traductor.traducirLineaALenguajeMaquina(asmMul));
+        Assert.assertEquals("E0FA JumpC", traductor.traducirLineaALenguajeMaquina(asmJumpC));
+        Assert.assertEquals("F20 Cmp", traductor.traducirLineaALenguajeMaquina(asmCmp));
     }
 
     public void testChequearSyntaxisDeLinea() throws Exception {
