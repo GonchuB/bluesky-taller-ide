@@ -800,8 +800,7 @@ public class ActionPerformer {
         }
         else
         {
-            String binaryNum = aux.hex_to_binary(entrada);
-            Float a =  FPConversionAPI.binaryToFloat(binaryNum);
+            Float a =  FPConversionAPI.hexaToFloat(entrada);
             tpEditor.setdeciField(String.valueOf(a));
         }
     }

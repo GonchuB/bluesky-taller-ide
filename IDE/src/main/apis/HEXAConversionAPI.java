@@ -107,7 +107,7 @@ public class HEXAConversionAPI {
         if (ConversionType.A2COMPLEMENT.equals(type)) {
             return hex_to_a2_decimal(auxHex).toString();
         } else if (ConversionType.FLOATINGPOINT.equals(type)) {
-            return FPConversionAPI.binaryToFloat(hex_to_binary(auxHex)).toString();
+            return FPConversionAPI.hexaToFloat(auxHex).toString();
         }
 
         return "";
