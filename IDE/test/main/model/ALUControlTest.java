@@ -65,14 +65,19 @@ public class ALUControlTest extends TestCase {
         Integer overflow1 = 100;
         Integer overflow2 = 100;
 
+        Integer carrySet1 = -10;
+        Integer carrySet2 = 5;
+
         aluControl.addTwoNumbers(zero1, zero2);
         Assert.assertTrue(aluControl.isZero());
         Assert.assertFalse(aluControl.isNegative());
         Assert.assertFalse(aluControl.isPrecisionLost());
         Assert.assertFalse(aluControl.isOverflow());
+        Assert.assertFalse(aluControl.isCarry());
 
         aluControl.addTwoNumbers(negative1, negative2);
         Assert.assertTrue(aluControl.isNegative());
+        Assert.assertTrue(aluControl.isCarry());
         Assert.assertFalse(aluControl.isZero());
         Assert.assertFalse(aluControl.isPrecisionLost());
         Assert.assertFalse(aluControl.isOverflow());
@@ -80,6 +85,14 @@ public class ALUControlTest extends TestCase {
         aluControl.addTwoNumbers(overflow1, overflow2);
         Assert.assertTrue(aluControl.isOverflow());
         Assert.assertFalse(aluControl.isNegative());
+        Assert.assertFalse(aluControl.isCarry());
+        Assert.assertFalse(aluControl.isZero());
+        Assert.assertFalse(aluControl.isPrecisionLost());
+
+        aluControl.addTwoNumbers(carrySet1, carrySet2);
+        Assert.assertTrue(aluControl.isCarry());
+        Assert.assertTrue(aluControl.isNegative());
+        Assert.assertFalse(aluControl.isOverflow());
         Assert.assertFalse(aluControl.isZero());
         Assert.assertFalse(aluControl.isPrecisionLost());
     }
