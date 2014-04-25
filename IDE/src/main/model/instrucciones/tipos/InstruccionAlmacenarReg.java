@@ -29,7 +29,7 @@ public class InstruccionAlmacenarReg extends Instruccion {
         if (numeroDeCelda.getDecimalNumber() == 255){
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
             if(error != null) return error;
-            vistaConversionHexa.mostrarEntradaHexa(hexa);
+            vistaConversionHexa.mostrarSalidaHexa(hexa);
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
             if(error != null) return error;
         }
