@@ -382,7 +382,9 @@ public class ActionPerformer {
             ss.getJTextArea().setText(tpEditor.getJTextArea().getText());
             ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
             tpEditor.getJFrame().setVisible(false);
-            ss.getJFrame().setVisible(true);
+            JFrame jFrame = ss.getJFrame();
+            jFrame.setExtendedState( jFrame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+            jFrame.setVisible(true);
             simulador.ejecutarPrimeraInstruccion();
             simulador.actualizarSiguienteInstruccion();
             ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());

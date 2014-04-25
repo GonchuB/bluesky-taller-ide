@@ -2,6 +2,8 @@ import main.model.Compilador;
 import main.model.Simulador;
 import main.ui.Editor;
 
+import javax.swing.*;
+
 /**
  * Created by Juan-Asus on 20/03/2014.
  */
@@ -17,7 +19,10 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Editor().getJFrame().setVisible(true);    //hace visible la GUI creada por la clase TPEditor
+                Editor editor = new Editor();
+                JFrame jFrame = editor.getJFrame();
+                jFrame.setExtendedState(jFrame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+                jFrame.setVisible(true);    //hace visible la GUI creada por la clase TPEditor
             }
         });
     }
