@@ -150,8 +150,18 @@ public class Simulador {
         return simulando;
     }
 
-    public Instruccion getInstruccionActual()
+    public int getPositionInstruction()
     {
-        return this.instruccionActual;
+        Set entrySet = instrucciones.entrySet();
+        Iterator it = entrySet.iterator();
+        for (int i = 0 ; i < instrucciones.size(); i++)
+        {
+            if (instrucciones.get(i).toString().equals(instruccionActual.toString()))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
