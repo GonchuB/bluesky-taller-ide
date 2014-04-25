@@ -376,13 +376,16 @@ public class ActionPerformer {
             simulador.init(rutaArchivoMAQ);
            // simulador.resetearMaquina();
             simulador.iniciarSimulacionPasoAPaso();
-            tpEditor.getJFrame().setVisible(false);
             ss = new StepToStepUI(this);
             //System.out.print(tpEditor.getJTextArea().getText());
             JTextArea a = ss.getJTextArea();
             ss.getJTextArea().setText(tpEditor.getJTextArea().getText());
             ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
+            tpEditor.getJFrame().setVisible(false);
             ss.getJFrame().setVisible(true);
+            simulador.ejecutarPrimeraInstruccion();
+            simulador.actualizarSiguienteInstruccion();
+            ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
         }
     }
 
@@ -393,9 +396,12 @@ public class ActionPerformer {
             return;
         }
         if(simulador.isSimulando()){
-            simulador.ejecutarSiguienteInstruccion();
+            ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
+            simulador.ejecutarInstruccion();
+            simulador.actualizarSiguienteInstruccion();
+            ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
         }
-        ss.setEstadoActual(simulador.mostrarEstadoSimulacion(), simulador.getPositionInstruction());
+
 
     }
 

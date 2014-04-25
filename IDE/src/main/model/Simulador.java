@@ -60,7 +60,11 @@ public class Simulador {
 
     public void iniciarSimulacionCompleta(){
         iniciarSimulacionPasoAPaso();
-        while (simulando) ejecutarSiguienteInstruccion();
+        ejecutarPrimeraInstruccion();
+        while (simulando) {
+            actualizarSiguienteInstruccion();
+            ejecutarInstruccion();
+        };
 
     }
 
@@ -73,6 +77,14 @@ public class Simulador {
         iteratorInstrucciones = instrucciones.values().iterator();
         simulando = true;
         instruccionActual = iteratorInstrucciones.next();
+    }
+
+    public void ejecutarPrimeraInstruccion(){
+        ejecutarInstruccion();
+    }
+
+    public void ejecutarInstruccion() {
+        if (!simulando) return;
         if (instruccionActual == null) {
             JOptionPane.showMessageDialog(null, "La instrucción es desconocida y no se puede ejecutar el código", "Simulador", JOptionPane.ERROR_MESSAGE);
             pararSimulacion();
@@ -86,20 +98,10 @@ public class Simulador {
         }
     }
 
-    public void ejecutarSiguienteInstruccion(){
-        if (iteratorInstrucciones.hasNext()){
+
+    public void actualizarSiguienteInstruccion(){
+        if (simulando && iteratorInstrucciones.hasNext()){
             instruccionActual = iteratorInstrucciones.next();
-            if (instruccionActual == null) {
-                JOptionPane.showMessageDialog(null, "La instrucción es desconocida y no se puede ejecutar el código", "Simulador", JOptionPane.ERROR_MESSAGE);
-                pararSimulacion();
-                return;
-            }
-            String error = maquinaGenerica.ejecutarInstruccion(this,instruccionActual);
-            if(error != null){
-                JOptionPane.showMessageDialog(null, error, "Simulador", JOptionPane.ERROR_MESSAGE);
-                pararSimulacion();
-                return;
-            }
 
         } else {
             pararSimulacion();
