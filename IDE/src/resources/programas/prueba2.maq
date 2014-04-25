@@ -1,0 +1,12 @@
+00 11FD Leo de teclado numero hexa parte mas significativa de n1 y lo pongo en r1
+02 12FD Leo de teclado numero hexa parte menos significativa de n1 y lo pongo en r2
+04 13FD Leo de teclado numero hexa parte mas significativa de n2 y lo pongo en r3
+06 14FD Leo de teclado numero hexa parte menos significativa de n3 y lo pongo en r4
+08 2500 Inicializo en 0
+0A 5624 Sumo las partes menos significativas de n1 y n2 y lo almaceno en r6
+0C E010 Salto la suma de 1 ya que no hay overflow y continuo normalmente, voy a 16 que es el add directamente
+0E 2501 Sumo 1 por el overflow de la parte menos significativa
+10 5551 Sumo las partes mas significativas de n1 y n2 y lo almaceno en r5
+12 5553 Sumo las partes mas significativas de n1 y n2 y lo almaceno en r5
+14 35FF Muestro en pantalla la parte mas significativa del resultado
+16 36FF Muestro en pantalla la parte menos significativa del resultado

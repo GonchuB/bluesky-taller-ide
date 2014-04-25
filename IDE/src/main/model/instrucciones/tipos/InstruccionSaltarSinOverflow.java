@@ -16,6 +16,7 @@ public class InstruccionSaltarSinOverflow extends Instruccion {
 
     @Override
     public String operacion(Simulador simulador, MaquinaGenerica maquina) {
+        //Fixme - Todo - Esto no es overflow es CARRY!!!!
         if(!maquina.getAluControl().isOverflow()){
             String parte1Instruccion = maquina.leerMemoria(numeroCeldaMemoria);
             String parte2Instruccion = maquina.leerMemoria(new ComplexNumber(numeroCeldaMemoria.getDecimalNumber()+1));

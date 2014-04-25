@@ -1,0 +1,4 @@
+00 10FD Leo de teclado numero hexa fp y lo pongo en r0
+02 11FD Leo de teclado numero hexa fp y lo pongo en r1
+04 D201 Hace la multiplicación
+06 32FF Muestro en pantalla el resultado
