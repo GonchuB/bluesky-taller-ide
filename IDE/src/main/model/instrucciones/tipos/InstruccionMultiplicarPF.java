@@ -26,7 +26,7 @@ public class InstruccionMultiplicarPF extends Instruccion {
         Float f1 = FPConversionAPI.binaryToFloat(HEXAConversionAPI.hex_to_binary(maquina.leerRegistro(registro1)));
         Float f2 = FPConversionAPI.binaryToFloat(HEXAConversionAPI.hex_to_binary(maquina.leerRegistro(registro2)));
         Float resultadoFinal = maquina.getAluControl().mulTwoNumbers(f1, f2);
-        String valorAGuardar = FPConversionAPI.floatToBinary(resultadoFinal);
+        String valorAGuardar = FPConversionAPI.floatToHexa(resultadoFinal);
         maquina.escribirEnRegistro(registroDestino, valorAGuardar);
         return null;
     }
