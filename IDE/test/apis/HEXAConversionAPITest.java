@@ -22,7 +22,7 @@ public class HEXAConversionAPITest {
         Assert.assertEquals("-6",fa1);
 
         String fa2 = HEXAConversionAPI.hex_to_decimal("FA", HEXAConversionAPI.ConversionType.FLOATINGPOINT);
-        Assert.assertEquals("3.5E-43",fa2);
+        Assert.assertEquals("-3.75",fa2);
     }
 
     @Test
