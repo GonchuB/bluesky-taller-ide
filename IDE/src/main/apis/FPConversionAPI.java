@@ -141,4 +141,12 @@ public class FPConversionAPI {
         return finalValue;
     }
 
+    public static String floatToHexa(Float floatNum) {
+        return HEXAConversionAPI.binary_to_hex(FPConversionAPI.floatToBinary(floatNum));
+    }
+
+    public static Float hexaToFloat(String hexa) {
+        return FPConversionAPI.binaryToFloat(HEXAConversionAPI.hex_to_binary(hexa));
+    }
+
 }
