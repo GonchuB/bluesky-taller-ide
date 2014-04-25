@@ -36,6 +36,25 @@ public class ALUControlTest extends TestCase {
         Assert.assertTrue(aluControl.checkSumOverflow(op41, op42));
     }
 
+    public void testCheckCarrySum() throws Exception {
+        Integer neg1 = -5;
+        Integer neg2 = -10;
+
+        Integer pos1 = 5;
+        Integer pos2 = 10;
+
+        Integer carrySet1 = -10;
+        Integer carrySet2 = 5;
+
+        Integer carryNotSet1 = 10;
+        Integer carryNotSet2 = -5;
+
+        Assert.assertTrue(aluControl.checkCarrySum(neg1, neg2));
+        Assert.assertFalse(aluControl.checkCarrySum(pos1, pos2));
+        Assert.assertTrue(aluControl.checkCarrySum(carrySet1, carrySet2));
+        Assert.assertFalse(aluControl.checkCarrySum(carryNotSet1, carryNotSet2));
+    }
+
     public void testAddTwoNumbersInt() throws Exception {
         Integer zero1 = 5;
         Integer zero2 = -5;

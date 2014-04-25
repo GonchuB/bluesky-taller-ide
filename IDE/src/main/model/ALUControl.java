@@ -14,6 +14,7 @@ public class ALUControl {
     private boolean overflow;
     private boolean precisionLost;
     private boolean zero;
+    private boolean carry;
     private boolean negative;
 
     private Float roundToSignificantFigures(Float num, int n) {
@@ -27,6 +28,18 @@ public class ALUControl {
         final double magnitude = Math.pow(10, power);
         final long shifted = Math.round(num * magnitude);
         return new Float(shifted / magnitude);
+    }
+
+    public boolean checkCarrySum(Integer op1, Integer op2) {
+        if (op1 < 0 && op2 < 0) {
+            return true;
+        } else if (op1 > 0 && op2 > 0) {
+            return false;
+        } else if (op1 < 0) {
+            return Math.abs(op1) > op2;
+        } else {
+            return Math.abs(op2) > op1;
+        }
     }
 
     public boolean checkSumPrecisionLost(Float op1, Float op2) {
@@ -73,6 +86,7 @@ public class ALUControl {
         this.setNegative(result < 0);
         this.setZero(result == 0);
         this.setPrecisionLost(false);
+        this.setCarry(this.checkCarrySum(op1, op2));
         return result;
     }
 
@@ -106,5 +120,13 @@ public class ALUControl {
 
     public void setNegative(boolean negative) {
         this.negative = negative;
+    }
+
+    public boolean isCarry() {
+        return carry;
+    }
+
+    public void setCarry(boolean carry) {
+        this.carry = carry;
     }
 }
