@@ -112,6 +112,7 @@ public class Simulador {
     public void pararSimulacion() {
         if(simulando){
             simulando = false;
+            instruccionActual = null;
             JOptionPane.showMessageDialog(null, "Ejecución finalizada", "Simulador", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -156,6 +157,7 @@ public class Simulador {
 
     public int getPositionInstruction()
     {
+        if (instruccionActual == null) return -1;
         Set entrySet = instrucciones.entrySet();
         Iterator it = entrySet.iterator();
         for (int i = 0 ; i < instrucciones.size(); i++)

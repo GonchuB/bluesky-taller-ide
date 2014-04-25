@@ -351,11 +351,13 @@ public class StepToStepUI extends Editor {
         Vector<String> columnFlags = new Vector();
         columnFlags.add("N");
         columnFlags.add("Z");
+        columnFlags.add("C");
         columnFlags.add("O");
         columnFlags.add("F");
         Vector<String> flags = new Vector<String>();
         flags.add(String.valueOf(this.C));
         flags.add(String.valueOf(this.Z));
+        flags.add(String.valueOf(this.C));
         flags.add(String.valueOf(this.O));
         flags.add(String.valueOf(this.F));
         dataFlags.add(flags);
@@ -394,8 +396,9 @@ public class StepToStepUI extends Editor {
 
         tablaFlags.setValueAt(boolToInt(a.isNegative()),0,0);
         tablaFlags.setValueAt(boolToInt(a.isZero()),0,1);
-        tablaFlags.setValueAt(boolToInt(a.isOverflow()),0,2);
-        tablaFlags.setValueAt(boolToInt(a.isPrecisionLost()),0,3);
+        tablaFlags.setValueAt(boolToInt(a.isCarry()),0,2);
+        tablaFlags.setValueAt(boolToInt(a.isOverflow()),0,3);
+        tablaFlags.setValueAt(boolToInt(a.isPrecisionLost()),0,4);
 
         for (int i = 0 ; i < 256 ; i++)
         {
@@ -409,7 +412,7 @@ public class StepToStepUI extends Editor {
           //  System.out.println(insActual);
             numeroInstruccion++;
         }catch (Exception i){
-
+            this.currentInstruction.setText("La ejecución finalizó");
         }
     }
 
