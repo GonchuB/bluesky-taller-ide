@@ -1,6 +1,7 @@
 package main.ui;
 
 
+import main.apis.FPConversionAPI;
 import main.apis.HEXAConversionAPI;
 import main.model.Compilador;
 import main.model.Simulador;
@@ -799,7 +800,8 @@ public class ActionPerformer {
         }
         else
         {
-            Float a =  aux.hex_to_fp_decimal(entrada);
+            String binaryNum = aux.hex_to_binary(entrada);
+            Float a =  FPConversionAPI.binaryToFloat(binaryNum);
             tpEditor.setdeciField(String.valueOf(a));
         }
     }

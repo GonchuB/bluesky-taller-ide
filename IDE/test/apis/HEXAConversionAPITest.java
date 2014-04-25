@@ -39,8 +39,6 @@ public class HEXAConversionAPITest {
         String fa2 = HEXAConversionAPI.a2_decimal_to_hex(3);
         Assert.assertEquals("3",fa2);
 
-        String fa3 = HEXAConversionAPI.fp_decimal_to_hex(new Float("3.5E-43"));
-        Assert.assertEquals("FA",fa3);
 
     }
 

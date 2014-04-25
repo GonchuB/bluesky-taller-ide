@@ -107,7 +107,7 @@ public class HEXAConversionAPI {
         if (ConversionType.A2COMPLEMENT.equals(type)) {
             return hex_to_a2_decimal(auxHex).toString();
         } else if (ConversionType.FLOATINGPOINT.equals(type)) {
-            return hex_to_fp_decimal(auxHex).toString();
+            return FPConversionAPI.binaryToFloat(hex_to_binary(auxHex)).toString();
         }
 
         return "";
@@ -121,10 +121,7 @@ public class HEXAConversionAPI {
         return (num >= (i / 2)) ? (num - i) : num;
     }
 
-    public static Float hex_to_fp_decimal(String str) {
-        float f = Float.intBitsToFloat(Integer.parseInt(hex_to_decimal(str)));
-        return new Float(f);
-    }
+
 
     public static String a2_decimal_to_binary(Integer i, Integer numberOfBits) {
         Integer newN = i;
@@ -148,9 +145,6 @@ public class HEXAConversionAPI {
         return decimal_to_hex(newN.intValue());
     }
 
-    public static String fp_decimal_to_hex(Float f) {
-        int i = Float.floatToIntBits(f);
-        return decimal_to_hex(i);
-    }
+
 
 }
