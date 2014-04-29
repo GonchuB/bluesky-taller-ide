@@ -27,7 +27,7 @@ public class InstruccionComparar extends Instruccion {
         Integer int2 = new Integer(valor2);
         Integer resultadoFinal = null;
         if (int1 > int2) resultadoFinal = 2;
-        else if (int1 == int2) resultadoFinal = 1;
+        else if (int1.equals(int2)) resultadoFinal = 1;
         else if (int1 < int2) resultadoFinal = 0;
         String valorAGuardar = HEXAConversionAPI.a2_decimal_to_hex(resultadoFinal);
         maquina.escribirEnRegistro(registroDestino, valorAGuardar);
