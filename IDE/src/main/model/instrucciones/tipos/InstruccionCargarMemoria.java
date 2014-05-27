@@ -4,8 +4,7 @@ import main.model.ComplexNumber;
 import main.model.MaquinaGenerica;
 import main.model.Simulador;
 import main.ui.VistaEntradaSalida;
-
-import javax.swing.*;
+import main.ui.VistaMemoria;
 
 /**
  * Created by Juan-Asus on 21/03/2014.
@@ -25,12 +24,15 @@ public class InstruccionCargarMemoria extends Instruccion {
     public String operacion(Simulador simulador, MaquinaGenerica maquina) {
         int decimalNumber = numeroCeldaMemoria.getDecimalNumber();
         String hexa = "";
-
+        VistaMemoria v = new VistaMemoria(simulador.mostrarEstadoSimulacion());
         if (decimalNumber == 253) {
+
             String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
+             v.showMemoryRam("El bit de control de entrada se ha puesto en 1");
             if (error != null) return error;
             hexa = ingresarHexaPorPantalla(hexa);
             error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+            v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
             if (error != null) return error;
         } else {
             hexa = maquina.leerMemoria(numeroCeldaMemoria);

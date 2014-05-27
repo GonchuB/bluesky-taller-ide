@@ -453,7 +453,7 @@ public class StepToStepUI extends Editor {
         final JComponent[] inputs = new JComponent[]{
             ramArea
         };
-        JOptionPane.showMessageDialog(null, inputs, "Memoria Ram", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, inputs, "registros Ram", JOptionPane.PLAIN_MESSAGE);
     }
 
 
