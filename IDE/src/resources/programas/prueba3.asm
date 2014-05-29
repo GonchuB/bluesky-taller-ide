@@ -17,13 +17,13 @@ str r4,r6 ;guardo el valor ingresado por teclado en el valor de celda que contie
 cmp r8,r9,r4 ;comparo el valor ingresado contra el maximo
 cmp r11,r4,r10 ;comparo el valor ingresado contra el minimo
 jpz r8,42 ;si el valor ingreaso es mas grande que el maximo lo guardo como maximo 
-jpz r11,48 ;si el valor ingresado es menor que el minimo lo guardo como minimo
-jpz r0,16 ;vuelvo a ingresar un dato nuevo   
-cpy r4,r9 ;en r9 guardo el maximo valor ingresado
+jpz r11,48 ;si el valor ingresado es menor que el minimo lo guardo como minimo 19
+jpz r0,18 ;vuelvo a ingresar un dato nuevo   
+cpy r4,r9 ;en r9 guardo el maximo valor ingresado 
 jpz r0,38 ;vuelvo para comparar con el minimo
 jpz r0,18 ;vuelvo a ingresar un dato nuevo  
-cpy r4,r10 ;en r10 guardo el minimo valor ingresado
-jpz r0,18 ;vuelvo a ingresar un dato nuevo  26               
+cpy r4,r10 ;en r10 guardo el minimo valor ingresado 
+jpz r0,18 ;vuelvo a ingresar un dato nuevo  26            
 ldm r4,253 ;obtengo el valor ingresado por teclado
 jpz r4,68 ;si es cero el valor ingresado muestro el minimo 28
 ldi r7,255
