@@ -26,20 +26,30 @@ public class InstruccionCargarMemoria extends Instruccion {
         String hexa = "";
         VistaMemoria v = new VistaMemoria(simulador.mostrarEstadoSimulacion());
         if (decimalNumber == 253) {
-
-            String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
-             v.showMemoryRam("El bit de control de entrada se ha puesto en 1");
+        	hexa = ingresarHexaPorPantalla(hexa);
+        	String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber),hexa);
+        	v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+        	v.showMemoryRam("");
             if (error != null) return error;
-            hexa = ingresarHexaPorPantalla(hexa);
-            error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
-            v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
+            error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
+            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            v.showMemoryRam("El bit de control de entrada se ha puesto en 1");
             if (error != null) return error;
+            //hexa = ingresarHexaPorPantalla(hexa);
+            //error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+            //v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            //v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
+            //if (error != null) return error;
         } else {
             hexa = maquina.leerMemoria(numeroCeldaMemoria);
         }
-
-
         maquina.escribirEnRegistro(numeroRegistro, hexa);
+        String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber), "00");
+        if (error != null) return error;
+        error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+        v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+        v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
+        if (error != null) return error;
         return null;
     }
 

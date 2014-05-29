@@ -29,12 +29,20 @@ public class InstruccionAlmacenarReg extends Instruccion {
         String error = maquina.escribirEnMemoria(numeroDeCelda,hexa);
         if(error != null) return error;
         if (numeroDeCelda.getDecimalNumber() == 255){
-            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"00");
-            v.showMemoryRam("El bit de control de salida se ha puesto en 0");
+        	error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()),hexa);
+            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            v.showMemoryRam("");
+            if(error != null) return error;
+            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"01");
+            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            v.showMemoryRam("El bit de control de salida se ha puesto en 1");
             if(error != null) return error;
             vistaConversionHexa.mostrarSalidaHexa(hexa);
-            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()-1),"01");
-            v.showMemoryRam("El bit de control de salida se ha puesto en 1");
+            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()),"00");
+            if(error != null) return error;
+            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"00");
+            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            v.showMemoryRam("El bit de control de salida se ha puesto en 0");
             if(error != null) return error;
         }
         return null;
