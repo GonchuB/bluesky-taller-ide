@@ -27,25 +27,23 @@ public class InstruccionAlmacenar extends Instruccion {
         VistaMemoria v = new VistaMemoria(simulador.mostrarEstadoSimulacion());
         if(error != null) return error;
         if (numeroDeCelda.getDecimalNumber() == 255){
-            /*error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"00");
+            //Muestro que se almacena el dato en memoria
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("El bit de control de salida se ha puesto en 0");
-            if(error != null) return error;*/
-            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()),hexa);
-            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("");
-            if(error != null) return error;
-            //vistaConversionHexa.mostrarSalidaHexa(hexa);
+            v.showMemoryRam("Se escribió el valor "+ hexa+ " en el puerto de salia (Memoria - Posicion " + numeroDeCelda.getHexaNumber() + ")");
+
+            //Seteo bit de control en 1 para indicar que se debe consumir el dato desde afuera
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"01");
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("El bit de control de salida se ha puesto en 1");
+            v.showMemoryRam("Bit de control en 1 para indicar que se debe consumir");
             if(error != null) return error;
+
+            //El dato se consume
             vistaConversionHexa.mostrarSalidaHexa(hexa);
-            error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber()),"00");
-            if(error != null) return error;
+
+            //Se setea el bit de control en 0 para indicar que el dato fue consumido externamente
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"00");
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("El bit de control de salida se ha puesto en 0");
+            v.showMemoryRam("Bit de control en 0 para indicar que el dato ya fue consumido de manera externa");
             if(error != null) return error;
         }
         return null;

@@ -26,34 +26,33 @@ public class InstruccionCargarMemoria extends Instruccion {
         String hexa = "";
         VistaMemoria v = new VistaMemoria(simulador.mostrarEstadoSimulacion());
         if (decimalNumber == 253) {
-        	hexa = ingresarHexaPorPantalla(hexa);
-        	String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber),hexa);
-        	v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-        	v.showMemoryRam("");
-            if (error != null) return error;
-            error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
+            //Seteo bit de control en 1 para comenzar a leer desde el puerto
+            String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "01");
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("El bit de control de entrada se ha puesto en 1");
+            v.showMemoryRam("Bit de control en 1 para comenzar a leer desde puerto de entrada");
             if (error != null) return error;
-            //hexa = ingresarHexaPorPantalla(hexa);
-            //error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
-            //v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            //v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
-            //if (error != null) return error;
+
+            //Ingreso valor en puerto de entrada y guardo en memoria
+            hexa = ingresarHexaPorPantalla();
+            error = maquina.escribirEnMemoria(numeroCeldaMemoria,hexa);
+        	v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+        	v.showMemoryRam("Se guardo el valor " + hexa + " en la posición " + numeroCeldaMemoria.getHexaNumber() + " que corresponde al puerto de entrada");
+            if (error != null) return error;
+
+            //Bit de control en 0 indicando que se termino la lectura desde el puerto de entrada
+            error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
+            v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
+            v.showMemoryRam("Bit de control en 0 indicando que se terminó de leer desde puerto de entrada");
+            if (error != null) return error;
         } else {
             hexa = maquina.leerMemoria(numeroCeldaMemoria);
         }
         maquina.escribirEnRegistro(numeroRegistro, hexa);
-        String error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber), "00");
-        if (error != null) return error;
-        error = maquina.escribirEnMemoria(new ComplexNumber(decimalNumber - 1), "00");
-        v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-        v.showMemoryRam("El bit de control de entrada se ha puesto en 0");
-        if (error != null) return error;
+
         return null;
     }
 
-    private String ingresarHexaPorPantalla(String hexa) {
-        return vistaConversionHexa.mostrarEntradaHexa(hexa);
+    private String ingresarHexaPorPantalla() {
+        return vistaConversionHexa.mostrarEntradaHexa();
     }
 }
