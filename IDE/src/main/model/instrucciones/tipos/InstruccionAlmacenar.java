@@ -34,7 +34,7 @@ public class InstruccionAlmacenar extends Instruccion {
             //Seteo bit de control en 1 para indicar que se debe consumir el dato desde afuera
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"01");
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("Bit de control en 1 para indicar que se debe consumir");
+            v.showMemoryRam("Bit de control en 1 para indicar que se debe consumir desde puerto de salida");
             if(error != null) return error;
 
             //El dato se consume
@@ -43,7 +43,7 @@ public class InstruccionAlmacenar extends Instruccion {
             //Se setea el bit de control en 0 para indicar que el dato fue consumido externamente
             error = maquina.escribirEnMemoria(new ComplexNumber(numeroDeCelda.getDecimalNumber() - 1),"00");
             v.buildMemoryRam(simulador.mostrarEstadoSimulacion());
-            v.showMemoryRam("Bit de control en 0 para indicar que el dato ya fue consumido de manera externa");
+            v.showMemoryRam("Bit de control en 0 para indicar que el dato ya fue consumido de manera externa del puerto de salida");
             if(error != null) return error;
         }
         return null;
